@@ -182,7 +182,8 @@ export default function Dashboard() {
         isOpen={showOnboarding}
         onComplete={() => {
           setShowOnboarding(false);
-          loadDashboardData(); // Reload data after onboarding
+          // Don't reload dashboard data here - the onboarding component
+          // already marks the user as onboarding_completed
         }}
       />
 

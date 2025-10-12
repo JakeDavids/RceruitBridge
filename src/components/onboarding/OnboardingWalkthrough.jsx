@@ -7,7 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle2, ArrowRight, Mail, UserCircle, GraduationCap, School as SchoolIcon, MessageSquare } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Mail, UserCircle, GraduationCap, School as SchoolIcon, MessageSquare, AtSign, Loader2, AlertCircle } from 'lucide-react';
+import { useRecruitBridgeIdentity } from '../hooks/useRecruitBridgeIdentity';
 
 const ONBOARDING_STEPS = [
   {
@@ -21,6 +22,12 @@ const ONBOARDING_STEPS = [
     title: 'Create Your Profile',
     description: 'Tell us about yourself so coaches know who you are.',
     icon: UserCircle,
+  },
+  {
+    id: 'email',
+    title: 'Create Your Email Address',
+    description: 'Set up your professional @recruitbridge.net email address.',
+    icon: AtSign,
   },
   {
     id: 'school',
@@ -58,6 +65,15 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
   const [lastName, setLastName] = useState('');
   const [classYear, setClassYear] = useState('');
 
+  // Email identity state
+  const { identity, checkUsername, createIdentity } = useRecruitBridgeIdentity();
+  const [emailUsername, setEmailUsername] = useState('');
+  const [emailDisplayName, setEmailDisplayName] = useState('');
+  const [checkingUsername, setCheckingUsername] = useState(false);
+  const [usernameStatus, setUsernameStatus] = useState('');
+  const [usernameMessage, setUsernameMessage] = useState('');
+  const [creatingEmail, setCreatingEmail] = useState(false);
+
   // School selection state
   const [schools, setSchools] = useState([]);
   const [selectedSchoolId, setSelectedSchoolId] = useState('');
@@ -82,8 +98,15 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
   }, [isOpen]);
 
   useEffect(() => {
+    // Auto-fill email display name when we have first and last name
+    if (firstName && lastName && !emailDisplayName) {
+      setEmailDisplayName(`${firstName} ${lastName}`);
+    }
+  }, [firstName, lastName, emailDisplayName]);
+
+  useEffect(() => {
     // Load schools when we reach the school selection step
-    if (currentStep === 2 && schools.length === 0) {
+    if (currentStep === 3 && schools.length === 0) {
       loadSchools();
     }
   }, [currentStep, schools.length]);
@@ -103,12 +126,15 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
       // Save profile before moving on
       await saveProfile();
     } else if (currentStep === 2) {
+      // Create email identity before moving on
+      await handleCreateEmail();
+    } else if (currentStep === 3) {
       // Save target school before moving on
       await saveTargetSchool();
-    } else if (currentStep === 3) {
+    } else if (currentStep === 4) {
       // Send demo email
       await sendDemoEmail();
-    } else if (currentStep === 4) {
+    } else if (currentStep === 5) {
       // Generate demo response
       await generateDemoResponse();
     }
@@ -153,6 +179,60 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
       alert('Error saving profile. Please try again.');
     }
     setLoading(false);
+  };
+
+  const handleUsernameChange = async (value) => {
+    const cleanValue = value.trim().toLowerCase();
+    setEmailUsername(cleanValue);
+    setUsernameStatus('');
+    setUsernameMessage('');
+
+    if (cleanValue.length < 3) {
+      return;
+    }
+
+    setCheckingUsername(true);
+
+    try {
+      const result = await checkUsername(cleanValue);
+      if (result.ok) {
+        setUsernameStatus(result.available ? 'available' : 'taken');
+        setUsernameMessage(result.available ? 'Available!' : 'Sorry, that username is taken.');
+      } else {
+        setUsernameStatus('error');
+        setUsernameMessage(result.error || 'Failed to check availability');
+      }
+    } catch (err) {
+      console.error('Username check error:', err);
+      setUsernameStatus('error');
+      setUsernameMessage('Error checking availability');
+    }
+
+    setCheckingUsername(false);
+  };
+
+  const handleCreateEmail = async () => {
+    if (!emailUsername || usernameStatus !== 'available') {
+      alert('Please choose an available username');
+      return;
+    }
+
+    setCreatingEmail(true);
+
+    try {
+      const result = await createIdentity(emailUsername, emailDisplayName);
+
+      if (!result.ok) {
+        throw new Error(result.error || 'Failed to create email identity');
+      }
+    } catch (error) {
+      console.error('Error creating email:', error);
+      alert('Error creating email. Please try again.');
+      setCreatingEmail(false);
+      return;
+    }
+
+    setCreatingEmail(false);
   };
 
   const saveTargetSchool = async () => {
@@ -228,10 +308,12 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
       case 1:
         return firstName && lastName && classYear;
       case 2:
-        return selectedSchoolId;
+        return usernameStatus === 'available' && emailDisplayName.trim();
       case 3:
-        return demoEmailSent;
+        return selectedSchoolId;
       case 4:
+        return demoEmailSent;
+      case 5:
         return demoResponseGenerated;
       default:
         return true;
@@ -243,8 +325,11 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
   const progress = ((currentStep + 1) / ONBOARDING_STEPS.length) * 100;
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="max-w-2xl">
+    <Dialog open={isOpen} onOpenChange={(open) => {
+      // Prevent closing the dialog while onboarding is in progress
+      // It can only be closed by completing the onboarding
+    }}>
+      <DialogContent className="max-w-2xl" onInteractOutside={(e) => e.preventDefault()} onEscapeKeyDown={(e) => e.preventDefault()}>
         <DialogHeader>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center">
@@ -279,6 +364,10 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5" />
                       <span>Set up your athlete profile</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5" />
+                      <span>Create your @recruitbridge.net email</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5" />
@@ -344,8 +433,85 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
             </Card>
           )}
 
-          {/* School Selection Step */}
+          {/* Email Creation Step */}
           {currentStep === 2 && (
+            <Card>
+              <CardContent className="pt-6 space-y-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-900 mb-2">Your Professional Email</h4>
+                  <p className="text-sm text-blue-800">
+                    Create your @recruitbridge.net email address. Coaches will see this professional address when you contact them.
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="displayName">Display Name *</Label>
+                  <Input
+                    id="displayName"
+                    value={emailDisplayName}
+                    onChange={(e) => setEmailDisplayName(e.target.value)}
+                    placeholder="Jake Davids"
+                    className="mt-1"
+                  />
+                  <p className="text-xs text-slate-500 mt-1">
+                    Your full name as it will appear in emails
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="emailUsername">Choose Your Username *</Label>
+                  <div className="mt-1 flex items-center gap-2">
+                    <Input
+                      id="emailUsername"
+                      className={`w-full ${
+                        usernameStatus === 'available'
+                          ? 'border-green-500 focus-visible:ring-green-500'
+                          : usernameStatus === 'taken' || usernameStatus === 'error'
+                          ? 'border-red-500 focus-visible:ring-red-500'
+                          : ''
+                      }`}
+                      placeholder="jakedavids"
+                      value={emailUsername}
+                      onChange={(e) => handleUsernameChange(e.target.value)}
+                    />
+                    <span className="text-sm text-slate-600 whitespace-nowrap">@recruitbridge.net</span>
+                  </div>
+                  <div className={`text-xs mt-1.5 flex items-center gap-1.5 ${
+                    usernameStatus === 'available'
+                      ? 'text-green-600'
+                      : usernameStatus === 'taken' || usernameStatus === 'error'
+                      ? 'text-red-600'
+                      : 'text-slate-500'
+                  }`}>
+                    {checkingUsername ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : usernameStatus === 'available' ? (
+                      <CheckCircle2 className="w-4 h-4" />
+                    ) : usernameStatus === 'taken' || usernameStatus === 'error' ? (
+                      <AlertCircle className="w-4 h-4" />
+                    ) : null}
+                    {checkingUsername ? 'Checking availability…' : usernameMessage || 'Choose a username (3+ characters, lowercase only)'}
+                  </div>
+                </div>
+
+                <div className="rounded-lg border px-4 py-3 bg-slate-50">
+                  <Label className="text-xs text-slate-500">Email Preview</Label>
+                  <div className="font-medium text-slate-900">
+                    {emailDisplayName || 'Your Name'} &lt;{emailUsername || 'username'}@recruitbridge.net&gt;
+                  </div>
+                </div>
+
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                  <p className="text-xs text-amber-800">
+                    <strong>Important:</strong> Once created, your username cannot be changed. Choose carefully!
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* School Selection Step */}
+          {currentStep === 3 && (
             <Card>
               <CardContent className="pt-6 space-y-4">
                 <div>
@@ -371,7 +537,7 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
           )}
 
           {/* Demo Email Step */}
-          {currentStep === 3 && (
+          {currentStep === 4 && (
             <Card>
               <CardContent className="pt-6 space-y-4">
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
@@ -407,7 +573,7 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
           )}
 
           {/* Response Center Step */}
-          {currentStep === 4 && (
+          {currentStep === 5 && (
             <Card>
               <CardContent className="pt-6 space-y-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -437,7 +603,7 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
           )}
 
           {/* Complete Step */}
-          {currentStep === 5 && (
+          {currentStep === 6 && (
             <Card>
               <CardContent className="pt-6">
                 <div className="text-center space-y-4">
@@ -469,15 +635,20 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
           </div>
           <Button
             onClick={handleNext}
-            disabled={!canProceed() || loading}
+            disabled={!canProceed() || loading || creatingEmail}
             size="lg"
             className="min-w-[140px]"
           >
-            {loading ? (
-              'Processing...'
+            {loading || creatingEmail ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Processing...
+              </>
             ) : currentStep === ONBOARDING_STEPS.length - 1 ? (
               'Finish & Start'
-            ) : currentStep === 3 ? (
+            ) : currentStep === 2 ? (
+              'Create Email'
+            ) : currentStep === 4 ? (
               'Send Email'
             ) : (
               <>
