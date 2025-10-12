@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Users, Mail, Target, TrendingUp, BarChart3, Clock, CheckCircle, Facebook, Twitter, Instagram } from 'lucide-react';
 import { PublicUser } from '@/api/entities';
 import { useNavigate } from 'react-router-dom';
@@ -7,13 +7,32 @@ import { createPageUrl } from '@/utils';
 export default function RecruitBridgeLanding() {
   const navigate = useNavigate();
 
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const user = await PublicUser.me();
+        if (user) {
+          // User is logged in, redirect to dashboard
+          navigate(createPageUrl('Dashboard'));
+        }
+      } catch (error) {
+        // User not logged in, stay on landing page
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+
   const handleGetStarted = async () => {
     try {
+      // Base44 OAuth will redirect to the configured app URL
+      // This will open Google OAuth in a popup
       await PublicUser.login();
-      // After login, redirect to dashboard
-      navigate(createPageUrl('Dashboard'));
+      // After successful login, redirect to dashboard
+      window.location.href = createPageUrl('Dashboard');
     } catch (error) {
       console.error('Login error:', error);
+      alert('There was an error logging in. Please try again or contact support.');
     }
   };
 
