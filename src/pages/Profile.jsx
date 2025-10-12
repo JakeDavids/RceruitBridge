@@ -14,6 +14,8 @@ import { User as UserIcon, Trophy, GraduationCap, Target, Save, Upload, Link as 
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Progress } from "@/components/ui/progress";
+import PageGuide from "@/components/onboarding/PageGuide";
+import useGuidedTour from "@/components/hooks/useGuidedTour";
 
 const sports = [
   { value: "football", label: "Football" },
@@ -74,6 +76,17 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [existingAthlete, setExistingAthlete] = useState(null);
+
+  // Guided Tour
+  const { isStepActive, completeCurrentStep, skipTour, TOUR_STEPS } = useGuidedTour();
+  const [showGuide, setShowGuide] = useState(false);
+
+  useEffect(() => {
+    // Show guide if user is on profile step
+    if (isStepActive(TOUR_STEPS.PROFILE)) {
+      setShowGuide(true);
+    }
+  }, [isStepActive, TOUR_STEPS.PROFILE]);
 
   const profileFields = [
     'first_name', 'last_name', 'email', 'phone', 'date_of_birth',
@@ -165,7 +178,7 @@ export default function Profile() {
 
       // List of fields that are numbers and might be empty
       const numericFields = [
-        'weight', 'graduation_year', 'gpa', 'sat_score', 
+        'weight', 'graduation_year', 'gpa', 'sat_score',
         'act_score', 'forty_time', 'bench_press', 'squat',
         'vertical_jump', 'pro_agility'
       ];
@@ -179,12 +192,22 @@ export default function Profile() {
 
       if (existingAthlete) {
         await Athlete.update(existingAthlete.id, payload);
-        // Auto-redirect to Dashboard for existing users
-        navigate(createPageUrl("Dashboard"));
       } else {
         await Athlete.create(payload);
-        // Auto-redirect to the Welcome page for first-time users
+      }
+
+      // If user is in guided tour, complete profile step and go to email creation
+      if (isStepActive(TOUR_STEPS.PROFILE)) {
+        const nextStep = await completeCurrentStep();
+        setShowGuide(false);
+        // Redirect to email identity setup (Settings page with identity tab)
+        navigate(createPageUrl("Settings"));
+      } else if (!existingAthlete) {
+        // First-time users not in tour go to Welcome page
         navigate(createPageUrl("Welcome"));
+      } else {
+        // Existing users go to Dashboard
+        navigate(createPageUrl("Dashboard"));
       }
     } catch (error) {
       console.error("Error saving athlete:", error);
@@ -734,6 +757,48 @@ export default function Profile() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Guided Tour */}
+      <PageGuide
+        isOpen={showGuide}
+        onClose={() => {
+          setShowGuide(false);
+          skipTour();
+        }}
+        onNext={() => {
+          // Scroll to save button
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }}
+        title="Step 1: Complete Your Profile"
+        description="Fill out your information so coaches can learn about you"
+        steps={[
+          { label: 'Complete Profile', completed: false },
+          { label: 'Create Email', completed: false },
+          { label: 'Add Target School', completed: false },
+          { label: 'Add Coach Contact', completed: false },
+          { label: 'Send First Email', completed: false },
+          { label: 'View Responses', completed: false },
+        ]}
+        currentStep={0}
+        nextButtonText="Scroll to Save Button"
+      >
+        <div className="space-y-3 bg-blue-50 p-4 rounded-lg">
+          <p className="text-sm text-blue-900 font-medium">Quick Start Guide:</p>
+          <ul className="text-sm text-blue-800 space-y-2">
+            <li>✅ <strong>Fill in your basic info</strong> - Name, contact, physical stats</li>
+            <li>✅ <strong>Add athletic achievements</strong> - What makes you special?</li>
+            <li>✅ <strong>Include your highlight video</strong> - This will be auto-included in emails!</li>
+            <li>✅ <strong>Academic info matters</strong> - GPA, test scores help coaches</li>
+            <li>✅ <strong>Be complete!</strong> - {profileCompletion}% complete. Aim for 80%+</li>
+          </ul>
+          <div className="pt-3 border-t border-blue-200">
+            <p className="text-xs text-blue-700">
+              <strong>💡 Tip:</strong> The more complete your profile, the better AI can write your emails!
+            </p>
+          </div>
+        </div>
+      </PageGuide>
+
         {/* Floating Save Button */}
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-sm border-t border-slate-200 flex justify-center z-10">
           <Button
