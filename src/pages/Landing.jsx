@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Users, Mail, Target, TrendingUp, BarChart3, Clock, CheckCircle, Facebook, Twitter, Instagram } from 'lucide-react';
+import { Users, Mail, Target, TrendingUp, BarChart3, Clock, CheckCircle, Facebook, Twitter, Instagram, Sparkles, Zap, ArrowRight } from 'lucide-react';
 import { PublicUser } from '@/api/entities';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { motion } from 'framer-motion';
 
 export default function RecruitBridgeLanding() {
   const navigate = useNavigate();
@@ -58,26 +59,119 @@ export default function RecruitBridgeLanding() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 relative overflow-hidden">
+        {/* Animated Background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-yellow-300 rounded-full blur-3xl"></div>
+          <motion.div
+            className="absolute top-20 left-10 w-64 h-64 bg-white rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          ></motion.div>
+          <motion.div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-yellow-300 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              x: [0, -30, 0],
+              y: [0, -50, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          ></motion.div>
         </div>
+
         <div className="max-w-6xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            Turn Your Hard Work Into<br />
-            <span className="text-yellow-400">College Opportunities</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-blue-50 mb-12 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Sparkles className="w-4 h-4 text-yellow-300" />
+              <span className="text-sm text-white font-medium">1,200+ Athletes Already Recruiting</span>
+            </motion.div>
+
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+              Turn Your Hard Work Into<br />
+              <motion.span
+                className="text-yellow-400 inline-block"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                College Opportunities
+              </motion.span>
+            </h1>
+          </motion.div>
+
+          <motion.p
+            className="text-xl md:text-2xl text-blue-50 mb-12 max-w-4xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
             Built by an athlete who had to fight for every opportunity — so you don't have to.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button onClick={handleGetStarted} className="bg-yellow-500 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-400 shadow-xl">
+          </motion.p>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            <motion.button
+              onClick={handleGetStarted}
+              className="bg-yellow-500 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-400 shadow-xl flex items-center gap-2 group"
+              whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(234, 179, 8, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+            >
               Start Free
-            </button>
-            <a href="#plans" className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-blue-600">
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+            <motion.a
+              href="#plans"
+              className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-blue-600 transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               See Plans
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div
+            className="mt-12 flex flex-wrap justify-center gap-8 text-blue-100 text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-green-300" />
+              <span>No credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-green-300" />
+              <span>Setup in 2 minutes</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-yellow-300" />
+              <span>AI-Powered</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
