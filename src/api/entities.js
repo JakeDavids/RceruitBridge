@@ -1,4 +1,4 @@
-import { base44 } from './base44Client';
+import { base44, publicBase44 } from './base44Client';
 
 
 export const Athlete = base44.entities.Athlete;
@@ -47,3 +47,6 @@ export const InboundMessage = base44.entities.InboundMessage;
 
 // auth sdk:
 export const User = base44.auth;
+
+// Public auth SDK (for landing page - doesn't force login)
+export const PublicUser = publicBase44.auth;

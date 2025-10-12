@@ -1,7 +1,22 @@
 import React from 'react';
 import { Users, Mail, Target, TrendingUp, BarChart3, Clock, CheckCircle, Facebook, Twitter, Instagram } from 'lucide-react';
+import { PublicUser } from '@/api/entities';
+import { useNavigate } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
 
 export default function RecruitBridgeLanding() {
+  const navigate = useNavigate();
+
+  const handleGetStarted = async () => {
+    try {
+      await PublicUser.login();
+      // After login, redirect to dashboard
+      navigate(createPageUrl('Dashboard'));
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -17,7 +32,7 @@ export default function RecruitBridgeLanding() {
             <a href="#how-it-works" className="text-gray-700 hover:text-blue-600">How It Works</a>
             <a href="#features" className="text-gray-700 hover:text-blue-600">Features</a>
             <a href="#story" className="text-gray-700 hover:text-blue-600">Our Story</a>
-            <a href="https://app.recruitbridge.net/signup" className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Get Started</a>
+            <button onClick={handleGetStarted} className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Get Started</button>
           </div>
         </div>
       </nav>
@@ -37,9 +52,9 @@ export default function RecruitBridgeLanding() {
             Built by an athlete who had to fight for every opportunity — so you don't have to.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="https://app.recruitbridge.net/signup" className="bg-yellow-500 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-400 shadow-xl">
+            <button onClick={handleGetStarted} className="bg-yellow-500 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-400 shadow-xl">
               Start Free
-            </a>
+            </button>
             <a href="#plans" className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-blue-600">
               See Plans
             </a>
@@ -276,9 +291,9 @@ export default function RecruitBridgeLanding() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <a href="https://app.recruitbridge.net/signup" className="bg-yellow-500 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-400 shadow-xl">
+            <button onClick={handleGetStarted} className="bg-yellow-500 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-400 shadow-xl">
               Join Free Today
-            </a>
+            </button>
             <a href="#plans" className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-blue-600">
               See Plans →
             </a>

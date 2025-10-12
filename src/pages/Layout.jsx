@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Outlet, useLocation, Navigate } from "react-router-dom";
-import { User } from "@/api/entities";
+import { User, PublicUser } from "@/api/entities";
 import { Athlete } from "@/api/entities";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
@@ -81,9 +81,13 @@ export default function Layout({ children }) {
   React.useEffect(() => {
     const checkUser = async () => {
       try {
-        const currentUser = await User.me();
+        // Use PublicUser on public pages to avoid forcing login
+        const isPublicPath = PUBLIC_PATHS.has(location.pathname);
+        const AuthClient = isPublicPath ? PublicUser : User;
+
+        const currentUser = await AuthClient.me();
         setUser(currentUser);
-        
+
         // Load athlete data if user is authenticated
         if (currentUser) {
           const athleteData = await Athlete.filter({ created_by: currentUser.email });
