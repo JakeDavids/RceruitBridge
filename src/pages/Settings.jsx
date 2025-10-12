@@ -1,13 +1,15 @@
 
 import React, { useState, useEffect } from "react";
 import { User } from "@/api/entities";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label"; // Keep Label for the new Billing section
 import IdentitySetupFixed from "../components/identity/IdentitySetupFixed";
+import PageGuide from "@/components/onboarding/PageGuide";
+import useGuidedTour from "@/components/hooks/useGuidedTour";
 import {
   Settings as SettingsIcon,
   User as UserIcon,
@@ -22,8 +24,20 @@ import {
 } from "lucide-react";
 
 export default function Settings() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Guided Tour
+  const { isStepActive, completeCurrentStep, skipTour, TOUR_STEPS } = useGuidedTour();
+  const [showGuide, setShowGuide] = useState(false);
+
+  useEffect(() => {
+    // Show guide if user is on email step
+    if (isStepActive(TOUR_STEPS.EMAIL)) {
+      setShowGuide(true);
+    }
+  }, [isStepActive, TOUR_STEPS.EMAIL]);
 
   useEffect(() => {
     loadUser();
@@ -110,7 +124,19 @@ export default function Settings() {
             <CardDescription>Manage your sending email address.</CardDescription>
           </CardHeader>
           <CardContent>
-            <IdentitySetupFixed />
+            <IdentitySetupFixed
+              onComplete={async () => {
+                // If in guided tour, advance to next step
+                if (isStepActive(TOUR_STEPS.EMAIL)) {
+                  await completeCurrentStep();
+                  setShowGuide(false);
+                  // Redirect to Target Schools page
+                  setTimeout(() => {
+                    navigate(createPageUrl("Schools"));
+                  }, 1500);
+                }
+              }}
+            />
           </CardContent>
         </Card>
 
@@ -215,6 +241,47 @@ export default function Settings() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Guided Tour */}
+      <PageGuide
+        isOpen={showGuide}
+        onClose={() => {
+          setShowGuide(false);
+          skipTour();
+        }}
+        onNext={() => {
+          // Scroll to email identity section
+          document.querySelector('[class*="Email Identity"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }}
+        title="Step 2: Create Your Email"
+        description="Set up your professional @recruitbridge.net email address"
+        steps={[
+          { label: 'Complete Profile', completed: true },
+          { label: 'Create Email', completed: false },
+          { label: 'Add Target School', completed: false },
+          { label: 'Add Coach Contact', completed: false },
+          { label: 'Send First Email', completed: false },
+          { label: 'View Responses', completed: false },
+        ]}
+        currentStep={1}
+        nextButtonText="Scroll to Email Section"
+      >
+        <div className="space-y-3 bg-indigo-50 p-4 rounded-lg">
+          <p className="text-sm text-indigo-900 font-medium">Why create a RecruitBridge email?</p>
+          <ul className="text-sm text-indigo-800 space-y-2">
+            <li>📧 <strong>Professional appearance</strong> - Stand out with @recruitbridge.net</li>
+            <li>📊 <strong>Track everything</strong> - See opens, clicks, and replies</li>
+            <li>🤖 <strong>AI-powered</strong> - Emails auto-generated from your profile</li>
+            <li>✉️ <strong>All replies in one place</strong> - Response Center inbox</li>
+            <li>🔒 <strong>Permanent address</strong> - Can't be changed after creation</li>
+          </ul>
+          <div className="pt-3 border-t border-indigo-200">
+            <p className="text-xs text-indigo-700">
+              <strong>💡 Tip:</strong> Use your name or initials for easy recognition by coaches!
+            </p>
+          </div>
+        </div>
+      </PageGuide>
     </div>
   );
 }

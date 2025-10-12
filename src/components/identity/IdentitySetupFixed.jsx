@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const PUBLIC_TOKEN = "78by89nu298sum98ms209ims09m76sb87";
 
-export default function IdentitySetupFixed({ onClose }) {
+export default function IdentitySetupFixed({ onClose, onComplete }) {
   const [loading, setLoading] = useState(true);
   const [identity, setIdentity] = useState(null);
   const [username, setUsername] = useState("");
@@ -113,6 +113,7 @@ export default function IdentitySetupFixed({ onClose }) {
           verified: true
         });
         setCreating(false);
+        if (onComplete) setTimeout(onComplete, 1000);
         if (onClose) setTimeout(onClose, 1000);
       } else {
         throw new Error(result.error || "Failed to create email identity");
