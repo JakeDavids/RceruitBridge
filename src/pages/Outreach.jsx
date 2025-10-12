@@ -13,6 +13,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Send, Clipboard, Check, Wand2, User as UserIcon, Mail, ExternalLink, Plus, AlertCircle, Sparkles as SparklesIcon, X, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import PageGuide from "@/components/onboarding/PageGuide";
+import useGuidedTour from "@/components/hooks/useGuidedTour";
 
 const staffDirectoryLinks = {
   "University of Louisville": "https://gocards.com/staff-directory",
@@ -65,6 +69,7 @@ const staffDirectoryLinks = {
 };
 
 export default function OutreachPage() {
+  const navigate = useNavigate();
   const [athlete, setAthlete] = useState(null);
   const [user, setUser] = useState(null);
   const [targetedSchools, setTargetedSchools] = useState([]);
@@ -96,6 +101,10 @@ export default function OutreachPage() {
     response_status: "not_contacted"
   });
 
+  // Guided Tour
+  const { isStepActive, completeCurrentStep, skipTour, TOUR_STEPS } = useGuidedTour();
+  const [showGuide, setShowGuide] = useState(false);
+
   const isAiEnabled = user?.plan === 'core' || user?.plan === 'unlimited';
 
   useEffect(() => {
@@ -107,6 +116,13 @@ export default function OutreachPage() {
       setSelectedSchoolId(targetedSchools[0].school_id);
     }
   }, [targetedSchools, selectedSchoolId]);
+
+  useEffect(() => {
+    // Show guide if user is on outreach step
+    if (isStepActive(TOUR_STEPS.OUTREACH) && !loading) {
+      setShowGuide(true);
+    }
+  }, [isStepActive, TOUR_STEPS.OUTREACH, loading]);
 
   const loadData = async () => {
     try {
@@ -186,18 +202,36 @@ export default function OutreachPage() {
     setGeneratedMessage("");
     setEmailSubject("");
     setEmailBody("");
-    
+
     const targetCoachContact = getCoachContactDetails(selectedCoachContactId);
     const targetSchool = targetCoachContact ? getSchoolDetails(targetCoachContact.school_id) : null;
 
+    // Helper function to get value or placeholder
+    const getValueOrPlaceholder = (value, placeholder) => {
+      return value && value.toString().trim() ? value : `(${placeholder})`;
+    };
+
+    // Build athlete info with placeholders for empty fields
+    const athleteInfo = `
+        - Name: ${athlete.first_name} ${athlete.last_name}
+        - Sport: ${getValueOrPlaceholder(athlete.sport, 'Sport')}, Position: ${getValueOrPlaceholder(athlete.position, 'Position')}, Grad Year: ${getValueOrPlaceholder(athlete.graduation_year, 'Grad Year')}
+        - Height: ${athlete.height ? `${Math.floor(athlete.height / 12)}'${athlete.height % 12}"` : '(Height)'}, Weight: ${getValueOrPlaceholder(athlete.weight, 'Weight')} lbs
+        - 40-Yard Dash: ${getValueOrPlaceholder(athlete.forty_time, '40 time')}s
+        - GPA: ${getValueOrPlaceholder(athlete.gpa, 'GPA')}, SAT: ${getValueOrPlaceholder(athlete.sat_score, 'SAT Score')}, ACT: ${getValueOrPlaceholder(athlete.act_score, 'ACT Score')}
+        - Highlights Link: ${athlete.highlights_url || '(Highlight Video URL)'}
+        - Awards/Achievements: ${getValueOrPlaceholder(athlete.awards, 'Key Awards and Achievements')}
+    `;
+
     const promptBase = `
         You are an expert in crafting outreach messages for high school athletes to college coaches.
-        
+
         Athlete's Information:
-        - Name: ${athlete.first_name} ${athlete.last_name}
-        - Sport: ${athlete.sport}, Position: ${athlete.position}, Grad Year: ${athlete.graduation_year}
-        - Academics: GPA: ${athlete.gpa}
-        - Highlights Link: ${athlete.highlights_url || 'Available upon request'}
+        ${athleteInfo}
+
+        IMPORTANT: Some fields may have placeholders in parentheses like "(40 time)" or "(GPA)". When you see these placeholders:
+        - Include them in the email body exactly as shown
+        - The athlete will fill them in before sending
+        - Don't skip or ignore placeholder fields - they're important for showing what info coaches want to see
     `;
 
     try {
@@ -210,21 +244,22 @@ export default function OutreachPage() {
             - Name: ${targetCoachContact.coach_name}, Title: ${targetCoachContact.coach_title}
             - School: ${targetSchool?.name}
             ` : ''}
-            
-            Ensure a professional closing.
-            
+
+            Include all the athlete's information, including any placeholder fields in parentheses.
+            Ensure a professional closing with the athlete's full name.
+
             Return the response in this exact format:
             Subject: [subject line]
-            
+
             [email body]
         `;
 
         const result = await InvokeLLM({ prompt });
         setGeneratedMessage(result);
-        
+
         // This parsing logic is for email, which is now the only active channel.
         const subjectMatch = result.match(/Subject:\s*(.*)\n/i);
-        const subjectLine = subjectMatch ? subjectMatch[1].trim() : `${athlete.position} | ${athlete.first_name} ${athlete.last_name} | Class of ${athlete.graduation_year}`;
+        const subjectLine = subjectMatch ? subjectMatch[1].trim() : `${athlete.position || 'Athlete'} | ${athlete.first_name} ${athlete.last_name} | Class of ${athlete.graduation_year || 'TBD'}`;
         setEmailSubject(subjectLine);
 
         const bodyStartIndex = result.indexOf(subjectMatch ? subjectMatch[0] : '\n') + (subjectMatch ? subjectMatch[0].length : 0);
@@ -233,7 +268,7 @@ export default function OutreachPage() {
             body = body.substring(body.indexOf('\n') + 1).trim();
         }
         setEmailBody(body);
-        
+
     } catch (error) {
       console.error("Error generating message:", error);
       setGeneratedMessage("Sorry, there was an error generating the message. Please try again.");
@@ -305,14 +340,23 @@ export default function OutreachPage() {
 
         setEmailSent(true);
         loadData();
-        
-        setTimeout(() => {
-          setSelectedCoachContactId("");
-          setGeneratedMessage("");
-          setEmailSubject("");
-          setEmailBody("");
-          setEmailSent(false);
-        }, 3000);
+
+        // If in guided tour, advance to next step
+        if (isStepActive(TOUR_STEPS.OUTREACH)) {
+          await completeCurrentStep();
+          setShowGuide(false);
+          setTimeout(() => {
+            navigate(createPageUrl("ResponseCenter"));
+          }, 2000);
+        } else {
+          setTimeout(() => {
+            setSelectedCoachContactId("");
+            setGeneratedMessage("");
+            setEmailSubject("");
+            setEmailBody("");
+            setEmailSent(false);
+          }, 3000);
+        }
       
     } catch (error) {
       console.error("Error during email send process:", error);
@@ -644,6 +688,50 @@ export default function OutreachPage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Guided Tour */}
+        <PageGuide
+          isOpen={showGuide}
+          onClose={() => {
+            setShowGuide(false);
+            skipTour();
+          }}
+          onNext={() => {
+            // Scroll to coach selection
+            document.querySelector('[class*="Select Coach"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
+          title="Step 5: Send Your First Email!"
+          description="Use AI to generate a personalized outreach email to a coach"
+          steps={[
+            { label: 'Complete Profile', completed: true },
+            { label: 'Create Email', completed: true },
+            { label: 'Add Target School', completed: true },
+            { label: 'Add Coach Contact', completed: true },
+            { label: 'Send First Email', completed: false },
+            { label: 'View Responses', completed: false },
+          ]}
+          currentStep={4}
+          nextButtonText="Scroll to Coach Selection"
+        >
+          <div className="space-y-3 bg-blue-50 p-4 rounded-lg">
+            <p className="text-sm text-blue-900 font-medium">How to send your first outreach email:</p>
+            <ul className="text-sm text-blue-800 space-y-2">
+              <li>🏫 <strong>Select your school</strong> - Choose from your target schools</li>
+              <li>👤 <strong>Select Coach Demo</strong> - Click on the demo coach we created</li>
+              <li>🤖 <strong>Generate AI email</strong> - Click "Generate Email with AI"</li>
+              <li>✏️ <strong>Review & edit</strong> - Customize the AI-generated email as needed</li>
+              <li>📨 <strong>Send it!</strong> - Click "Send Email" when you're ready</li>
+            </ul>
+            <div className="pt-3 border-t border-blue-200">
+              <p className="text-xs text-blue-700 mb-2">
+                <strong>💡 Pro Tip:</strong> AI pulls from your profile and uses placeholders like "(40 time)" for empty fields. Fill these in before sending!
+              </p>
+              <p className="text-xs text-blue-700">
+                <strong>✨ After sending:</strong> You'll be taken to the Response Center to track all your outreach!
+              </p>
+            </div>
+          </div>
+        </PageGuide>
       </div>
     </div>
   );

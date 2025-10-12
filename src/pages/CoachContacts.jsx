@@ -22,6 +22,10 @@ import {
   Plus,
   Edit
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import PageGuide from "@/components/onboarding/PageGuide";
+import useGuidedTour from "@/components/hooks/useGuidedTour";
 
 const staffDirectoryLinks = {
   "University of Louisville": "https://gocards.com/staff-directory",
@@ -120,7 +124,7 @@ function CoachForm({ coachData, setCoachData, schools, isEdit = false }) {
     );
 }
 
-function AddCoachModal({ isOpen, onClose, athlete, schools, onSave }) {
+function AddCoachModal({ isOpen, onClose, athlete, schools, onSave, onTourAdvance }) {
     const [newCoach, setNewCoach] = useState(initialCoachState);
 
     const handleSave = async () => {
@@ -128,12 +132,15 @@ function AddCoachModal({ isOpen, onClose, athlete, schools, onSave }) {
             alert("School and Coach Name are required.");
             return;
         }
-        await CoachContact.create({ 
-          ...newCoach, 
-          athlete_id: athlete.id 
+        await CoachContact.create({
+          ...newCoach,
+          athlete_id: athlete.id
         });
         setNewCoach(initialCoachState);
         onSave();
+        if (onTourAdvance) {
+          onTourAdvance();
+        }
         onClose();
     };
 
@@ -379,6 +386,7 @@ function BulkImportModal({ isOpen, onClose, athlete, schools, onSave }) {
 }
 
 export default function CoachContacts() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [athlete, setAthlete] = useState(null);
   const [targetedSchools, setTargetedSchools] = useState([]);
@@ -392,9 +400,63 @@ export default function CoachContacts() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedCoach, setSelectedCoach] = useState(null);
 
+  // Guided Tour
+  const { isStepActive, completeCurrentStep, skipTour, TOUR_STEPS } = useGuidedTour();
+  const [showGuide, setShowGuide] = useState(false);
+  const [demoContactCreated, setDemoContactCreated] = useState(false);
+
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    // Show guide and create demo contact if user is on coaches step
+    if (isStepActive(TOUR_STEPS.COACHES) && !loading && athlete && targetedSchools.length > 0 && !demoContactCreated) {
+      setShowGuide(true);
+      createDemoContact();
+    }
+  }, [isStepActive, TOUR_STEPS.COACHES, loading, athlete, targetedSchools, demoContactCreated]);
+
+  const createDemoContact = async () => {
+    if (!athlete || targetedSchools.length === 0 || demoContactCreated) return;
+
+    try {
+      // Use the first targeted school for the demo contact
+      const firstTargetedSchool = targetedSchools[0];
+      const school = schools.find(s => s.id === firstTargetedSchool.school_id);
+
+      if (!school) return;
+
+      // Check if a demo contact already exists for this school
+      const existingContact = coachContacts.find(c =>
+        c.school_id === firstTargetedSchool.school_id &&
+        c.coach_name === "Coach Demo"
+      );
+
+      if (existingContact) {
+        setDemoContactCreated(true);
+        return;
+      }
+
+      // Create a demo coach contact
+      await CoachContact.create({
+        athlete_id: athlete.id,
+        school_id: firstTargetedSchool.school_id,
+        coach_name: "Coach Demo",
+        coach_title: "Head Coach",
+        coach_email: "demo.coach@example.com",
+        coach_twitter: "@CoachDemo",
+        coach_phone: "(555) 123-4567",
+        response_status: "not_contacted"
+      });
+
+      setDemoContactCreated(true);
+      // Reload data to show the new contact
+      await loadData();
+    } catch (error) {
+      console.error("Error creating demo contact:", error);
+    }
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -565,6 +627,15 @@ export default function CoachContacts() {
             athlete={athlete}
             schools={schools.filter(s => targetedSchools.some(ts => ts.school_id === s.id))}
             onSave={loadData}
+            onTourAdvance={async () => {
+              if (isStepActive(TOUR_STEPS.COACHES)) {
+                await completeCurrentStep();
+                setShowGuide(false);
+                setTimeout(() => {
+                  navigate(createPageUrl("OutreachCenter"));
+                }, 1500);
+              }
+            }}
         />
         <BulkImportModal
             isOpen={isBulkImportOpen}
@@ -597,6 +668,62 @@ export default function CoachContacts() {
             </Dialog>
           </>
         )}
+
+        {/* Guided Tour */}
+        <PageGuide
+          isOpen={showGuide}
+          onClose={() => {
+            setShowGuide(false);
+            skipTour();
+          }}
+          onNext={() => {
+            // Scroll to demo contact
+            const demoContact = document.querySelector('[class*="Coach Demo"]');
+            if (demoContact) {
+              demoContact.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }}
+          title="Step 4: Coach Contact Added!"
+          description="We've created a demo contact to show you how it works"
+          steps={[
+            { label: 'Complete Profile', completed: true },
+            { label: 'Create Email', completed: true },
+            { label: 'Add Target School', completed: true },
+            { label: 'Add Coach Contact', completed: false },
+            { label: 'Send First Email', completed: false },
+            { label: 'View Responses', completed: false },
+          ]}
+          currentStep={3}
+          nextButtonText="View Demo Contact"
+        >
+          <div className="space-y-3 bg-purple-50 p-4 rounded-lg">
+            <p className="text-sm text-purple-900 font-medium">Managing Coach Contacts:</p>
+            <ul className="text-sm text-purple-800 space-y-2">
+              <li>👤 <strong>Demo contact created</strong> - We added "Coach Demo" to your first school</li>
+              <li>➕ <strong>Add more contacts</strong> - Use "Add Coach Manually" or "Bulk Import"</li>
+              <li>📊 <strong>Bulk Import with AI</strong> - Paste from staff directory to add multiple coaches</li>
+              <li>✏️ <strong>Edit or delete</strong> - Use the icons next to each contact</li>
+              <li>📧 <strong>Ready for outreach</strong> - Once satisfied, move to Outreach Center!</li>
+            </ul>
+            <div className="pt-3 border-t border-purple-200">
+              <p className="text-xs text-purple-700">
+                <strong>💡 Next Step:</strong> When you're ready, we'll show you how to send your first email in the Outreach Center!
+              </p>
+            </div>
+            <Button
+              onClick={async () => {
+                await completeCurrentStep();
+                setShowGuide(false);
+                setTimeout(() => {
+                  navigate(createPageUrl("OutreachCenter"));
+                }, 500);
+              }}
+              className="w-full bg-purple-600 hover:bg-purple-700 mt-3"
+            >
+              Continue to Outreach Center
+            </Button>
+          </div>
+        </PageGuide>
       </div>
     </div>
   );

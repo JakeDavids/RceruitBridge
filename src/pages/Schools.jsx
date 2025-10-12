@@ -9,8 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Target, Search, Star, CheckCircle, MapPin, Trash2, Bot, Sparkles, Lock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import PageGuide from "@/components/onboarding/PageGuide";
+import useGuidedTour from "@/components/hooks/useGuidedTour";
 
 // Central utility function for formatted school names
 const getFormattedSchoolName = (schoolName) => {
@@ -347,6 +349,7 @@ function AISuggestions({ athlete, user, onTargetSchool }) {
 }
 
 export default function Schools() {
+  const navigate = useNavigate();
   const [schools, setSchools] = useState([]);
   const [targetedSchools, setTargetedSchools] = useState([]);
   const [athlete, setAthlete] = useState(null);
@@ -358,9 +361,20 @@ export default function Schools() {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedConference, setSelectedConference] = useState("All");
 
+  // Guided Tour
+  const { isStepActive, completeCurrentStep, skipTour, TOUR_STEPS } = useGuidedTour();
+  const [showGuide, setShowGuide] = useState(false);
+
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    // Show guide if user is on schools step
+    if (isStepActive(TOUR_STEPS.SCHOOLS)) {
+      setShowGuide(true);
+    }
+  }, [isStepActive, TOUR_STEPS.SCHOOLS]);
 
   const loadData = async () => {
     try {
@@ -437,7 +451,7 @@ export default function Schools() {
         } else {
             // Check limits before adding a new school
             const plan = user?.plan || 'free';
-            
+
             if (plan === 'unlimited') {
                 // No restrictions for unlimited plan
             } else if (plan === 'core' && targetedSchools.length >= 15) {
@@ -450,12 +464,22 @@ export default function Schools() {
                 alert("Free plan is limited to 3 target schools. Please upgrade!");
                 return;
             }
-            
+
             await TargetedSchool.create({ athlete_id: athlete.id, school_id: schoolId });
         }
 
         const updatedTargetedData = await TargetedSchool.filter({ athlete_id: athlete.id });
         setTargetedSchools(updatedTargetedData);
+
+        // If in guided tour and this is the first school added, advance to next step
+        if (isStepActive(TOUR_STEPS.SCHOOLS) && updatedTargetedData.length === 1 && !isCurrentlyTargeted) {
+          await completeCurrentStep();
+          setShowGuide(false);
+          // Redirect to Coach Contacts page
+          setTimeout(() => {
+            navigate(createPageUrl("CoachContacts"));
+          }, 1500);
+        }
 
     } catch (error) {
         console.error("Error targeting school:", error);
@@ -655,6 +679,47 @@ export default function Schools() {
           </div>
         </div>
       </div>
+
+      {/* Guided Tour */}
+      <PageGuide
+        isOpen={showGuide}
+        onClose={() => {
+          setShowGuide(false);
+          skipTour();
+        }}
+        onNext={() => {
+          // Scroll to search section
+          document.querySelector('[class*="Search Schools"]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }}
+        title="Step 3: Add Your First Target School"
+        description="Choose a school you're interested in and add it to your target list"
+        steps={[
+          { label: 'Complete Profile', completed: true },
+          { label: 'Create Email', completed: true },
+          { label: 'Add Target School', completed: false },
+          { label: 'Add Coach Contact', completed: false },
+          { label: 'Send First Email', completed: false },
+          { label: 'View Responses', completed: false },
+        ]}
+        currentStep={2}
+        nextButtonText="Scroll to Search"
+      >
+        <div className="space-y-3 bg-blue-50 p-4 rounded-lg">
+          <p className="text-sm text-blue-900 font-medium">How to find your target school:</p>
+          <ul className="text-sm text-blue-800 space-y-2">
+            <li>🔍 <strong>Use the search bar</strong> - Type the school name to find it quickly</li>
+            <li>📊 <strong>Filter by division</strong> - Choose FBS, FCS, D2, D3, or JUCO</li>
+            <li>🗺️ <strong>Filter by state</strong> - Narrow down schools by location</li>
+            <li>🏆 <strong>Filter by conference</strong> - Find schools in specific conferences</li>
+            <li>⭐ <strong>Click "Add to Target List"</strong> - School will appear at the top</li>
+          </ul>
+          <div className="pt-3 border-t border-blue-200">
+            <p className="text-xs text-blue-700">
+              <strong>💡 Tip:</strong> Start with schools that match your academic and athletic level. You can always add more later!
+            </p>
+          </div>
+        </div>
+      </PageGuide>
     </TooltipProvider>
   );
 }

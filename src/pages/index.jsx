@@ -1,39 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from "react-router-dom";
-import { createPageUrl } from "@/utils";
-import { User } from "@/api/entities";
 import { Users, Mail, Target, TrendingUp, BarChart3, Clock, CheckCircle, Facebook, Twitter, Instagram, UserPlus, Search, ChevronDown, Play } from 'lucide-react';
 
 export default function RecruitBridgeLanding() {
-  const navigate = useNavigate();
-  const [checking, setChecking] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef(null);
-
-  // ============================================
-  // STEP 1: CHECK IF USER IS ALREADY LOGGED IN
-  // ============================================
-  // When page loads, we check if the user is authenticated
-  // If YES → redirect them to Dashboard (they don't need to see the landing page)
-  // If NO → show the landing page with "Get Started" buttons
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const user = await User.me(); // Try to get current logged-in user
-        if (user) {
-          // User is already logged in, send them to the app
-          navigate(createPageUrl("Dashboard"), { replace: true });
-        }
-      } catch (error) {
-        // User is NOT logged in, that's fine - show landing page
-      } finally {
-        setChecking(false); // Done checking, stop showing loading spinner
-      }
-    };
-    
-    checkAuth();
-  }, [navigate]);
 
   // ============================================
   // STEP 2: HANDLE SCROLL EFFECTS
@@ -71,17 +42,9 @@ export default function RecruitBridgeLanding() {
   // ============================================
   // STEP 4: HANDLE "GET STARTED" BUTTON CLICKS
   // ============================================
-  // THIS IS THE KEY FUNCTION!
-  // When user clicks "Get Started", "Start Free", or "Join Free Today"
-  // We call User.login() which triggers Base44's Google OAuth flow
-  const handleGetStarted = async () => {
-    try {
-      await User.login(); // ✅ Opens Google sign-in popup
-      // After successful login, Base44 automatically redirects to /Dashboard
-    } catch (error) {
-      console.error("Login error:", error);
-      // If something goes wrong, log it for debugging
-    }
+  // Redirect to app subdomain where authentication happens
+  const handleGetStarted = () => {
+    window.location.href = 'https://app.recruitbridge.net';
   };
 
   // ============================================
@@ -100,18 +63,6 @@ export default function RecruitBridgeLanding() {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  // ============================================
-  // SHOW LOADING SPINNER WHILE CHECKING AUTH
-  // ============================================
-  // While we're checking if user is logged in, show a loading screen
-  if (checking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
-      </div>
-    );
-  }
 
   // ============================================
   // RENDER THE LANDING PAGE

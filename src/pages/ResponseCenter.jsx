@@ -18,6 +18,8 @@ import {
   Clock
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
+import PageGuide from "@/components/onboarding/PageGuide";
+import useGuidedTour from "@/components/hooks/useGuidedTour";
 
 const API_BASE = "/functions/api/threads";
 
@@ -56,6 +58,10 @@ export default function ResponseCenter() {
   const [replyText, setReplyText] = useState("");
   const [sendingReply, setSendingReply] = useState(false);
 
+  // Guided Tour
+  const { isStepActive, completeCurrentStep, skipTour, TOUR_STEPS } = useGuidedTour();
+  const [showGuide, setShowGuide] = useState(false);
+
   const loadUser = async () => {
     try {
       const currentUser = await User.me();
@@ -90,6 +96,17 @@ export default function ResponseCenter() {
   useEffect(() => {
     loadThreads();
   }, [loadThreads]);
+
+  useEffect(() => {
+    // Show guide if user is on responses step
+    if (isStepActive(TOUR_STEPS.RESPONSES) && !loading) {
+      setShowGuide(true);
+      // Complete the tour step after a brief delay
+      setTimeout(async () => {
+        await completeCurrentStep();
+      }, 2000);
+    }
+  }, [isStepActive, TOUR_STEPS.RESPONSES, loading]);
 
   const loadThread = async (threadId) => {
     setLoadingThread(true);
@@ -413,6 +430,54 @@ export default function ResponseCenter() {
             )}
           </Card>
         </div>
+
+        {/* Guided Tour */}
+        <PageGuide
+          isOpen={showGuide}
+          onClose={() => {
+            setShowGuide(false);
+            skipTour();
+          }}
+          onNext={() => {
+            setShowGuide(false);
+          }}
+          title="Step 6: Tour Complete!"
+          description="You've successfully completed the RecruitBridge onboarding tour"
+          steps={[
+            { label: 'Complete Profile', completed: true },
+            { label: 'Create Email', completed: true },
+            { label: 'Add Target School', completed: true },
+            { label: 'Add Coach Contact', completed: true },
+            { label: 'Send First Email', completed: true },
+            { label: 'View Responses', completed: true },
+          ]}
+          currentStep={5}
+          nextButtonText="Close Tour"
+        >
+          <div className="space-y-3 bg-green-50 p-4 rounded-lg">
+            <p className="text-sm text-green-900 font-medium">🎉 Congratulations! You're all set up!</p>
+            <ul className="text-sm text-green-800 space-y-2">
+              <li>✅ <strong>Profile created</strong> - Your athletic and academic info is ready</li>
+              <li>✅ <strong>Email configured</strong> - You have a professional @recruitbridge.net address</li>
+              <li>✅ <strong>Target school added</strong> - You've identified where you want to play</li>
+              <li>✅ <strong>Coach contact saved</strong> - Your recruiting database is started</li>
+              <li>✅ <strong>First email sent</strong> - You've begun your outreach journey</li>
+              <li>✅ <strong>Response Center ready</strong> - All replies will appear here</li>
+            </ul>
+            <div className="pt-3 border-t border-green-200">
+              <p className="text-xs text-green-700 mb-2">
+                <strong>💡 What's next?</strong>
+              </p>
+              <ul className="text-xs text-green-700 space-y-1">
+                <li>• Add more target schools and coach contacts</li>
+                <li>• Send personalized emails to all your targets</li>
+                <li>• Track responses and follow up strategically</li>
+                <li>• Keep your profile updated with new achievements</li>
+                <li>• Check the Response Center daily for coach replies!</li>
+              </ul>
+            </div>
+          </div>
+        </PageGuide>
       </div>
     </div>
   );
