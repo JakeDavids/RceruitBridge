@@ -27,6 +27,7 @@ import StatsCard from "../components/dashboard/StatsCard";
 import RecentActivity from "../components/dashboard/RecentActivity";
 import QuickActions from "../components/dashboard/QuickActions";
 import RecruitingCounseling from "../components/dashboard/RecruitingCounseling";
+import OnboardingWalkthrough from "../components/onboarding/OnboardingWalkthrough";
 
 export default function Dashboard() {
   const [athlete, setAthlete] = useState(null);
@@ -36,6 +37,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null); // State to store the current user
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
@@ -46,6 +48,11 @@ export default function Dashboard() {
       setError(null);
       const user = await User.me();
       setCurrentUser(user); // Set the current user in state
+
+      // Check if user has completed onboarding
+      if (!user.onboarding_completed) {
+        setShowOnboarding(true);
+      }
 
       // Load athlete data first
       const athleteData = await Athlete.filter({ created_by: user.email });
@@ -170,6 +177,15 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+      {/* Onboarding Walkthrough */}
+      <OnboardingWalkthrough
+        isOpen={showOnboarding}
+        onComplete={() => {
+          setShowOnboarding(false);
+          loadDashboardData(); // Reload data after onboarding
+        }}
+      />
+
       <motion.div
         className="max-w-7xl mx-auto space-y-8"
         initial="hidden"
