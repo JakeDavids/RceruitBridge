@@ -222,22 +222,17 @@ export default function Layout({ children }) {
     );
   }
 
-  const path = location.pathname;
-
-  // ✅ Public routes (no sidebar, no auth required)
-  if (PUBLIC_PATHS.has(path)) {
-    return <>{children}</>;
-  }
-
-  // ✅ Redirect root to Dashboard for authenticated users
-  if (user && path === "/") {
-    return <Navigate to={createPageUrl("Dashboard")} replace />;
-  }
-
-  // 🚫 Protected routes - redirect to login if not authenticated
+  // 🚫 Redirect to Base44 login if not authenticated
   if (!user) {
-    window.location.href = 'https://app.recruitbridge.net/login';
-    return null;
+    User.login();
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="text-center">
+          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
+          <p className="text-slate-600">Redirecting to login...</p>
+        </div>
+      </div>
+    );
   }
 
   // ✅ Authenticated routes with sidebar

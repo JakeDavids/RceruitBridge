@@ -1,9 +1,8 @@
 import './App.css'
+import Pages from "@/Pages.jsx"
 import Landing from "@/pages/Landing.jsx"
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
-import { BrowserRouter } from "react-router-dom"
-import Base44Client from "@/Base44Client"
 
 function App() {
   // Check if this is landing mode or app mode
@@ -19,13 +18,13 @@ function App() {
     );
   }
 
-  // Full app with routing and auth (Base44 handles routing automatically)
+  // Full app with routing and auth
   return (
-    <BrowserRouter>
-      <Base44Client />
+    <>
+      <Pages />
       <Toaster />
       <Analytics />
-    </BrowserRouter>
+    </>
   )
 }
 
