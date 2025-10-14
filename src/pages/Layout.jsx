@@ -46,9 +46,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 
-// ✅ Fixed: include "/" instead of "/Landing"
 const PUBLIC_PATHS = new Set([
-  "/",          // root landing page
   "/login",
   "/signup",
   "/pricing"
@@ -231,9 +229,15 @@ export default function Layout({ children }) {
     return <>{children}</>;
   }
 
-  // 🚫 Protected routes - redirect to root if not authenticated
+  // ✅ Redirect root to Dashboard for authenticated users
+  if (user && path === "/") {
+    return <Navigate to={createPageUrl("Dashboard")} replace />;
+  }
+
+  // 🚫 Protected routes - redirect to login if not authenticated
   if (!user) {
-    return <Navigate to="/" replace />;
+    window.location.href = 'https://app.recruitbridge.net/login';
+    return null;
   }
 
   // ✅ Authenticated routes with sidebar

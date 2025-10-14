@@ -73,7 +73,7 @@ export default function RecruitBridgeLanding() {
               transition={{ delay: 0.2 }}
             >
               <Sparkles className="w-4 h-4 text-yellow-300" />
-              <span className="text-sm text-white font-medium">1,200+ Athletes Already Recruiting</span>
+              <span className="text-sm text-white font-medium">1,281 Football Players • 150,000+ Emails Sent</span>
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
@@ -173,29 +173,29 @@ export default function RecruitBridgeLanding() {
             <div className="text-center">
               <div className="relative mb-6">
                 <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
-                  <Mail className="w-10 h-10 text-white" />
+                  <Target className="w-10 h-10 text-white" />
                 </div>
                 <div className="absolute -top-2 -left-2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
                   2
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Send Smart Outreach</h3>
+              <h3 className="text-xl font-bold mb-3">Pick Target Schools</h3>
               <p className="text-gray-600">
-                AI writes and sends personalized emails to college coaches based on your goals and position.
+                Choose schools you want to contact, view all their info in one place, and stay organized.
               </p>
             </div>
             <div className="text-center">
               <div className="relative mb-6">
                 <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
-                  <Target className="w-10 h-10 text-white" />
+                  <Mail className="w-10 h-10 text-white" />
                 </div>
                 <div className="absolute -top-2 -left-2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
                   3
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Pick Target Schools</h3>
+              <h3 className="text-xl font-bold mb-3">Send Smart Outreach</h3>
               <p className="text-gray-600">
-                Choose schools you want to contact, view all their info in one place, and stay organized.
+                AI writes and sends personalized emails to college coaches based on your goals and position.
               </p>
             </div>
             <div className="text-center">
@@ -236,21 +236,9 @@ export default function RecruitBridgeLanding() {
             </button>
           </div>
 
-          <div className="text-center mb-6">
+          <div className="text-center">
             <p className="text-lg text-gray-700 italic">
               Watch my 60-second story to learn how RecruitBridge started.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl p-8 shadow-lg space-y-4 text-gray-700 leading-relaxed">
-            <p>
-              "I come from a small family of immigrants — no one in my house was talking about four-star rankings or scholarships. I started football during COVID and fell in love with the process of getting stronger and smarter."
-            </p>
-            <p>
-              "By junior year, I was grinding through recruiting emails alone, tracking coach responses in messy spreadsheets. I eventually earned my shot at Charlotte, but I realized how much time I'd wasted figuring things out the hard way."
-            </p>
-            <p>
-              "RecruitBridge was built to change that. Every athlete deserves a fair shot to be seen — without needing connections or insider knowledge."
             </p>
           </div>
         </div>
@@ -264,7 +252,7 @@ export default function RecruitBridgeLanding() {
           </h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mb-4"></div>
           <p className="text-xl text-blue-100 text-center mb-16">
-            Everything you need to get recruited, powered by artificial intelligence
+            Everything You Need to Get Recruited. Over 150,000+ Personalized Coach Emails with a 31% Open Rate.
           </p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -304,7 +292,7 @@ export default function RecruitBridgeLanding() {
               </div>
               <h3 className="text-xl font-bold mb-3">Recruiting Questionnaires</h3>
               <p className="text-gray-600">
-                <span className="font-semibold">Save 3+ hours per application.</span> Auto-fill school forms straight from your RecruitBridge profile.
+                <span className="font-semibold">45 minutes saved per application.</span> Auto-fill school forms straight from your RecruitBridge profile.
               </p>
             </div>
           </div>
@@ -315,27 +303,51 @@ export default function RecruitBridgeLanding() {
       <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            Trusted by Athletes
+            Trusted by Real Football Players
           </h2>
           <p className="text-xl text-gray-600 text-center mb-16">
-            Join thousands of athletes who have successfully connected with college programs
+            Join hundreds of football players who are getting recruited right now
           </p>
-          
-          <div className="grid md:grid-cols-3 gap-12 mb-16">
+
+          <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div className="text-center">
-              <div className="text-5xl md:text-6xl font-bold text-blue-600 mb-2">1,200+</div>
-              <div className="text-xl font-semibold mb-1">Athletes Registered</div>
-              <div className="text-gray-500">Growing every day</div>
+              <div className="text-5xl md:text-6xl font-bold text-blue-600 mb-2">1,281</div>
+              <div className="text-xl font-semibold mb-1">Football Players</div>
+              <div className="text-gray-500">Growing every week</div>
             </div>
             <div className="text-center">
-              <div className="text-5xl md:text-6xl font-bold text-yellow-600 mb-2">3,500+</div>
+              <div className="text-5xl md:text-6xl font-bold text-yellow-600 mb-2">4,739</div>
               <div className="text-xl font-semibold mb-1">Coaches Contacted</div>
               <div className="text-gray-500">Across all divisions</div>
             </div>
             <div className="text-center">
-              <div className="text-5xl md:text-6xl font-bold text-blue-600 mb-2">87%</div>
-              <div className="text-xl font-semibold mb-1">Response Rate</div>
-              <div className="text-gray-500">Above industry average</div>
+              <div className="text-5xl md:text-6xl font-bold text-blue-600 mb-2">99%</div>
+              <div className="text-xl font-semibold mb-1">Email Delivery Rate</div>
+              <div className="text-gray-500">Industry avg: 82%</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl md:text-6xl font-bold text-yellow-600 mb-2">20%</div>
+              <div className="text-xl font-semibold mb-1">Coach Reply Rate</div>
+              <div className="text-gray-500">5x industry average</div>
+            </div>
+          </div>
+
+          {/* Additional stats row */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
+              <div className="text-4xl font-bold text-blue-600 mb-2">67</div>
+              <div className="text-lg font-semibold mb-1">Programs Per Player</div>
+              <div className="text-sm text-gray-500">Successfully contacted</div>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
+              <div className="text-4xl font-bold text-yellow-600 mb-2">226</div>
+              <div className="text-lg font-semibold mb-1">Committed Players</div>
+              <div className="text-sm text-gray-500">Since launch (Oct 2024)</div>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg text-center">
+              <div className="text-4xl font-bold text-blue-600 mb-2">620+</div>
+              <div className="text-lg font-semibold mb-1">Programs Connected</div>
+              <div className="text-sm text-gray-500">D1, D2, D3, NAIA schools</div>
             </div>
           </div>
 
@@ -346,18 +358,40 @@ export default function RecruitBridgeLanding() {
             <span className="font-semibold">COLLEGE</span>
           </div>
 
-          <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-            <p className="text-xl text-gray-700 italic mb-6 text-center">
-              "RecruitBridge helped me connect with 15 college programs in just two weeks. The process was simple, organized, and actually fun."
-            </p>
-            <div className="flex items-center justify-center gap-4">
-              <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                JP
+          {/* Testimonials */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-blue-600">
+              <p className="text-lg text-gray-700 italic mb-6">
+                "RecruitBridge was a huge part of my recruiting journey. Coming out of a prep school and back in high school, it helped me consistently connect with college coaches and get my name in front of the right programs. The AI tools made the whole process way easier — from sending emails to staying organized — so I could focus on training. I truly believe it played a big role in helping me get recruited and earn the opportunity to play D1 football at UNC Charlotte."
+              </p>
+              <div className="flex items-center gap-4">
+                <img
+                  src="/src/assets/renderedImage.jpeg"
+                  alt="Aiden Martinez"
+                  className="w-14 h-14 rounded-full object-cover border-2 border-blue-600"
+                />
+                <div>
+                  <div className="font-bold text-lg">Aiden Martinez</div>
+                  <div className="text-gray-600">UNC Charlotte Football</div>
+                  <div className="text-blue-600 text-sm font-semibold">⚡ D1 FBS</div>
+                </div>
               </div>
-              <div>
-                <div className="font-bold text-lg">Jordan P.</div>
-                <div className="text-gray-600">Class of 2024</div>
-                <div className="text-blue-600 text-sm">⚡ Now at State University</div>
+            </div>
+            <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-yellow-600">
+              <p className="text-lg text-gray-700 italic mb-6">
+                "RecruitBridge made my recruiting journey so much easier. The platform helped me stay organized and connect with coaches at programs that were the right fit for me. The AI email tools saved me tons of time and helped me stand out. I'm grateful for the role it played in helping me get recruited to play D1 football."
+              </p>
+              <div className="flex items-center gap-4">
+                <img
+                  src="/src/assets/IMG_6180.JPG"
+                  alt="Caleb Irving"
+                  className="w-14 h-14 rounded-full object-cover border-2 border-yellow-600"
+                />
+                <div>
+                  <div className="font-bold text-lg">Caleb Irving</div>
+                  <div className="text-gray-600">Purdue/UNC Charlotte</div>
+                  <div className="text-yellow-600 text-sm font-semibold">⚡ Class of 2024</div>
+                </div>
               </div>
             </div>
           </div>

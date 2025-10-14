@@ -8,13 +8,13 @@ import { Loader2, CheckCircle2, AlertCircle, Lock, Mail, Copy } from "lucide-rea
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export default function IdentitySetup({ onClose }) {
+export default function IdentitySetup({ onClose, onSuccess }) {
   const { loading, error, identity, getMe, checkUsername, createIdentity } = useRecruitBridgeIdentity();
-  
+
   const [username, setUsername] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [checking, setChecking] = useState(false);
-  const [status, setStatus] = useState(""); 
+  const [status, setStatus] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
   const [creating, setCreating] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -64,23 +64,31 @@ export default function IdentitySetup({ onClose }) {
   };
 
   const handleCreate = async () => {
-    if (!username || status !== "available" || !currentUser?.id) return;
-    
+    if (!username || status !== "available" || !currentUser?.id || !displayName.trim()) return;
+
     setCreating(true);
-    
+
     try {
-      const result = await createIdentity(username, displayName || username);
-      
+      const result = await createIdentity(username, displayName.trim());
+
       if (result.ok) {
-        // Success - close modal after delay
+        // Update user's emailIdentityType to mark as configured
+        try {
+          await User.update(currentUser.id, { emailIdentityType: 'recruitbridge' });
+        } catch (updateErr) {
+          console.warn("Could not update user emailIdentityType:", updateErr);
+        }
+
+        // Success - close modal after brief delay
         setTimeout(() => {
           setCreating(false);
+          if (onSuccess) onSuccess();
           if (onClose) onClose();
-        }, 1000);
+        }, 1500);
       } else {
         throw new Error(result.error || "Failed to create email identity");
       }
-      
+
     } catch (err) {
       console.error("Create identity error:", err);
       setStatus("error");
@@ -173,59 +181,83 @@ export default function IdentitySetup({ onClose }) {
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="displayName">Display Name (Your full name for emails)</Label>
+                <Label htmlFor="displayName" className="text-sm font-semibold">Display Name *</Label>
+                <p className="text-xs text-slate-500 mb-2">Your full name as coaches will see it</p>
                 <Input
                   id="displayName"
                   className="mt-1"
                   placeholder="Jake Davids"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
+                  autoComplete="name"
                 />
               </div>
 
               <div>
-                <Label htmlFor="username">Username (permanent - cannot be changed)</Label>
+                <Label htmlFor="username" className="text-sm font-semibold">Email Address *</Label>
+                <p className="text-xs text-slate-500 mb-2">Choose your username - this email address is <strong className="text-amber-700">permanent</strong></p>
                 <div className="mt-1 flex items-center gap-2">
                   <Input
                     id="username"
-                    className={`w-full ${
+                    className={`flex-1 ${
                       status === "available"
-                        ? "border-green-500 focus-visible:ring-green-500" 
+                        ? "border-green-500 focus-visible:ring-green-500"
                         : status === "taken" || status === "invalid" || status === "error"
-                        ? "border-red-500 focus-visible:ring-red-500" 
+                        ? "border-red-500 focus-visible:ring-red-500"
                         : ""
                     }`}
-                    placeholder="jakedavids"
+                    placeholder="username"
                     value={username}
                     onChange={(e) => handleUsernameChange(e.target.value)}
+                    autoComplete="off"
                   />
-                  <span className="text-sm text-slate-600 whitespace-nowrap">@recruitbridge.net</span>
+                  <span className="text-sm text-slate-700 font-medium whitespace-nowrap">@recruitbridge.net</span>
                 </div>
                 <div className={`text-xs mt-1.5 flex items-center gap-1.5 ${
                   status === "available"
-                    ? "text-green-600" 
+                    ? "text-green-600 font-medium"
                     : status === "taken" || status === "invalid" || status === "error"
-                    ? "text-red-600" 
+                    ? "text-red-600 font-medium"
                     : "text-slate-500"
                 }`}>
                   {checking ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Checking availability…
+                    </>
                   ) : status === "available" ? (
-                    <CheckCircle2 className="w-4 h-4" />
-                  ) : status === "taken" || status === "invalid" || status === "error" ? (
-                    <AlertCircle className="w-4 h-4" />
-                  ) : null}
-                  {checking ? "Checking availability…" : validationMessage || "Choose a username (3-64 characters, a-z, 0-9, ., -)"}
+                    <>
+                      <CheckCircle2 className="w-4 h-4" />
+                      ✓ Available! This email address is yours.
+                    </>
+                  ) : status === "taken" ? (
+                    <>
+                      <AlertCircle className="w-4 h-4" />
+                      {validationMessage}
+                    </>
+                  ) : status === "error" ? (
+                    <>
+                      <AlertCircle className="w-4 h-4" />
+                      {validationMessage}
+                    </>
+                  ) : (
+                    "Choose a username (3-64 characters, letters, numbers, dots, or dashes)"
+                  )}
                 </div>
               </div>
 
-              <div className="rounded-lg border px-4 py-3 bg-slate-50">
-                <Label className="text-xs text-slate-500">Email Preview</Label>
-                <div className="font-medium text-slate-900">
+              <div className="rounded-lg border-2 border-blue-200 px-4 py-3 bg-blue-50">
+                <div className="flex items-center gap-2 mb-2">
+                  <Mail className="w-4 h-4 text-blue-600" />
+                  <Label className="text-xs font-semibold text-blue-900">Email Preview</Label>
+                </div>
+                <div className="font-bold text-base text-blue-900">
                   {displayName || "Your Name"} &lt;{username || "username"}@recruitbridge.net&gt;
                 </div>
-                <p className="text-xs text-slate-600 mt-1">
-                  Coaches will see this professional address. Replies will be tracked automatically.
+                <p className="text-xs text-blue-700 mt-2">
+                  ✓ Coaches will see this professional address<br/>
+                  ✓ All replies will be tracked automatically<br/>
+                  ✓ This email address is <strong>permanent</strong> and cannot be changed
                 </p>
               </div>
 
@@ -238,20 +270,26 @@ export default function IdentitySetup({ onClose }) {
                 {creating ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Creating your professional email address...
+                    Creating Your Email Address...
                   </>
                 ) : (
                   <>
                     <Mail className="w-4 h-4 mr-2" />
-                    Create My RecruitBridge Email
+                    Create Email Address
                   </>
                 )}
               </Button>
 
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                <p className="text-xs text-amber-800">
-                  <strong>Important:</strong> Once created, your username cannot be changed. Choose carefully!
-                </p>
+              <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-4">
+                <div className="flex items-start gap-2">
+                  <Lock className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-bold text-amber-900 mb-1">⚠️ This email address is PERMANENT</p>
+                    <p className="text-xs text-amber-800">
+                      Once you click "Create Email Address", your username cannot be changed for security reasons. Make sure you're happy with your choice!
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 

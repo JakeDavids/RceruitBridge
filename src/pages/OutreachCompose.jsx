@@ -16,7 +16,7 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Mail, Send, Users, Filter, Copy, Wand2, RefreshCw, Plus, CheckCircle, AlertCircle, Loader2, Settings, RefreshCcw } from "lucide-react";
+import { Mail, Send, Users, Filter, Copy, Wand2, RefreshCw, Plus, CheckCircle, AlertCircle, Loader2, Settings, RefreshCcw, Calendar, Clock } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { debounce } from "lodash";
 import { syncReplies as syncGmailReplies } from "@/api/functions";
@@ -123,6 +123,9 @@ export default function OutreachCompose() {
   
   const [toast, setToast] = useState(null);
   const [syncing, setSyncing] = useState(false);
+  const [scheduleSend, setScheduleSend] = useState(false);
+  const [scheduledDate, setScheduledDate] = useState("");
+  const [scheduledTime, setScheduledTime] = useState("");
 
   const colorPalette = React.useMemo(() => ([
     "bg-blue-100 text-blue-800 border-blue-200",
@@ -691,7 +694,7 @@ export default function OutreachCompose() {
                         className="mt-1"
                       />
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <Button onClick={generateWithAI} disabled={generating} variant="outline" className="flex items-center gap-2">
                         {generating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Wand2 className="w-4 h-4" />}
                         Generate with AI
@@ -704,7 +707,50 @@ export default function OutreachCompose() {
                         <RefreshCw className="w-4 h-4" />
                         Clear
                       </Button>
+                      <Button
+                        onClick={() => setScheduleSend(!scheduleSend)}
+                        variant={scheduleSend ? "default" : "outline"}
+                        className="flex items-center gap-2"
+                      >
+                        <Calendar className="w-4 h-4" />
+                        {scheduleSend ? "Remove Schedule" : "Schedule Send"}
+                      </Button>
                     </div>
+
+                    {scheduleSend && (
+                      <div className="border rounded-lg p-4 bg-blue-50 space-y-3">
+                        <div className="flex items-center gap-2 text-blue-900 font-semibold">
+                          <Clock className="w-5 h-5" />
+                          <span>Schedule Email Delivery</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor="scheduledDate" className="text-sm text-slate-700">Date</Label>
+                            <Input
+                              id="scheduledDate"
+                              type="date"
+                              value={scheduledDate}
+                              onChange={(e) => setScheduledDate(e.target.value)}
+                              min={new Date().toISOString().split('T')[0]}
+                              className="mt-1"
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="scheduledTime" className="text-sm text-slate-700">Time</Label>
+                            <Input
+                              id="scheduledTime"
+                              type="time"
+                              value={scheduledTime}
+                              onChange={(e) => setScheduledTime(e.target.value)}
+                              className="mt-1"
+                            />
+                          </div>
+                        </div>
+                        <p className="text-xs text-slate-600">
+                          Emails will be sent at the scheduled time in your timezone.
+                        </p>
+                      </div>
+                    )}
 
                     <Separator />
 
@@ -750,15 +796,17 @@ export default function OutreachCompose() {
                         </span>
                         <Button
                           onClick={handleBulkSend}
-                          disabled={bulkSending || selectedCoaches.size === 0 || !emailSubject || !emailBody || !isIdentityConfigured}
+                          disabled={bulkSending || selectedCoaches.size === 0 || !emailSubject || !emailBody || !isIdentityConfigured || (scheduleSend && (!scheduledDate || !scheduledTime))}
                           className="bg-gradient-to-r from-blue-600 to-indigo-600"
                         >
                           {bulkSending ? (
                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          ) : scheduleSend ? (
+                            <Calendar className="w-4 h-4 mr-2" />
                           ) : (
                             <Send className="w-4 h-4 mr-2" />
                           )}
-                          Send Emails
+                          {scheduleSend ? "Schedule Emails" : "Send Emails"}
                         </Button>
                       </div>
                     </div>

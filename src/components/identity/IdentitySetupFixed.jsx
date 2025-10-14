@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const PUBLIC_TOKEN = "78by89nu298sum98ms209ims09m76sb87";
 
-export default function IdentitySetupFixed({ onClose, onComplete }) {
+export default function IdentitySetupFixed({ onClose, onSuccess }) {
   const [loading, setLoading] = useState(true);
   const [identity, setIdentity] = useState(null);
   const [username, setUsername] = useState("");
@@ -105,6 +105,13 @@ export default function IdentitySetupFixed({ onClose, onComplete }) {
       const result = await response.json();
       
       if (result.success) {
+        // Update user's emailIdentityType to mark as configured
+        try {
+          await User.update(currentUser.id, { emailIdentityType: 'recruitbridge' });
+        } catch (updateErr) {
+          console.warn("Could not update user emailIdentityType:", updateErr);
+        }
+
         setIdentity({
           address: `${username}@recruitbridge.net`,
           displayName: displayName,
@@ -112,9 +119,13 @@ export default function IdentitySetupFixed({ onClose, onComplete }) {
           domain: "recruitbridge.net",
           verified: true
         });
-        setCreating(false);
-        if (onComplete) setTimeout(onComplete, 1000);
-        if (onClose) setTimeout(onClose, 1000);
+
+        // Success - close modal after brief delay
+        setTimeout(() => {
+          setCreating(false);
+          if (onSuccess) onSuccess();
+          if (onClose) onClose();
+        }, 1500);
       } else {
         throw new Error(result.error || "Failed to create email identity");
       }
@@ -194,6 +205,7 @@ export default function IdentitySetupFixed({ onClose, onComplete }) {
                 <li>✅ Use this address in the Outreach Center to send emails</li>
                 <li>✅ All replies will be tracked in your Response Center</li>
                 <li>✅ Coaches will see your professional RecruitBridge email</li>
+                <li>✅ Your username is locked for security (cannot be changed)</li>
               </ul>
             </div>
           </div>
@@ -208,39 +220,74 @@ export default function IdentitySetupFixed({ onClose, onComplete }) {
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="displayName">Display Name (Your full name for emails)</Label>
+                <Label htmlFor="displayName" className="text-sm font-semibold">Display Name *</Label>
+                <p className="text-xs text-slate-500 mb-2">Your full name as coaches will see it</p>
                 <Input
                   id="displayName"
                   className="mt-1"
                   placeholder="Jake Davids"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
+                  autoComplete="name"
                 />
               </div>
 
               <div>
-                <Label htmlFor="username">Username (permanent - cannot be changed)</Label>
+                <Label htmlFor="username" className="text-sm font-semibold">Email Address *</Label>
+                <p className="text-xs text-slate-500 mb-2">Choose your username - this email address is <strong className="text-amber-700">permanent</strong></p>
                 <div className="mt-1 flex items-center gap-2">
                   <Input
                     id="username"
-                    className={`w-full ${
-                      status === "available" ? "border-green-500 focus-visible:ring-green-500" 
-                      : status === "invalid" ? "border-red-500 focus-visible:ring-red-500" 
-                      : ""
+                    className={`flex-1 ${
+                      status === "available"
+                        ? "border-green-500 focus-visible:ring-green-500"
+                        : status === "invalid" || status === "error"
+                        ? "border-red-500 focus-visible:ring-red-500"
+                        : ""
                     }`}
-                    placeholder="jakedavids"
+                    placeholder="username"
                     value={username}
                     onChange={(e) => handleUsernameChange(e.target.value)}
+                    autoComplete="off"
                   />
-                  <span className="text-sm text-slate-600 whitespace-nowrap">@recruitbridge.net</span>
+                  <span className="text-sm text-slate-700 font-medium whitespace-nowrap">@recruitbridge.net</span>
                 </div>
                 <div className={`text-xs mt-1.5 flex items-center gap-1.5 ${
-                  status === "available" ? "text-green-600" : status === "invalid" ? "text-red-600" : "text-slate-500"
+                  status === "available"
+                    ? "text-green-600 font-medium"
+                    : status === "invalid" || status === "error"
+                    ? "text-red-600 font-medium"
+                    : "text-slate-500"
                 }`}>
-                  {status === "available" && <CheckCircle2 className="w-4 h-4" />}
-                  {status === "invalid" && <AlertCircle className="w-4 h-4" />}
-                  {validationMessage || "Choose a username (3-64 characters, a-z, 0-9, ., -)"}
+                  {status === "available" ? (
+                    <>
+                      <CheckCircle2 className="w-4 h-4" />
+                      ✓ Available! This email address is yours.
+                    </>
+                  ) : status === "invalid" ? (
+                    <>
+                      <AlertCircle className="w-4 h-4" />
+                      {validationMessage}
+                    </>
+                  ) : (
+                    "Choose a username (3-64 characters, letters, numbers, dots, or dashes)"
+                  )}
                 </div>
+              </div>
+
+              <div className="rounded-lg border-2 border-blue-200 px-4 py-3 bg-blue-50">
+                <div className="flex items-center gap-2 mb-2">
+                  <Mail className="w-4 h-4 text-blue-600" />
+                  <Label className="text-xs font-semibold text-blue-900">Email Preview</Label>
+                </div>
+                <div className="font-bold text-base text-blue-900">
+                  {displayName || "Your Name"} &lt;{username || "username"}@recruitbridge.net&gt;
+                </div>
+                <p className="text-xs text-blue-700 mt-2">
+                  ✓ Coaches will see this professional address<br/>
+                  ✓ All replies will be tracked automatically<br/>
+                  ✓ This email address is <strong>permanent</strong> and cannot be changed
+                </p>
               </div>
 
               <Button
@@ -252,15 +299,27 @@ export default function IdentitySetupFixed({ onClose, onComplete }) {
                 {creating ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Creating your professional email address...
+                    Creating Your Email Address...
                   </>
                 ) : (
                   <>
                     <Mail className="w-4 h-4 mr-2" />
-                    Create My RecruitBridge Email
+                    Create Email Address
                   </>
                 )}
               </Button>
+
+              <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-4">
+                <div className="flex items-start gap-2">
+                  <Lock className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-bold text-amber-900 mb-1">⚠️ This email address is PERMANENT</p>
+                    <p className="text-xs text-amber-800">
+                      Once you click "Create Email Address", your username cannot be changed for security reasons. Make sure you're happy with your choice!
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}

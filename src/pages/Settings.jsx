@@ -125,7 +125,9 @@ export default function Settings() {
           </CardHeader>
           <CardContent>
             <IdentitySetupFixed
-              onComplete={async () => {
+              onSuccess={async () => {
+                // Reload user to get updated emailIdentityType
+                await loadUser();
                 // If in guided tour, advance to next step
                 if (isStepActive(TOUR_STEPS.EMAIL)) {
                   await completeCurrentStep();

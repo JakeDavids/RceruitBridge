@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   CreditCard,
   Calendar,
@@ -12,12 +16,17 @@ import {
   AlertCircle,
   ArrowRight,
   Sparkles,
-  Info
+  Info,
+  XCircle
 } from "lucide-react";
 
 export default function BillingPortal() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+  const [cancelReasonText, setCancelReasonText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     loadUser();
@@ -31,6 +40,43 @@ export default function BillingPortal() {
       console.error("Error loading user:", error);
     }
     setLoading(false);
+  };
+
+  const handleCancelSubscription = async () => {
+    if (!cancelReason) {
+      alert("Please select a reason for cancellation.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      // Submit cancellation request to backend
+      const response = await fetch("/functions/subscription/cancel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          userId: user.id,
+          reason: cancelReason,
+          reasonText: cancelReasonText,
+          currentPlan: user.plan
+        })
+      });
+
+      if (response.ok) {
+        // Update user to free plan
+        await User.update(user.id, { plan: 'free' });
+        alert("Your subscription has been cancelled. Your account has been reverted to the free plan. You will receive a refund confirmation email within 24-48 hours.");
+        setShowCancelDialog(false);
+        loadUser(); // Reload to show updated plan
+      } else {
+        throw new Error("Failed to cancel subscription");
+      }
+    } catch (error) {
+      console.error("Error cancelling subscription:", error);
+      alert("There was an error processing your cancellation. Please contact support at realrecruitbridge@gmail.com");
+    }
+    setSubmitting(false);
   };
 
   const getPlanDetails = (plan) => {
@@ -237,13 +283,12 @@ export default function BillingPortal() {
               )}
               
               <div className="border-t pt-4">
-                <Button 
-                  variant="ghost" 
-                  className="w-full text-slate-600 hover:text-red-600"
-                  onClick={() => {
-                    alert("To cancel your subscription, please email realrecruitbridge@gmail.com. We'll process your request within 24 hours.");
-                  }}
+                <Button
+                  variant="ghost"
+                  className="w-full text-slate-600 hover:text-red-600 flex items-center justify-center gap-2"
+                  onClick={() => setShowCancelDialog(true)}
                 >
+                  <XCircle className="w-4 h-4" />
                   Cancel Subscription
                 </Button>
                 <p className="text-xs text-slate-500 text-center mt-2">
@@ -271,6 +316,94 @@ export default function BillingPortal() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Cancel Subscription Dialog */}
+      <Dialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-red-600">
+              <XCircle className="w-5 h-5" />
+              Cancel Subscription
+            </DialogTitle>
+            <DialogDescription>
+              We're sorry to see you go. Please help us improve by telling us why you're cancelling.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div>
+              <Label className="text-sm font-semibold mb-3 block">Reason for Cancellation *</Label>
+              <RadioGroup value={cancelReason} onValueChange={setCancelReason}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="too_expensive" id="too_expensive" />
+                  <Label htmlFor="too_expensive" className="font-normal cursor-pointer">Too expensive</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="not_using" id="not_using" />
+                  <Label htmlFor="not_using" className="font-normal cursor-pointer">Not using it enough</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="missing_features" id="missing_features" />
+                  <Label htmlFor="missing_features" className="font-normal cursor-pointer">Missing features I need</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="found_alternative" id="found_alternative" />
+                  <Label htmlFor="found_alternative" className="font-normal cursor-pointer">Found a better alternative</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="technical_issues" id="technical_issues" />
+                  <Label htmlFor="technical_issues" className="font-normal cursor-pointer">Technical issues</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="other" id="other" />
+                  <Label htmlFor="other" className="font-normal cursor-pointer">Other</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div>
+              <Label htmlFor="cancelReasonText" className="text-sm font-semibold mb-2 block">
+                Additional Comments (Optional)
+              </Label>
+              <Textarea
+                id="cancelReasonText"
+                placeholder="Tell us more about your experience..."
+                value={cancelReasonText}
+                onChange={(e) => setCancelReasonText(e.target.value)}
+                rows={4}
+              />
+            </div>
+
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+              <p className="text-sm text-yellow-900">
+                <strong>Note:</strong> Your account will be immediately reverted to the free plan, and you'll receive a refund within 24-48 hours.
+              </p>
+            </div>
+          </div>
+
+          <DialogFooter className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowCancelDialog(false);
+                setCancelReason("");
+                setCancelReasonText("");
+              }}
+              disabled={submitting}
+            >
+              Keep Subscription
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleCancelSubscription}
+              disabled={!cancelReason || submitting}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              {submitting ? "Processing..." : "Confirm Cancellation"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
