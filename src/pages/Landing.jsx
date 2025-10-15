@@ -4,8 +4,18 @@ import { motion } from 'framer-motion';
 
 export default function RecruitBridgeLanding() {
   const handleGetStarted = () => {
-    // Redirect to the app subdomain where authentication happens
-    window.location.href = 'https://app.recruitbridge.net';
+    // Redirect to signup page
+    window.location.href = 'https://www.recruitbridge.app/signup';
+  };
+
+  const handleLogin = () => {
+    // Redirect to login page
+    window.location.href = 'https://www.recruitbridge.app/login';
+  };
+
+  const handleLaunchApp = () => {
+    // Redirect to dashboard
+    window.location.href = 'https://www.recruitbridge.app/dashboard';
   };
 
   return (
