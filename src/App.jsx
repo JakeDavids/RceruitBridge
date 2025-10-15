@@ -8,6 +8,10 @@ function App() {
   // Check if this is landing mode or app mode
   const isLandingMode = import.meta.env.VITE_APP_MODE === 'landing';
 
+  // Debug: Log the environment variable
+  console.log('VITE_APP_MODE:', import.meta.env.VITE_APP_MODE);
+  console.log('isLandingMode:', isLandingMode);
+
   if (isLandingMode) {
     // Landing page only - no routing, no Base44, no auth
     return (
