@@ -1,8 +1,7 @@
 import './App.css'
-import Pages from "@/Pages.jsx"
-import Landing from "@/pages/Landing.jsx"
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
+import React from 'react'
 
 function App() {
   // Check if this is landing mode or app mode
@@ -13,22 +12,26 @@ function App() {
   console.log('isLandingMode:', isLandingMode);
 
   if (isLandingMode) {
-    // Landing page only - no routing, no Base44, no auth
+    // Lazy load Landing component to avoid Base44 initialization
+    const Landing = React.lazy(() => import("@/pages/Landing.jsx"));
+
     return (
-      <>
+      <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div></div>}>
         <Landing />
         <Analytics />
-      </>
+      </React.Suspense>
     );
   }
 
-  // Full app with routing and auth
+  // Lazy load app Pages to ensure Base44 only loads in app mode
+  const Pages = React.lazy(() => import("@/Pages.jsx"));
+
   return (
-    <>
+    <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div></div>}>
       <Pages />
       <Toaster />
       <Analytics />
-    </>
+    </React.Suspense>
   )
 }
 
