@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/login",
+      "destination": "https://www.recruitbridge.app/login",
+      "permanent": false
+    },
+    {
+      "source": "/signup",
+      "destination": "https://www.recruitbridge.app/signup",
+      "permanent": false
+    },
+    {
+      "source": "/dashboard",
+      "destination": "https://www.recruitbridge.app/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/app",
+      "destination": "https://www.recruitbridge.app",
+      "permanent": false
+    }
+  ]
+}
