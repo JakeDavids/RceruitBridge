@@ -75,6 +75,7 @@ export default function Layout({ children }) {
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
   const [athlete, setAthlete] = React.useState(null);
+  const [loginInitiated, setLoginInitiated] = React.useState(false);
 
   React.useEffect(() => {
     const checkUser = async () => {
@@ -223,13 +224,26 @@ export default function Layout({ children }) {
   }
 
   // 🚫 Redirect to Base44 login if not authenticated
-  if (!user) {
+  if (!user && !loginInitiated) {
+    setLoginInitiated(true);
     User.login();
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="text-center">
           <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
           <p className="text-slate-600">Redirecting to login...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user && loginInitiated) {
+    // Waiting for Base44 redirect/callback
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="text-center">
+          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
+          <p className="text-slate-600">Authenticating...</p>
         </div>
       </div>
     );
