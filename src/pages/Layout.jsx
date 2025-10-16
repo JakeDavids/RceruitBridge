@@ -54,20 +54,24 @@ const PUBLIC_PATHS = new Set([
 ]);
 
 const bottomNavigationItems = [
+  // Resources - Blue-Cyan
   {
     title: "Email Guide",
     url: createPageUrl("EmailGuide"),
     icon: MessageSquare,
+    colorClass: "from-blue-500 to-cyan-600"
   },
   {
     title: "Scholarships & NIL",
     url: createPageUrl("ScholarshipsNIL"),
     icon: GraduationCap,
+    colorClass: "from-blue-500 to-cyan-600"
   },
   {
     title: "My Recruiting Journey",
     url: createPageUrl("MyRecruitingJourney"),
     icon: BookOpen,
+    colorClass: "from-blue-500 to-cyan-600"
   }
 ];
 
@@ -162,65 +166,88 @@ export default function Layout({ children }) {
   const planStyling = getPlanStyling(user?.plan);
 
   const navigationItems = [
+    // Dashboard - Blue
     {
       title: "Dashboard",
       url: createPageUrl("Dashboard"),
       icon: LayoutDashboard,
+      colorClass: "from-blue-500 to-indigo-600"
     },
+
+    // Core Recruiting Flow - Purple-Indigo
     {
       title: "Target Schools",
       url: createPageUrl("Schools"),
       icon: Target,
+      colorClass: "from-purple-500 to-indigo-600"
     },
     {
       title: "Coach Contacts",
       url: createPageUrl("CoachContacts"),
       icon: Users,
+      colorClass: "from-purple-500 to-indigo-600"
     },
     {
       title: "Outreach Center",
       url: createPageUrl("OutreachCompose"),
       icon: Send,
+      colorClass: "from-purple-500 to-indigo-600"
     },
     {
       title: "Response Center",
       url: createPageUrl("ResponseCenter"),
       icon: MessageSquare,
+      colorClass: "from-purple-500 to-indigo-600"
     },
+
+    // Tracking & Analytics - Cyan-Blue
     {
       title: "Coach Tracking",
       url: createPageUrl("Tracking"),
       icon: Users,
+      colorClass: "from-cyan-500 to-blue-600"
     },
     {
       title: "Coach Analytics",
       url: createPageUrl("CoachAnalytics"),
       icon: TrendingUp,
+      colorClass: "from-cyan-500 to-blue-600"
     },
     {
       title: "Action Plan",
       url: createPageUrl("Timeline"),
       icon: Calendar,
+      colorClass: "from-cyan-500 to-blue-600"
     },
     {
       title: "Questionnaires",
       url: createPageUrl("Questionnaires"),
       icon: ClipboardList,
+      colorClass: "from-cyan-500 to-blue-600"
     },
+
+    // Profile - Blue-Purple
     {
       title: "Profile",
       url: createPageUrl("Profile"),
       icon: UserIcon,
+      colorClass: "from-blue-500 to-purple-600"
     },
+
+    // 1-on-1 Counseling - Purple-Pink
     {
       title: "1-on-1 Counseling",
       url: createPageUrl("RecruitingCounseling"),
       icon: Users2,
+      colorClass: "from-purple-500 to-pink-600"
     },
+
+    // Feedback - Indigo-Purple
     {
       title: "Feedback",
       url: createPageUrl("Feedback"),
       icon: MessageSquare,
+      colorClass: "from-indigo-500 to-purple-600"
     },
   ];
 
@@ -288,14 +315,16 @@ export default function Layout({ children }) {
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
                         asChild
-                        className={`hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 rounded-xl ${
+                        className={`hover:bg-slate-50 transition-all duration-200 rounded-xl group ${
                           location.pathname === item.url
-                            ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/25'
+                            ? 'bg-gradient-to-r ' + item.colorClass + ' text-white shadow-lg'
                             : 'text-slate-600'
                         }`}
                       >
                         <Link to={item.url} className="flex items-center gap-3 px-4 py-3">
-                          <item.icon className="w-5 h-5" />
+                          <div className={location.pathname === item.url ? "" : `bg-gradient-to-br ${item.colorClass} p-1.5 rounded-lg`}>
+                            <item.icon className={`w-4 h-4 ${location.pathname === item.url ? 'text-white' : 'text-white'}`} />
+                          </div>
                           <span className="font-medium">{item.title}</span>
                         </Link>
                       </SidebarMenuButton>
@@ -315,14 +344,16 @@ export default function Layout({ children }) {
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
                         asChild
-                        className={`hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 rounded-xl ${
+                        className={`hover:bg-slate-50 transition-all duration-200 rounded-xl group ${
                           location.pathname === item.url
-                            ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/25'
+                            ? 'bg-gradient-to-r ' + item.colorClass + ' text-white shadow-lg'
                             : 'text-slate-600'
                         }`}
                       >
                         <Link to={item.url} className="flex items-center gap-3 px-4 py-3">
-                          <item.icon className="w-5 h-5" />
+                          <div className={location.pathname === item.url ? "" : `bg-gradient-to-br ${item.colorClass} p-1.5 rounded-lg`}>
+                            <item.icon className={`w-4 h-4 ${location.pathname === item.url ? 'text-white' : 'text-white'}`} />
+                          </div>
                           <span className="font-medium">{item.title}</span>
                         </Link>
                       </SidebarMenuButton>

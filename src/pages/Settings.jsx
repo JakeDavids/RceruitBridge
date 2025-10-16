@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"; // Keep Label for the new Billing
 import IdentitySetupFixed from "../components/identity/IdentitySetupFixed";
 import PageGuide from "@/components/onboarding/PageGuide";
 import useGuidedTour from "@/components/hooks/useGuidedTour";
+import OnboardingWalkthrough from "@/components/onboarding/OnboardingWalkthrough";
 import {
   Settings as SettingsIcon,
   User as UserIcon,
@@ -20,13 +21,15 @@ import {
   Download,
   Trash2,
   Shield,
-  AlertTriangle
+  AlertTriangle,
+  RotateCcw
 } from "lucide-react";
 
 export default function Settings() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showWalkthrough, setShowWalkthrough] = useState(false);
 
   // Guided Tour
   const { isStepActive, completeCurrentStep, skipTour, TOUR_STEPS } = useGuidedTour();
@@ -139,6 +142,40 @@ export default function Settings() {
                 }
               }}
             />
+          </CardContent>
+        </Card>
+
+        {/* Tutorial/Walkthrough */}
+        <Card className="hover:shadow-lg transition-shadow border-cyan-200 bg-cyan-50/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-900">
+              <RotateCcw className="w-5 h-5 text-cyan-600" />
+              Tutorial & Walkthrough
+            </CardTitle>
+            <CardDescription className="text-cyan-700">
+              Need help getting started? Restart the interactive walkthrough.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-white p-4 rounded-lg border border-cyan-200">
+              <p className="text-sm text-slate-700 mb-3">
+                The interactive walkthrough will guide you through:
+              </p>
+              <ul className="text-sm text-slate-600 space-y-2">
+                <li>✓ Setting up your profile</li>
+                <li>✓ Creating your @recruitbridge.net email</li>
+                <li>✓ Adding target schools</li>
+                <li>✓ Sending your first outreach email</li>
+                <li>✓ Tracking coach responses</li>
+              </ul>
+            </div>
+            <Button
+              onClick={() => setShowWalkthrough(true)}
+              className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700"
+            >
+              <RotateCcw className="w-4 h-4 mr-2" />
+              Restart Tutorial
+            </Button>
           </CardContent>
         </Card>
 
@@ -284,6 +321,12 @@ export default function Settings() {
           </div>
         </div>
       </PageGuide>
+
+      {/* Onboarding Walkthrough */}
+      <OnboardingWalkthrough
+        isOpen={showWalkthrough}
+        onComplete={() => setShowWalkthrough(false)}
+      />
     </div>
   );
 }

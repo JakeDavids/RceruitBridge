@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, Athlete, TargetedSchool, School } from '@/api/entities';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle2, ArrowRight, Mail, UserCircle, GraduationCap, School as SchoolIcon, MessageSquare, AtSign, Loader2, AlertCircle } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Mail, UserCircle, GraduationCap, School as SchoolIcon, MessageSquare, AtSign, Loader2, AlertCircle, ExternalLink } from 'lucide-react';
 import { useRecruitBridgeIdentity } from '../hooks/useRecruitBridgeIdentity';
 
 const ONBOARDING_STEPS = [
@@ -20,8 +21,9 @@ const ONBOARDING_STEPS = [
   {
     id: 'profile',
     title: 'Create Your Profile',
-    description: 'Tell us about yourself so coaches know who you are.',
+    description: 'Go to your Profile page and fill out your information.',
     icon: UserCircle,
+    redirectTo: '/Profile',
   },
   {
     id: 'email',
@@ -32,8 +34,9 @@ const ONBOARDING_STEPS = [
   {
     id: 'school',
     title: 'Add Your First Target School',
-    description: 'Choose a school you\'re interested in. You can add more later!',
+    description: 'Go to Target Schools and add a school you\'re interested in.',
     icon: SchoolIcon,
+    redirectTo: '/Schools',
   },
   {
     id: 'demo-email',
@@ -56,6 +59,7 @@ const ONBOARDING_STEPS = [
 ];
 
 export default function OnboardingWalkthrough({ isOpen, onComplete }) {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -324,12 +328,15 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
   const Icon = step.icon;
   const progress = ((currentStep + 1) / ONBOARDING_STEPS.length) * 100;
 
+  const handleClose = () => {
+    if (onComplete) {
+      onComplete(); // Allow closing and mark as skipped
+    }
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => {
-      // Prevent closing the dialog while onboarding is in progress
-      // It can only be closed by completing the onboarding
-    }}>
-      <DialogContent className="max-w-2xl" onInteractOutside={(e) => e.preventDefault()} onEscapeKeyDown={(e) => e.preventDefault()}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="max-w-2xl">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center">
@@ -390,44 +397,31 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
             </Card>
           )}
 
-          {/* Profile Step */}
+          {/* Profile Step - Interactive */}
           {currentStep === 1 && (
             <Card>
               <CardContent className="pt-6 space-y-4">
-                <div>
-                  <Label htmlFor="firstName">First Name *</Label>
-                  <Input
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="John"
-                    className="mt-1"
-                  />
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-900 mb-2">Complete Your Profile</h4>
+                  <p className="text-sm text-blue-800 mb-4">
+                    Click the button below to go to your Profile page. Fill out your information (name, sport, position, graduation year, etc.), then come back here to continue.
+                  </p>
+                  <Button
+                    onClick={() => {
+                      navigate('/Profile');
+                      handleClose(); // Close the walkthrough
+                    }}
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600"
+                    size="lg"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Go to Profile Page
+                  </Button>
                 </div>
-                <div>
-                  <Label htmlFor="lastName">Last Name *</Label>
-                  <Input
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Smith"
-                    className="mt-1"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="classYear">Class Year *</Label>
-                  <Select value={classYear} onValueChange={setClassYear}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select your graduation year" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="2025">Class of 2025</SelectItem>
-                      <SelectItem value="2026">Class of 2026</SelectItem>
-                      <SelectItem value="2027">Class of 2027</SelectItem>
-                      <SelectItem value="2028">Class of 2028</SelectItem>
-                      <SelectItem value="2029">Class of 2029</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                  <p className="text-xs text-amber-800">
+                    <strong>Tip:</strong> You can restart this walkthrough anytime from Settings → "Restart Tutorial"
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -510,26 +504,30 @@ export default function OnboardingWalkthrough({ isOpen, onComplete }) {
             </Card>
           )}
 
-          {/* School Selection Step */}
+          {/* School Selection Step - Interactive */}
           {currentStep === 3 && (
             <Card>
               <CardContent className="pt-6 space-y-4">
-                <div>
-                  <Label htmlFor="school">Select Your First Target School *</Label>
-                  <Select value={selectedSchoolId} onValueChange={setSelectedSchoolId}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Choose a school you're interested in" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {schools.map(school => (
-                        <SelectItem key={school.id} value={school.id}>
-                          {school.school_name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-slate-500 mt-2">
-                    Don't worry, you can add more schools later!
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-purple-900 mb-2">Add Your First Target School</h4>
+                  <p className="text-sm text-purple-800 mb-4">
+                    Click below to go to Target Schools. Search for a school you're interested in and add it to your list. Then come back to continue the walkthrough!
+                  </p>
+                  <Button
+                    onClick={() => {
+                      navigate('/Schools');
+                      handleClose(); // Close the walkthrough
+                    }}
+                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600"
+                    size="lg"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Go to Target Schools
+                  </Button>
+                </div>
+                <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                  <p className="text-xs text-slate-600">
+                    <strong>Tip:</strong> You can add as many schools as you want. Start with 5-10 schools that match your athletic and academic goals.
                   </p>
                 </div>
               </CardContent>
