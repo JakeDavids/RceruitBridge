@@ -28,11 +28,29 @@ export default function IdentitySetupFixed({ onClose, onSuccess }) {
     try {
       const user = await User.me();
       setCurrentUser(user);
-      
+
+      // MOCK MODE: Check localStorage for saved identity
+      const savedIdentity = localStorage.getItem('rb_email_identity');
+      if (savedIdentity) {
+        try {
+          const identityData = JSON.parse(savedIdentity);
+          console.log('[MOCK] Loaded email identity from localStorage:', identityData);
+          setIdentity(identityData);
+          setLoading(false);
+          return;
+        } catch (parseErr) {
+          console.error('Error parsing saved identity:', parseErr);
+          localStorage.removeItem('rb_email_identity');
+        }
+      }
+
+      console.log('[MOCK] No email identity found in localStorage');
+
+      /* ORIGINAL CODE - Re-enable when Base44 functions are working:
       // Check if EmailIdentity exists by testing sendEmail
       const response = await fetch("/functions/sendEmail", {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
           "x-rb-public": PUBLIC_TOKEN,
           "x-user-id": user.id
@@ -44,9 +62,9 @@ export default function IdentitySetupFixed({ onClose, onSuccess }) {
           from: "test@recruitbridge.net"
         })
       });
-      
+
       const result = await response.json();
-      
+
       // If it succeeded and has fromIdentity, an identity exists
       if (result.success && result.fromIdentity) {
         // Extract username from console logs or assume from user data
@@ -59,6 +77,7 @@ export default function IdentitySetupFixed({ onClose, onSuccess }) {
           verified: true
         });
       }
+      */
     } catch (err) {
       console.error("Error loading identity:", err);
     }
@@ -83,13 +102,49 @@ export default function IdentitySetupFixed({ onClose, onSuccess }) {
 
   const handleCreate = async () => {
     if (!username || status !== "available" || !currentUser?.id || !displayName.trim()) return;
-    
+
     setCreating(true);
-    
+
     try {
+      // MOCK MODE: Since Base44 functions are disabled, mock the identity creation
+      // Store the identity locally for testing
+      console.log('[MOCK] Creating email identity:', {
+        username,
+        displayName,
+        email: `${username}@recruitbridge.net`
+      });
+
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Save to localStorage for persistence across page reloads
+      const identityData = {
+        address: `${username}@recruitbridge.net`,
+        displayName: displayName,
+        username: username,
+        domain: "recruitbridge.net",
+        verified: true,
+        userId: currentUser.id,
+        createdAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('rb_email_identity', JSON.stringify(identityData));
+
+      console.log('[MOCK] Email identity created and saved to localStorage');
+
+      setIdentity(identityData);
+
+      // Success - close modal after brief delay
+      setTimeout(() => {
+        setCreating(false);
+        if (onSuccess) onSuccess();
+        if (onClose) onClose();
+      }, 1500);
+
+      /* ORIGINAL CODE - Re-enable when Base44 functions are working:
       const response = await fetch("/functions/sendEmail", {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
           "x-rb-public": PUBLIC_TOKEN,
           "x-user-id": currentUser.id
@@ -103,7 +158,7 @@ export default function IdentitySetupFixed({ onClose, onSuccess }) {
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         // Update user's emailIdentityType to mark as configured
         try {
@@ -129,6 +184,7 @@ export default function IdentitySetupFixed({ onClose, onSuccess }) {
       } else {
         throw new Error(result.error || "Failed to create email identity");
       }
+      */
     } catch (err) {
       console.error("Create error:", err);
       alert("Error creating email identity: " + err.message);
