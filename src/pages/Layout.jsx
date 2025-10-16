@@ -80,20 +80,26 @@ export default function Layout({ children }) {
   React.useEffect(() => {
     const checkUser = async () => {
       try {
-        // Use PublicUser on public pages to avoid forcing login
-        const isPublicPath = PUBLIC_PATHS.has(location.pathname);
-        const AuthClient = isPublicPath ? PublicUser : User;
+        // TEMPORARY: Skip authentication check since Base44 auth is disabled
+        // This prevents redirect to base44.app/login
+        // TODO: Re-enable when Google Auth is configured
 
-        const currentUser = await AuthClient.me();
-        setUser(currentUser);
+        // const isPublicPath = PUBLIC_PATHS.has(location.pathname);
+        // const AuthClient = isPublicPath ? PublicUser : User;
+        // const currentUser = await AuthClient.me();
+        // setUser(currentUser);
 
-        // Load athlete data if user is authenticated
-        if (currentUser) {
-          const athleteData = await Athlete.filter({ created_by: currentUser.email });
-          if (athleteData.length > 0) {
-            setAthlete(athleteData[0]);
-          }
-        }
+        // For now, set user to null and skip authentication
+        setUser(null);
+        setAthlete(null);
+
+        // Original code (commented out):
+        // if (currentUser) {
+        //   const athleteData = await Athlete.filter({ created_by: currentUser.email });
+        //   if (athleteData.length > 0) {
+        //     setAthlete(athleteData[0]);
+        //   }
+        // }
       } catch {
         setUser(null);
       } finally {
