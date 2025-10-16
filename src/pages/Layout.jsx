@@ -223,31 +223,34 @@ export default function Layout({ children }) {
     );
   }
 
-  // 🚫 Redirect to Base44 login if not authenticated
-  if (!user && !loginInitiated) {
-    setLoginInitiated(true);
-    User.login();
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="text-center">
-          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
-          <p className="text-slate-600">Redirecting to login...</p>
-        </div>
-      </div>
-    );
-  }
+  // Authentication disabled in Base44 - allow access without login
+  // Users can access the app without authentication for now
+  // TODO: Re-enable Google Auth once everything is set up
 
-  if (!user && loginInitiated) {
-    // Waiting for Base44 redirect/callback
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="text-center">
-          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
-          <p className="text-slate-600">Authenticating...</p>
-        </div>
-      </div>
-    );
-  }
+  // if (!user && !loginInitiated) {
+  //   setLoginInitiated(true);
+  //   User.login();
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+  //       <div className="text-center">
+  //         <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
+  //         <p className="text-slate-600">Redirecting to login...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+  // if (!user && loginInitiated) {
+  //   // Waiting for Base44 redirect/callback
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+  //       <div className="text-center">
+  //         <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
+  //         <p className="text-slate-600">Authenticating...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   // ✅ Authenticated routes with sidebar
   return (

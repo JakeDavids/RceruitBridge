@@ -70,11 +70,15 @@ export default function NewLanding() {
 
 
   const handleGetStarted = () => {
-    window.location.href = 'https://www.recruitbridge.app/signup';
+    window.location.href = 'https://www.recruitbridge.app';
   };
 
   const handleSeePlans = () => {
-    window.location.href = 'https://www.recruitbridge.app/pricing';
+    window.location.href = 'https://www.recruitbridge.app';
+  };
+
+  const handleStartFree = () => {
+    window.location.href = 'https://www.recruitbridge.app';
   };
 
   return (
@@ -126,8 +130,8 @@ export default function NewLanding() {
                 Our Story
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 transition-all group-hover:w-full" style={{ backgroundColor: '#F9B233' }}></span>
               </button>
-              <Button 
-                onClick={() => scrollToSection('cta')}
+              <Button
+                onClick={handleGetStarted}
                 className="text-white hover:opacity-90"
                 style={{ backgroundColor: '#0046AD' }}
               >
@@ -280,11 +284,11 @@ export default function NewLanding() {
               whileHover={{ scale: 1.08, y: -4 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button 
+              <Button
                 size="lg"
-                onClick={() => scrollToSection('cta')}
+                onClick={handleStartFree}
                 className="px-10 py-6 relative overflow-hidden group"
-                style={{ 
+                style={{
                   backgroundColor: '#F9B233',
                   color: '#000000',
                   fontSize: '18px',
@@ -316,11 +320,11 @@ export default function NewLanding() {
               whileHover={{ scale: 1.08, y: -4 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button 
+              <Button
                 size="lg"
-                onClick={() => scrollToSection('how-it-works')}
+                onClick={handleSeePlans}
                 className="px-10 py-6 border-3 relative overflow-hidden"
-                style={{ 
+                style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
                   borderColor: '#F9B233',
                   color: '#ffffff',
