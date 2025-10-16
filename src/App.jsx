@@ -12,12 +12,12 @@ function App() {
   console.log('isLandingMode:', isLandingMode);
 
   if (isLandingMode) {
-    // Lazy load Landing component to avoid Base44 initialization
-    const Landing = React.lazy(() => import("@/pages/Landing.jsx"));
+    // Lazy load new Landing component to avoid Base44 initialization
+    const NewLanding = React.lazy(() => import("@/pages/NewLanding.jsx"));
 
     return (
       <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div></div>}>
-        <Landing />
+        <NewLanding />
         <Analytics />
       </React.Suspense>
     );
