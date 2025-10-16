@@ -1,32 +1,41 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '@/pages/Layout';
-import Dashboard from '@/pages/Dashboard';
-import Profile from '@/pages/Profile';
-import Schools from '@/pages/Schools';
-import CoachContacts from '@/pages/CoachContacts';
-import OutreachCompose from '@/pages/OutreachCompose';
-import ResponseCenter from '@/pages/ResponseCenter';
-import Tracking from '@/pages/Tracking';
-import CoachAnalytics from '@/pages/CoachAnalytics';
-import Timeline from '@/pages/Timeline';
-import Questionnaires from '@/pages/Questionnaires';
-import RecruitingCounseling from '@/pages/RecruitingCounseling';
-import Feedback from '@/pages/Feedback';
-import EmailGuide from '@/pages/EmailGuide';
-import ScholarshipsNIL from '@/pages/ScholarshipsNIL';
-import MyRecruitingJourney from '@/pages/MyRecruitingJourney';
-import Settings from '@/pages/Settings';
-import Upgrade from '@/pages/Upgrade';
-import BillingPortal from '@/pages/BillingPortal';
+
+// CRITICAL FIX: Lazy load ALL pages to prevent Base44 entity imports
+// Static imports cause Dashboard etc to import entities.js immediately
+// which triggers Base44 initialization and redirect to base44.app/login
+const Dashboard = React.lazy(() => import('@/pages/Dashboard'));
+const Profile = React.lazy(() => import('@/pages/Profile'));
+const Schools = React.lazy(() => import('@/pages/Schools'));
+const CoachContacts = React.lazy(() => import('@/pages/CoachContacts'));
+const OutreachCompose = React.lazy(() => import('@/pages/OutreachCompose'));
+const ResponseCenter = React.lazy(() => import('@/pages/ResponseCenter'));
+const Tracking = React.lazy(() => import('@/pages/Tracking'));
+const CoachAnalytics = React.lazy(() => import('@/pages/CoachAnalytics'));
+const Timeline = React.lazy(() => import('@/pages/Timeline'));
+const Questionnaires = React.lazy(() => import('@/pages/Questionnaires'));
+const RecruitingCounseling = React.lazy(() => import('@/pages/RecruitingCounseling'));
+const Feedback = React.lazy(() => import('@/pages/Feedback'));
+const EmailGuide = React.lazy(() => import('@/pages/EmailGuide'));
+const ScholarshipsNIL = React.lazy(() => import('@/pages/ScholarshipsNIL'));
+const MyRecruitingJourney = React.lazy(() => import('@/pages/MyRecruitingJourney'));
+const Settings = React.lazy(() => import('@/pages/Settings'));
+const Upgrade = React.lazy(() => import('@/pages/Upgrade'));
+const BillingPortal = React.lazy(() => import('@/pages/BillingPortal'));
 
 export default function Pages() {
   return (
     <BrowserRouter>
       <Layout>
-        <Routes>
-          {/* Default route - redirect to Dashboard */}
-          <Route path="/" element={<Navigate to="/Dashboard" replace />} />
+        <React.Suspense fallback={
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div>
+          </div>
+        }>
+          <Routes>
+            {/* Default route - redirect to Dashboard */}
+            <Route path="/" element={<Navigate to="/Dashboard" replace />} />
 
           {/* Main app routes */}
           <Route path="/Dashboard" element={<Dashboard />} />
@@ -51,6 +60,7 @@ export default function Pages() {
           {/* Catch all - redirect to Dashboard */}
           <Route path="*" element={<Navigate to="/Dashboard" replace />} />
         </Routes>
+        </React.Suspense>
       </Layout>
     </BrowserRouter>
   );
