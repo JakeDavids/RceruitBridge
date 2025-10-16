@@ -1,8 +1,9 @@
 
 import React from "react";
 import { Outlet, useLocation, Navigate } from "react-router-dom";
-import { User, PublicUser } from "@/api/entities";
-import { Athlete } from "@/api/entities";
+// TEMPORARY: Don't import User/PublicUser/Athlete to prevent Base44 initialization
+// import { User, PublicUser } from "@/api/entities";
+// import { Athlete } from "@/api/entities";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
@@ -111,7 +112,9 @@ export default function Layout({ children }) {
 
   const handleLogout = async () => {
     try {
-      await User.logout();
+      // TEMPORARY: Logout disabled since auth is disabled
+      // await User.logout();
+      window.location.href = "/";
     } catch (error) {
       console.error("Error logging out:", error);
       window.location.href = "/";
