@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "export-base44": "node scripts/export-base44-data.js",
+    "import-supabase": "node scripts/import-to-supabase.js"
   },
   "dependencies": {
     "@base44/sdk": "^0.1.2",
