@@ -43,12 +43,35 @@ const auth = {
   },
 
   async login() {
-    // Sign in with Google OAuth
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    // Sign in with Google OAuth (default)
+    const { data, error} = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: window.location.origin
       }
+    });
+    if (error) throw error;
+    return data;
+  },
+
+  async signUp(email, password) {
+    // Sign up with email/password
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin
+      }
+    });
+    if (error) throw error;
+    return data;
+  },
+
+  async signInWithEmail(email, password) {
+    // Sign in with email/password
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
     });
     if (error) throw error;
     return data;
