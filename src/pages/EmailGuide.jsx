@@ -141,10 +141,10 @@ export default function EmailGuide() {
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Mail className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/30">
+            <MessageSquare className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600 bg-clip-text text-transparent mb-4">
             Email Strategy Guide
           </h1>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">

@@ -7,13 +7,13 @@ export default function ScholarshipsNIL() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
       <div className="max-w-5xl mx-auto space-y-6">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
-            <GraduationCap className="w-6 h-6 text-white" />
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <GraduationCap className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Scholarships and NIL Collectives</h1>
-            <p className="text-slate-600">Clear facts on athletic aid, walk-ons, and how NIL works.</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600 bg-clip-text text-transparent">Scholarships & NIL</h1>
+            <p className="text-slate-600 text-lg">Clear facts on athletic aid, walk-ons, and how NIL works.</p>
           </div>
         </div>
 
@@ -82,24 +82,29 @@ export default function ScholarshipsNIL() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200/60 shadow-lg">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><DollarSign className="w-5 h-5" /> NIL Collectives: What to Know</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 shadow-md">
+                <DollarSign className="w-5 h-5 text-white" />
+              </div>
+              NIL Collectives: What to Know
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-slate-700">
             <ul className="list-disc ml-5 space-y-2">
               <li><strong>What they are:</strong> Groups that fund athlete NIL deals (appearances, social posts, camps, content, etc.).</li>
-              <li><strong>Budgets vary widely:</strong> 
+              <li><strong>Budgets vary widely:</strong>
                 <ul className="list-disc ml-5">
                   <li>Power Five (FBS): often multi-million dollar ranges.</li>
                   <li>Group of Five (FBS): typically high six to low seven figures.</li>
                   <li>FCS/D2: generally lower; varies by alumni/support.</li>
                 </ul>
               </li>
-              <li><strong>Rules matter:</strong> It’s not “pay-for-play” or guaranteed for recruiting. Deals must be for real NIL activity and comply with school/state policies.</li>
+              <li><strong>Rules matter:</strong> It's not "pay-for-play" or guaranteed for recruiting. Deals must be for real NIL activity and comply with school/state policies.</li>
               <li><strong>Walk-ons/PWOs at big FBS schools:</strong> Many programs still add them; exact numbers depend on roster needs and resources.</li>
             </ul>
-            <p className="text-sm text-slate-500">This is informational only. Policies evolve—always confirm with your school’s compliance office.</p>
+            <p className="text-sm text-green-800 font-medium mt-4">💡 This is informational only. Policies evolve—always confirm with your school's compliance office.</p>
           </CardContent>
         </Card>
 

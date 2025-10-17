@@ -256,23 +256,23 @@ export default function Profile() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
       <div className="max-w-4xl mx-auto space-y-8 pb-24">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
-            <UserIcon className="w-6 h-6 text-white" />
+          <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <UserIcon className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Athlete Profile</h1>
-            <p className="text-slate-600">Complete your profile to start connecting with coaches</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">Athlete Profile</h1>
+            <p className="text-slate-600 text-lg">Complete your profile to start connecting with coaches</p>
           </div>
         </div>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200/60 shadow-lg">
             <CardContent className="pt-6">
                 <Label className="text-base font-medium">Profile Completion</Label>
                 <div className="flex items-center gap-4 mt-2">
-                    <Progress value={profileCompletion} className="h-2 flex-1 [&>div]:bg-green-600" />
-                    <span className="font-semibold text-blue-600">{profileCompletion}%</span>
+                    <Progress value={profileCompletion} className="h-2 flex-1 [&>div]:bg-gradient-to-r [&>div]:from-green-500 [&>div]:to-emerald-600" />
+                    <span className="font-semibold text-green-600 text-lg">{profileCompletion}%</span>
                 </div>
-                 <p className="text-xs text-slate-500 mt-2">A complete profile is 80% more likely to get a coach's attention. Keep it updated!</p>
+                 <p className="text-sm text-green-800 mt-2 font-medium">✨ A complete profile is 80% more likely to get a coach's attention!</p>
             </CardContent>
         </Card>
 

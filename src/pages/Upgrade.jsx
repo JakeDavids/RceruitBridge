@@ -201,11 +201,11 @@ export default function Upgrade() {
               <Trophy className="w-8 h-8 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-4">
             Your trial just ended — but your recruiting journey doesn't have to.
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-            Don't let this opportunity slip away. Athletes who upgrade see <strong>3x more responses</strong> from coaches and get recruited faster.
+          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-6 font-medium">
+            Don't let this opportunity slip away. Athletes who upgrade see <strong className="text-red-600">3x more responses</strong> from coaches and get recruited faster.
           </p>
           <div className="bg-red-100 border border-red-300 rounded-lg p-4 max-w-2xl mx-auto">
             <p className="text-red-800 font-medium">
