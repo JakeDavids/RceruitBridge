@@ -1,34 +1,47 @@
-// TEMPORARY: Use mock entities to prevent Base44 initialization
-// This allows the app to load without Base44 authentication
-// TO RE-ENABLE BASE44: Uncomment the line below and comment out the mock import
-// import { base44, publicBase44 } from './base44Client';
-
-// Import mock entities instead of real Base44 entities
-export {
+// Using Supabase for all data storage and authentication
+// Migrated from Base44 - see QUICKSTART_SUPABASE.md for details
+import {
   User,
-  PublicUser,
   Athlete,
   School,
   Coach,
   Outreach,
   TargetedSchool,
   CoachContact,
-  QuestionnaireSubmission,
-  SchoolConnection,
-  Coaches,
-  OutreachLogs,
-  MailThreads,
   Mailbox,
   MailThread,
   Message,
   EmailIdentity,
-  FeatureFlag,
-  MailMessages,
-  EmailAliases,
-  Email,
-  UserIdentity,
-  InboundMessage,
-} from './mockEntities';
+} from './supabaseClient';
+
+// Export all entities
+export {
+  User,
+  Athlete,
+  School,
+  Coach,
+  Outreach,
+  TargetedSchool,
+  CoachContact,
+  Mailbox,
+  MailThread,
+  Message,
+  EmailIdentity,
+};
+
+// Aliases for backward compatibility
+export const PublicUser = User;
+export const QuestionnaireSubmission = Outreach; // Map to outreach for now
+export const SchoolConnection = TargetedSchool;
+export const Coaches = Coach;
+export const OutreachLogs = Outreach;
+export const MailThreads = MailThread;
+export const FeatureFlag = {}; // Not needed with Supabase
+export const MailMessages = Message;
+export const EmailAliases = EmailIdentity;
+export const Email = Message;
+export const UserIdentity = EmailIdentity;
+export const InboundMessage = Message;
 
 // ORIGINAL CODE (commented out to prevent Base44 initialization):
 // import { base44, publicBase44 } from './base44Client';

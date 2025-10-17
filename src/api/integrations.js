@@ -1,23 +1,53 @@
-import { base44 } from './base44Client';
+// Supabase integrations
+// Migrated from Base44 - see QUICKSTART_SUPABASE.md
+import { InvokeLLM, SendEmail, UploadFile, supabase } from './supabaseClient';
 
+// Core integrations
+export const Core = {
+  InvokeLLM,
+  SendEmail,
+  UploadFile,
 
+  // Additional functions (to be implemented as needed)
+  GenerateImage: async (params) => {
+    console.warn('GenerateImage not yet implemented with Supabase');
+    throw new Error('GenerateImage requires Edge Function implementation');
+  },
 
+  ExtractDataFromUploadedFile: async (params) => {
+    console.warn('ExtractDataFromUploadedFile not yet implemented');
+    throw new Error('ExtractDataFromUploadedFile requires Edge Function implementation');
+  },
 
-export const Core = base44.integrations.Core;
+  CreateFileSignedUrl: async ({ path }) => {
+    const { data, error } = await supabase.storage
+      .from('uploads')
+      .createSignedUrl(path, 3600); // 1 hour expiry
+    if (error) throw error;
+    return { signedUrl: data.signedUrl };
+  },
 
-export const InvokeLLM = base44.integrations.Core.InvokeLLM;
+  UploadPrivateFile: async ({ file }) => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `private/${fileName}`;
 
-export const SendEmail = base44.integrations.Core.SendEmail;
+    const { data, error } = await supabase.storage
+      .from('uploads')
+      .upload(filePath, file);
 
-export const UploadFile = base44.integrations.Core.UploadFile;
+    if (error) throw error;
+    return { path: filePath };
+  }
+};
 
-export const GenerateImage = base44.integrations.Core.GenerateImage;
+// Export individual functions
+export { InvokeLLM, SendEmail, UploadFile };
 
-export const ExtractDataFromUploadedFile = base44.integrations.Core.ExtractDataFromUploadedFile;
-
-export const CreateFileSignedUrl = base44.integrations.Core.CreateFileSignedUrl;
-
-export const UploadPrivateFile = base44.integrations.Core.UploadPrivateFile;
+export const GenerateImage = Core.GenerateImage;
+export const ExtractDataFromUploadedFile = Core.ExtractDataFromUploadedFile;
+export const CreateFileSignedUrl = Core.CreateFileSignedUrl;
+export const UploadPrivateFile = Core.UploadPrivateFile;
 
 
 
