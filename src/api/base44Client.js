@@ -20,7 +20,9 @@ export const base44 = new Proxy({}, {
             emailUsername: null,
             emailDomain: null,
             gmailLinked: false,
-            profile_picture_url: null
+            profile_picture_url: null,
+            onboarding_completed: true,
+            tour_progress: 'completed'
           };
         },
         async login() {
@@ -34,6 +36,10 @@ export const base44 = new Proxy({}, {
         async updateMyUserData(data) {
           console.log('[MOCK] base44.auth.updateMyUserData() called', data);
           return { success: true, ...data };
+        },
+        async update(id, data) {
+          console.log('[MOCK] base44.auth.update() called', id, data);
+          return { success: true, id, ...data };
         }
       };
     }
