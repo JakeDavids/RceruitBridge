@@ -44,10 +44,14 @@ const auth = {
 
   async login() {
     // Sign in with Google OAuth (default)
+    const redirectUrl = import.meta.env.PROD
+      ? 'https://www.recruitbridge.app/dashboard'
+      : 'http://localhost:5173/dashboard';
+
     const { data, error} = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin
+        redirectTo: redirectUrl
       }
     });
     if (error) throw error;
@@ -56,11 +60,15 @@ const auth = {
 
   async signUp(email, password) {
     // Sign up with email/password
+    const redirectUrl = import.meta.env.PROD
+      ? 'https://www.recruitbridge.app/dashboard'
+      : 'http://localhost:5173/dashboard';
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: window.location.origin
+        emailRedirectTo: redirectUrl
       }
     });
     if (error) throw error;

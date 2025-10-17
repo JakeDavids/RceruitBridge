@@ -95,9 +95,22 @@ export default function Layout({ children }) {
             const athleteData = await Athlete.filter({ created_by: currentUser.email });
             if (athleteData.length > 0) {
               setAthlete(athleteData[0]);
+            } else {
+              // First-time user with no athlete profile
+              // Check if onboarding is completed
+              if (!currentUser.onboarding_completed && location.pathname !== '/Profile') {
+                // Redirect to Profile (onboarding)
+                window.location.href = '/Profile';
+                return;
+              }
             }
           } catch (error) {
             console.log('No athlete profile yet:', error);
+            // First-time user - redirect to Profile
+            if (!currentUser.onboarding_completed && location.pathname !== '/Profile') {
+              window.location.href = '/Profile';
+              return;
+            }
           }
         } else {
           setUser(null);
@@ -257,22 +270,17 @@ export default function Layout({ children }) {
     );
   }
 
-  // If not authenticated, redirect to landing/login
+  // If not authenticated, trigger login (redirects to recruitbridge.net)
   if (!user && !loginInitiated) {
-    // Check if on landing page
-    if (location.pathname === '/' || location.pathname === '/login') {
-      // Allow access to landing page
-      return children || <Outlet />;
-    }
-
-    // Initiate login for protected routes
+    // Trigger Google OAuth login
     setLoginInitiated(true);
     User.login();
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="text-center">
           <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
-          <p className="text-slate-600">Redirecting to sign in...</p>
+          <p className="text-slate-600 text-lg">Redirecting to sign in...</p>
+          <p className="text-slate-500 text-sm mt-2">Please visit recruitbridge.net to create an account</p>
         </div>
       </div>
     );

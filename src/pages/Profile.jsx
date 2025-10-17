@@ -278,10 +278,16 @@ export default function Profile() {
 
       if (existingAthlete) {
         await Athlete.update(existingAthlete.id, payload);
+        // Mark onboarding as complete if this is their first save
+        if (!user.onboarding_completed) {
+          await User.updateMyUserData({ onboarding_completed: true });
+        }
         navigate(createPageUrl("Dashboard"));
       } else {
         await Athlete.create(payload);
-        navigate(createPageUrl("Welcome"));
+        // Mark onboarding as complete for first-time users
+        await User.updateMyUserData({ onboarding_completed: true });
+        navigate(createPageUrl("Dashboard"));
       }
     } catch (error) {
       console.error("Error saving athlete:", error);
