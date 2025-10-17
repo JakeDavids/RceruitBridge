@@ -5,6 +5,7 @@ import Layout from '@/pages/Layout';
 // CRITICAL FIX: Lazy load ALL pages to prevent Base44 entity imports
 // Static imports cause Dashboard etc to import entities.js immediately
 // which triggers Base44 initialization and redirect to base44.app/login
+const Landing = React.lazy(() => import('@/pages/Landing'));
 const Dashboard = React.lazy(() => import('@/pages/Dashboard'));
 const Profile = React.lazy(() => import('@/pages/Profile'));
 const Schools = React.lazy(() => import('@/pages/Schools'));
@@ -34,10 +35,11 @@ export default function Pages() {
           </div>
         }>
           <Routes>
-            {/* Default route - redirect to Dashboard */}
-            <Route path="/" element={<Navigate to="/Dashboard" replace />} />
+            {/* Landing page (public) */}
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Landing />} />
 
-          {/* Main app routes */}
+          {/* Main app routes (protected) */}
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Schools" element={<Schools />} />

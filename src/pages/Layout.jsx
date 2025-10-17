@@ -1,9 +1,8 @@
 
 import React from "react";
 import { Outlet, useLocation, Navigate } from "react-router-dom";
-// TEMPORARY: Don't import User/PublicUser/Athlete to prevent Base44 initialization
-// import { User, PublicUser } from "@/api/entities";
-// import { Athlete } from "@/api/entities";
+import { User } from "@/api/entities";
+import { Athlete } from "@/api/entities";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
@@ -85,28 +84,29 @@ export default function Layout({ children }) {
   React.useEffect(() => {
     const checkUser = async () => {
       try {
-        // TEMPORARY: Skip authentication check since Base44 auth is disabled
-        // This prevents redirect to base44.app/login
-        // TODO: Re-enable when Google Auth is configured
+        // Check if user is authenticated via Supabase
+        const currentUser = await User.me();
 
-        // const isPublicPath = PUBLIC_PATHS.has(location.pathname);
-        // const AuthClient = isPublicPath ? PublicUser : User;
-        // const currentUser = await AuthClient.me();
-        // setUser(currentUser);
+        if (currentUser) {
+          setUser(currentUser);
 
-        // For now, set user to null and skip authentication
+          // Load athlete profile if exists
+          try {
+            const athleteData = await Athlete.filter({ created_by: currentUser.email });
+            if (athleteData.length > 0) {
+              setAthlete(athleteData[0]);
+            }
+          } catch (error) {
+            console.log('No athlete profile yet:', error);
+          }
+        } else {
+          setUser(null);
+          setAthlete(null);
+        }
+      } catch (error) {
+        console.log('Auth check error:', error);
         setUser(null);
         setAthlete(null);
-
-        // Original code (commented out):
-        // if (currentUser) {
-        //   const athleteData = await Athlete.filter({ created_by: currentUser.email });
-        //   if (athleteData.length > 0) {
-        //     setAthlete(athleteData[0]);
-        //   }
-        // }
-      } catch {
-        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -116,9 +116,7 @@ export default function Layout({ children }) {
 
   const handleLogout = async () => {
     try {
-      // TEMPORARY: Logout disabled since auth is disabled
-      // await User.logout();
-      window.location.href = "/";
+      await User.logout();
     } catch (error) {
       console.error("Error logging out:", error);
       window.location.href = "/";
@@ -259,34 +257,38 @@ export default function Layout({ children }) {
     );
   }
 
-  // Authentication disabled in Base44 - allow access without login
-  // Users can access the app without authentication for now
-  // TODO: Re-enable Google Auth once everything is set up
+  // If not authenticated, redirect to landing/login
+  if (!user && !loginInitiated) {
+    // Check if on landing page
+    if (location.pathname === '/' || location.pathname === '/login') {
+      // Allow access to landing page
+      return children || <Outlet />;
+    }
 
-  // if (!user && !loginInitiated) {
-  //   setLoginInitiated(true);
-  //   User.login();
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-  //       <div className="text-center">
-  //         <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
-  //         <p className="text-slate-600">Redirecting to login...</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+    // Initiate login for protected routes
+    setLoginInitiated(true);
+    User.login();
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="text-center">
+          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
+          <p className="text-slate-600">Redirecting to sign in...</p>
+        </div>
+      </div>
+    );
+  }
 
-  // if (!user && loginInitiated) {
-  //   // Waiting for Base44 redirect/callback
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-  //       <div className="text-center">
-  //         <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
-  //         <p className="text-slate-600">Authenticating...</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (!user && loginInitiated) {
+    // Waiting for auth callback
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="text-center">
+          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
+          <p className="text-slate-600">Authenticating...</p>
+        </div>
+      </div>
+    );
+  }
 
   // ✅ Authenticated routes with sidebar
   return (

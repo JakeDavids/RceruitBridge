@@ -1,21 +1,30 @@
 import React from 'react';
 import { Users, Mail, Target, TrendingUp, BarChart3, Clock, CheckCircle, Facebook, Twitter, Instagram, Sparkles, Zap, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { User } from '@/api/entities';
 
 export default function RecruitBridgeLanding() {
-  const handleGetStarted = () => {
-    // Redirect to signup page
-    window.location.href = 'https://www.recruitbridge.app/signup';
+  const handleGetStarted = async () => {
+    // Trigger Google OAuth login
+    try {
+      await User.login();
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
-  const handleLogin = () => {
-    // Redirect to login page
-    window.location.href = 'https://www.recruitbridge.app/login';
+  const handleLogin = async () => {
+    // Trigger Google OAuth login
+    try {
+      await User.login();
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
   const handleLaunchApp = () => {
     // Redirect to dashboard
-    window.location.href = 'https://www.recruitbridge.app/dashboard';
+    window.location.href = '/dashboard';
   };
 
   return (
