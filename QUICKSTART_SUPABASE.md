@@ -12,7 +12,7 @@
 - `MIGRATION_CHECKLIST.md` - 16-phase checklist
 - `supabase-schema.sql` - Complete database schema
 - `src/api/supabaseClient.js` - Supabase client (replaces Base44)
-- `scripts/export-base44-data.js` - Export script
+- `CSV_IMPORT_GUIDE.md` - Guide for importing schools from Google Sheets
 - `scripts/import-to-supabase.js` - Import script
 
 ## 🎯 Next Steps (DO THESE NOW!)
@@ -72,25 +72,16 @@ Replace with YOUR actual credentials from Step 2!
 npm install @supabase/supabase-js dotenv
 ```
 
-### Step 6: Export Base44 Data (Optional - 5 minutes)
+### Step 6: Import Schools from Google Sheets (Optional - 15 minutes)
 
-Only if you have existing data in Base44:
+If you have schools data in Google Sheets:
 
-```bash
-npm run export-base44
-```
+1. Export from Google Sheets: **File** → **Download** → **CSV**
+2. Save as `schools.csv` in project root
+3. Follow the **CSV_IMPORT_GUIDE.md** for detailed instructions
+4. Or use Supabase's built-in CSV import in Table Editor
 
-This creates `data-export/` folder with all your data.
-
-### Step 7: Import to Supabase (Optional - 5 minutes)
-
-If you exported data:
-
-```bash
-npm run import-supabase
-```
-
-### Step 8: Set Up Google OAuth (10 minutes)
+### Step 7: Set Up Google OAuth (10 minutes)
 
 1. Go to **Authentication** → **Providers** in Supabase
 2. Enable **Google**
@@ -103,7 +94,7 @@ npm run import-supabase
 
 ## 🎉 Once Complete
 
-After completing steps 1-8:
+After completing steps 1-7:
 
 1. Open `src/api/entities.js`
 2. Change imports from:
@@ -129,8 +120,8 @@ After completing steps 1-8:
 ## ⏱️ Time Estimate
 
 - **Steps 1-5**: ~13 minutes
-- **Steps 6-7** (optional): ~10 minutes
-- **Step 8**: ~10 minutes
+- **Step 6** (optional CSV import): ~15 minutes
+- **Step 7** (Google OAuth): ~10 minutes
 - **Code updates**: ~30 minutes
 - **Testing**: ~30 minutes
 
@@ -147,13 +138,32 @@ Follow the detailed guides:
 
 ---
 
-## 🐛 Profile Page Fixed!
+## 🐛 Profile Page Fix - Attempt 3 Deployed!
 
-The white screen issue is now resolved:
-- Disabled guided tour in mock mode
-- Page now loads all form fields
-- Save button works correctly
-- Redirects to Dashboard after save
+Latest fix deployed with comprehensive error handling:
+- Wrapped all async calls in try-catch blocks
+- Added finally block to ALWAYS exit loading state
+- Mock user fallback if User.me() fails
+- Added debug console logs
+- Should resolve white screen issue once and for all
+
+**Test the fix:** Visit `/profile` and check browser console for debug logs
+
+---
+
+## 📂 Where to Find Your Files
+
+All Supabase setup files are in your project root:
+
+```
+/Users/davidskids/Projects/RecruitBridge/
+├── QUICKSTART_SUPABASE.md      ← You are here!
+├── SUPABASE_SETUP.md            ← Detailed setup guide
+├── MIGRATION_CHECKLIST.md       ← 16-phase checklist
+├── CSV_IMPORT_GUIDE.md          ← Import schools from Google Sheets
+├── supabase-schema.sql          ← Run this in Supabase SQL Editor
+└── src/api/supabaseClient.js    ← Ready to use once Supabase is set up
+```
 
 ---
 

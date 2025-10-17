@@ -44,14 +44,19 @@
 - [ ] **5.3** Set bucket to Public
 - [ ] **5.4** Configure RLS policies for uploads bucket
 
-## Phase 6: Export Data from Base44
+## Phase 6: Import Schools Data from Google Sheets (Optional)
 
-- [ ] **6.1** Open terminal in project root
-- [ ] **6.2** Run: `node scripts/export-base44-data.js`
-- [ ] **6.3** Wait for export to complete
-- [ ] **6.4** Verify `data-export/` folder created with JSON files
-- [ ] **6.5** Check each JSON file has data
-- [ ] **6.6** Keep backup copy of exported data
+**NOTE:** Base44 data export is NOT needed - starting fresh with Supabase!
+
+If you have schools data in Google Sheets:
+
+- [ ] **6.1** Export from Google Sheets: File → Download → CSV
+- [ ] **6.2** Save as `schools.csv` in project root
+- [ ] **6.3** Read `CSV_IMPORT_GUIDE.md` for full instructions
+- [ ] **6.4** Create import script or use Supabase built-in CSV import
+- [ ] **6.5** Verify schools imported in Supabase Table Editor
+
+If no schools data to import, skip this phase entirely!
 
 ## Phase 7: Configure Environment Variables
 
@@ -71,14 +76,14 @@
 - [ ] **8.2** Run: `npm install dotenv` (for import scripts)
 - [ ] **8.3** Verify installation successful
 
-## Phase 9: Import Data to Supabase
+## Phase 9: Verify Database Setup
 
-- [ ] **9.1** Make sure schema SQL has been run (Phase 3)
-- [ ] **9.2** Make sure .env.local is configured (Phase 7)
-- [ ] **9.3** Run: `node scripts/import-to-supabase.js`
-- [ ] **9.4** Wait for import to complete
-- [ ] **9.5** Check Supabase Table Editor to verify data imported
-- [ ] **9.6** Verify record counts match export
+- [ ] **9.1** Go to Supabase Table Editor
+- [ ] **9.2** Verify all tables exist (users, athletes, schools, etc.)
+- [ ] **9.3** Check that schools table has data (if you imported CSV)
+- [ ] **9.4** Test RLS policies are enabled
+- [ ] **9.5** Everything should be empty initially - that's normal!
+- [ ] **9.6** Data will be created as you use the app
 
 ## Phase 10: Update Application Code
 
@@ -157,14 +162,17 @@ For AI and email features, you'll need Supabase Edge Functions:
 **Problem**: Schema SQL fails
 - **Solution**: Check for syntax errors, run line by line
 
-**Problem**: Import fails with foreign key errors
-- **Solution**: Make sure import order is correct (users first, then athletes, etc.)
+**Problem**: CSV import fails
+- **Solution**: Check column names match exactly (lowercase, underscores). See CSV_IMPORT_GUIDE.md
 
 **Problem**: RLS policies block data access
 - **Solution**: Check user is authenticated, verify RLS policies
 
 **Problem**: Authentication doesn't work
 - **Solution**: Verify Google OAuth credentials, check redirect URIs
+
+**Problem**: Profile page shows white screen
+- **Solution**: Check browser console for debug logs. Latest fix (Attempt 3) should resolve this.
 
 ---
 
@@ -173,15 +181,18 @@ For AI and email features, you'll need Supabase Edge Functions:
 - Supabase Docs: https://supabase.com/docs
 - Supabase Discord: https://discord.supabase.com
 - Check Supabase logs in dashboard for errors
+- See CSV_IMPORT_GUIDE.md for schools data import
 
 ---
 
 ## Estimated Time
 
 - **Phase 1-5**: 30-60 minutes
-- **Phase 6-9**: 15-30 minutes
+- **Phase 6-9**: 15-30 minutes (optional CSV import)
 - **Phase 10-12**: 2-4 hours (testing)
 - **Phase 13-14**: 1-2 hours (optional)
-- **Total**: ~4-6 hours
+- **Total**: ~3-5 hours (since no Base44 export needed!)
 
 **Current Status**: 🟢 Ready to begin Phase 2!
+
+**Note**: You're starting fresh with Supabase, so no Base44 data migration needed. This saves time!
