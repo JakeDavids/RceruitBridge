@@ -30,6 +30,10 @@ export const base44 = new Proxy({}, {
         async logout() {
           console.log('[MOCK] base44.auth.logout() called - redirecting home');
           window.location.href = '/';
+        },
+        async updateMyUserData(data) {
+          console.log('[MOCK] base44.auth.updateMyUserData() called', data);
+          return { success: true, ...data };
         }
       };
     }
@@ -86,6 +90,14 @@ export const base44 = new Proxy({}, {
                 // Special handling for InvokeLLM
                 if (methodName === 'InvokeLLM') {
                   return "This is a mock AI-generated response. In production, this would call Claude API to generate email content.";
+                }
+
+                // Special handling for UploadFile
+                if (methodName === 'UploadFile') {
+                  return {
+                    file_url: 'https://via.placeholder.com/150',
+                    success: true
+                  };
                 }
 
                 return { success: true, data: null };
