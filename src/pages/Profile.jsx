@@ -128,29 +128,50 @@ export default function Profile() {
 
   const loadAthlete = async () => {
     try {
-      const currentUser = await User.me();
+      console.log('[Profile] Starting loadAthlete...');
 
-      // 👉 TEMP: print your user ID to the browser console.
-      // REMOVE this line after you've copied the ID.
-      console.log("Your User ID:", currentUser.id);
+      // Try to get user, but don't fail if it doesn't work
+      let currentUser = null;
+      try {
+        currentUser = await User.me();
+        console.log('[Profile] User loaded:', currentUser);
+        setUser(currentUser);
+      } catch (userError) {
+        console.warn('[Profile] Could not load user (mock mode?):', userError);
+        // Set a mock user for development
+        currentUser = {
+          id: 'mock-user-id',
+          email: 'athlete@mock.com'
+        };
+        setUser(currentUser);
+      }
 
-      setUser(currentUser);
+      // Try to load existing athlete data
+      try {
+        const athletes = await Athlete.filter({ created_by: currentUser.email });
+        console.log('[Profile] Athletes loaded:', athletes);
 
-      const athletes = await Athlete.filter({ created_by: currentUser.email });
-      if (athletes.length > 0) {
-        setAthlete(athletes[0]);
-        setExistingAthlete(athletes[0]);
-      } else {
-        // If no existing athlete profile, initialize email with current user's email
-        setAthlete(prev => ({
-          ...prev,
-          email: currentUser.email
-        }));
+        if (athletes.length > 0) {
+          setAthlete(athletes[0]);
+          setExistingAthlete(athletes[0]);
+        } else {
+          // If no existing athlete profile, initialize email with current user's email
+          setAthlete(prev => ({
+            ...prev,
+            email: currentUser.email
+          }));
+        }
+      } catch (athleteError) {
+        console.warn('[Profile] Could not load athletes:', athleteError);
+        // Just use default empty athlete state
       }
     } catch (error) {
-      console.error("Error loading athlete:", error);
+      console.error('[Profile] Fatal error loading athlete:', error);
+    } finally {
+      // ALWAYS stop loading, even if there's an error
+      console.log('[Profile] Setting loading to false');
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handlePictureUpload = async (event) => {
