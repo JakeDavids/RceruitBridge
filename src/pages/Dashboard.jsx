@@ -196,16 +196,16 @@ export default function Dashboard() {
         {/* Header */}
         <motion.div variants={containerVariants} className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Welcome back{athlete ? `, ${athlete.first_name}` : ''}! 🏆
             </h1>
-            <p className="text-slate-600 mt-2">
+            <p className="text-slate-600 mt-2 text-lg">
               Track your recruiting progress and manage coach communications
             </p>
           </div>
           {!athlete && (
             <Link to={createPageUrl("Profile")}>
-              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg">
+              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-200">
                 <Plus className="w-4 h-4 mr-2" />
                 Complete Profile
               </Button>

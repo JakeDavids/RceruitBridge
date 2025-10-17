@@ -234,29 +234,34 @@ function TargetList({ schools, targetedSchools, onRemove, limitReached }) {
   }, [schools, targetedSchools]);
 
   return (
-    <Card className="mb-8 bg-blue-50/50 border-blue-200">
+    <Card className="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 shadow-lg">
       <CardHeader>
-        <CardTitle className="flex items-center gap-3 text-blue-800">
-          <Star className="w-6 h-6" />
-          My Target List
+        <CardTitle className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md">
+            <Star className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            My Target List
+          </span>
         </CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {myTargets.length > 0 ? (
             myTargets.map(school => (
-              <div key={school.id} className="p-4 bg-white rounded-lg border flex justify-between items-center">
+              <div key={school.id} className="p-4 bg-white rounded-xl border-2 border-blue-100 shadow-sm hover:shadow-md hover:border-blue-200 transition-all flex justify-between items-center">
                 <div>
-                  <p className="font-semibold">{getFormattedSchoolName(school.name)}</p>
-                  <p className="text-sm text-slate-500">{school.division}</p>
+                  <p className="font-semibold text-slate-900">{getFormattedSchoolName(school.name)}</p>
+                  <p className="text-sm text-slate-500 font-medium">{school.division}</p>
                 </div>
-                <Button variant="ghost" size="icon" onClick={() => onRemove(school.id)} disabled={limitReached}>
-                  <Trash2 className={`w-4 h-4 ${limitReached ? 'text-gray-400' : 'text-red-500'}`} />
+                <Button variant="ghost" size="icon" onClick={() => onRemove(school.id)} disabled={limitReached} className="hover:bg-red-50">
+                  <Trash2 className={`w-4 h-4 ${limitReached ? 'text-gray-400' : 'text-red-500 hover:text-red-600'}`} />
                 </Button>
               </div>
             ))
         ) : (
-            <div className="col-span-full text-center py-6 text-slate-600">
-                <p>Your target schools will appear here once you add them.</p>
+            <div className="col-span-full text-center py-8 text-slate-600">
+                <Star className="w-12 h-12 mx-auto mb-3 text-blue-300" />
+                <p className="font-medium">Your target schools will appear here once you add them.</p>
             </div>
         )}
       </CardContent>
@@ -304,14 +309,18 @@ function AISuggestions({ athlete, user, onTargetSchool }) {
     }
 
     return (
-        <Card className="mb-8 bg-purple-50/50 border-purple-200 overflow-hidden">
+        <Card className="mb-8 bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200/60 shadow-lg overflow-hidden">
             <CardHeader>
-                <CardTitle className="flex items-center justify-between text-purple-800">
+                <CardTitle className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Bot className="w-6 h-6" />
-                      AI-Powered Recommendations
+                      <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 shadow-md">
+                        <Bot className="w-5 h-5 text-white" />
+                      </div>
+                      <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        AI-Powered Recommendations
+                      </span>
                     </div>
-                    <Badge variant={isPro ? "default" : "secondary"} className={isPro ? "bg-purple-600" : ""}>
+                    <Badge variant={isPro ? "default" : "secondary"} className={isPro ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0" : ""}>
                       {user?.plan === 'unlimited' ? "Unlimited Access" : isPro ? "Pro Feature" : "Pro Plan Required"}
                     </Badge>
                 </CardTitle>
@@ -552,12 +561,12 @@ export default function Schools() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
-              <Target className="w-6 h-6 text-white" />
+            <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+              <Target className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Target Schools</h1>
-              <p className="text-slate-600">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent">Target Schools</h1>
+              <p className="text-slate-600 text-lg">
                 Find and select schools that match your goals
                 {plan === 'unlimited' && <span className="ml-2 text-purple-600 font-medium">✨ Unlimited Access</span>}
               </p>
