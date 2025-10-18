@@ -79,7 +79,6 @@ export default function Layout({ children }) {
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
   const [athlete, setAthlete] = React.useState(null);
-  const [loginInitiated, setLoginInitiated] = React.useState(false);
 
   React.useEffect(() => {
     const checkUser = async () => {
@@ -270,32 +269,18 @@ export default function Layout({ children }) {
     );
   }
 
-  // If not authenticated, trigger login (redirects to recruitbridge.net)
-  if (!user && !loginInitiated) {
-    // Trigger Google OAuth login
-    setLoginInitiated(true);
-    User.login();
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="text-center">
-          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
-          <p className="text-slate-600 text-lg">Redirecting to sign in...</p>
-          <p className="text-slate-500 text-sm mt-2">Please visit recruitbridge.net to create an account</p>
-        </div>
-      </div>
-    );
+  // If not authenticated and not on login page, redirect to login
+  if (!user) {
+    if (location.pathname !== '/login') {
+      return <Navigate to="/login" replace />;
+    }
+    // On login page, show it without sidebar
+    return children;
   }
 
-  if (!user && loginInitiated) {
-    // Waiting for auth callback
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="text-center">
-          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"></div>
-          <p className="text-slate-600">Authenticating...</p>
-        </div>
-      </div>
-    );
+  // If authenticated and on login page, redirect to Dashboard
+  if (user && location.pathname === '/login') {
+    return <Navigate to="/Dashboard" replace />;
   }
 
   // ✅ Authenticated routes with sidebar

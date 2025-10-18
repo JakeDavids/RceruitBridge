@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '@/pages/Layout';
 
 // Lazy load all app pages
+const Login = React.lazy(() => import('@/pages/Login'));
 const Dashboard = React.lazy(() => import('@/pages/Dashboard'));
 const Profile = React.lazy(() => import('@/pages/Profile'));
 const Schools = React.lazy(() => import('@/pages/Schools'));
@@ -32,8 +33,9 @@ export default function Pages() {
           </div>
         }>
           <Routes>
-            {/* Root redirects to Dashboard - no landing page on .app! */}
-            <Route path="/" element={<Navigate to="/Dashboard" replace />} />
+            {/* Root redirects to Login for unauthenticated, Dashboard for authenticated */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/login" element={<Login />} />
 
           {/* Main app routes (protected) */}
           <Route path="/Dashboard" element={<Dashboard />} />
