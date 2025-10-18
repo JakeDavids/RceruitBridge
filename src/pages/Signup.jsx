@@ -1,67 +1,92 @@
 import React, { useState } from 'react';
 import { User } from '@/api/supabaseClient';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Loader2, LogIn } from 'lucide-react';
+import { Mail, Lock, Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function Login() {
+export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSignup = async () => {
     try {
       setLoading(true);
       setError('');
       await User.login(); // Google OAuth
     } catch (err) {
-      console.error('Google login error:', err);
-      setError('Failed to sign in with Google. Please try again.');
+      console.error('Google signup error:', err);
+      setError('Failed to sign up with Google. Please try again.');
       setLoading(false);
     }
   };
 
-  const handleEmailLogin = async (e) => {
+  const handleEmailSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setMessage('');
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    // Validate password length
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      setLoading(false);
+      return;
+    }
 
     try {
-      await User.signInWithEmail(email, password);
-      // Will redirect automatically on success
+      await User.signUp(email, password);
+      setMessage('Success! Check your email for the confirmation link.');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
     } catch (err) {
-      console.error('Login error:', err);
-      setError(err.message || 'Login failed. Please try again.');
+      console.error('Signup error:', err);
+      setError(err.message || 'Signup failed. Please try again.');
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-emerald-900 to-teal-900 p-4">
       {/* Animated background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -inset-[10px] opacity-50">
-          {[...Array(20)].map((_, i) => (
+        <div className="absolute -inset-[10px] opacity-40">
+          {[...Array(15)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute rounded-full"
               style={{
-                width: Math.random() * 300 + 50,
-                height: Math.random() * 300 + 50,
+                width: Math.random() * 400 + 100,
+                height: Math.random() * 400 + 100,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
                 background: `radial-gradient(circle, ${
-                  i % 2 === 0 ? 'rgba(59, 130, 246, 0.1)' : 'rgba(249, 178, 51, 0.1)'
+                  i % 3 === 0
+                    ? 'rgba(16, 185, 129, 0.15)'
+                    : i % 3 === 1
+                    ? 'rgba(249, 178, 51, 0.1)'
+                    : 'rgba(59, 130, 246, 0.1)'
                 }, transparent)`,
               }}
               animate={{
-                x: [0, Math.random() * 100 - 50],
-                y: [0, Math.random() * 100 - 50],
-                scale: [1, 1.2, 1],
+                x: [0, Math.random() * 50 - 25],
+                y: [0, Math.random() * 50 - 25],
+                scale: [1, 1.1, 1],
               }}
               transition={{
-                duration: Math.random() * 10 + 10,
+                duration: Math.random() * 15 + 10,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
@@ -70,7 +95,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Login Card */}
+      {/* Signup Card */}
       <motion.div
         className="relative w-full max-w-md bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-8"
         initial={{ opacity: 0, y: 20 }}
@@ -81,20 +106,20 @@ export default function Login() {
         <div className="text-center mb-8">
           <motion.div
             className="inline-block mb-4"
-            whileHover={{ rotate: 360 }}
-            transition={{ duration: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center shadow-lg">
               <span className="text-2xl font-bold text-white">RB</span>
             </div>
           </motion.div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
           <p className="text-white/70">
-            Sign in to continue your recruiting journey
+            Start your recruiting journey today
           </p>
         </div>
 
-        {/* Error Message */}
+        {/* Error/Success Messages */}
         {error && (
           <motion.div
             className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm"
@@ -104,10 +129,20 @@ export default function Login() {
             {error}
           </motion.div>
         )}
+        {message && (
+          <motion.div
+            className="mb-4 p-3 bg-emerald-500/20 border border-emerald-500/50 rounded-lg text-emerald-200 text-sm flex items-start gap-2"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <span>{message}</span>
+          </motion.div>
+        )}
 
-        {/* Google Sign In Button */}
+        {/* Google Sign Up Button */}
         <motion.button
-          onClick={handleGoogleLogin}
+          onClick={handleGoogleSignup}
           disabled={loading}
           className="w-full mb-6 py-3 px-4 bg-white hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-md flex items-center justify-center gap-3 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           whileHover={{ scale: loading ? 1 : 1.02 }}
@@ -131,7 +166,7 @@ export default function Login() {
               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
             />
           </svg>
-          {loading ? 'Signing in...' : 'Sign in with Google'}
+          {loading ? 'Signing up...' : 'Sign up with Google'}
         </motion.button>
 
         {/* Divider */}
@@ -140,14 +175,14 @@ export default function Login() {
             <div className="w-full border-t border-white/20"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-slate-900/50 text-white/60">Or sign in with email</span>
+            <span className="px-4 bg-emerald-900/50 text-white/60">Or sign up with email</span>
           </div>
         </div>
 
         {/* Email/Password Form */}
-        <form onSubmit={handleEmailLogin} className="space-y-4">
+        <form onSubmit={handleEmailSignup} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">Email</label>
+            <label className="block text-sm font-medium text-white/80 mb-2">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
               <input
@@ -156,7 +191,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
-                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
+                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50"
                 placeholder="you@example.com"
               />
             </div>
@@ -173,8 +208,25 @@ export default function Login() {
                 required
                 disabled={loading}
                 minLength={6}
-                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
-                placeholder="••••••••"
+                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50"
+                placeholder="At least 6 characters"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-white/80 mb-2">Confirm Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                disabled={loading}
+                minLength={6}
+                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50"
+                placeholder="Confirm your password"
               />
             </div>
           </div>
@@ -182,32 +234,32 @@ export default function Login() {
           <motion.button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-semibold rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             whileHover={{ scale: loading ? 1 : 1.02 }}
             whileTap={{ scale: loading ? 1 : 0.98 }}
           >
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Signing in...
+                Creating account...
               </>
             ) : (
               <>
-                <LogIn className="w-5 h-5" />
-                Sign In
+                Create Account
+                <ArrowRight className="w-5 h-5" />
               </>
             )}
           </motion.button>
         </form>
 
-        {/* Signup Link */}
+        {/* Login Link */}
         <div className="mt-6 text-center text-white/70 text-sm">
-          Don't have an account?{' '}
+          Already have an account?{' '}
           <Link
-            to="/signup"
-            className="text-blue-400 hover:text-blue-300 font-semibold"
+            to="/login"
+            className="text-emerald-400 hover:text-emerald-300 font-semibold"
           >
-            Sign Up
+            Sign In
           </Link>
         </div>
 

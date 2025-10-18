@@ -94,22 +94,9 @@ export default function Layout({ children }) {
             const athleteData = await Athlete.filter({ created_by: currentUser.email });
             if (athleteData.length > 0) {
               setAthlete(athleteData[0]);
-            } else {
-              // First-time user with no athlete profile
-              // Check if onboarding is completed
-              if (!currentUser.onboarding_completed && location.pathname !== '/Profile') {
-                // Redirect to Profile (onboarding)
-                window.location.href = '/Profile';
-                return;
-              }
             }
           } catch (error) {
             console.log('No athlete profile yet:', error);
-            // First-time user - redirect to Profile
-            if (!currentUser.onboarding_completed && location.pathname !== '/Profile') {
-              window.location.href = '/Profile';
-              return;
-            }
           }
         } else {
           setUser(null);
@@ -269,18 +256,27 @@ export default function Layout({ children }) {
     );
   }
 
-  // If not authenticated and not on login page, redirect to login
-  if (!user) {
-    if (location.pathname !== '/login') {
-      return <Navigate to="/login" replace />;
-    }
-    // On login page, show it without sidebar
+  // Check if current path is public
+  const isPublicPath = PUBLIC_PATHS.has(location.pathname);
+
+  // If not authenticated and not on public page, redirect to login
+  if (!user && !isPublicPath) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // If not authenticated and on public page, show without sidebar
+  if (!user && isPublicPath) {
     return children;
   }
 
   // If authenticated and on login page, redirect to Dashboard
   if (user && location.pathname === '/login') {
     return <Navigate to="/Dashboard" replace />;
+  }
+
+  // If authenticated but no onboarding completed, redirect to Profile
+  if (user && !user.onboarding_completed && location.pathname !== '/Profile') {
+    return <Navigate to="/Profile" replace />;
   }
 
   // ✅ Authenticated routes with sidebar
