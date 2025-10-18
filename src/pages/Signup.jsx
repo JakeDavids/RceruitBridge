@@ -59,7 +59,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-emerald-900 to-teal-900 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#001F3F] via-[#0046AD] to-[#001F3F] p-4">
       {/* Animated background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -inset-[10px] opacity-40">
@@ -74,10 +74,10 @@ export default function Signup() {
                 top: `${Math.random() * 100}%`,
                 background: `radial-gradient(circle, ${
                   i % 3 === 0
-                    ? 'rgba(16, 185, 129, 0.15)'
+                    ? 'rgba(0, 70, 173, 0.15)'
                     : i % 3 === 1
-                    ? 'rgba(249, 178, 51, 0.1)'
-                    : 'rgba(59, 130, 246, 0.1)'
+                    ? 'rgba(249, 178, 51, 0.12)'
+                    : 'rgba(0, 70, 173, 0.1)'
                 }, transparent)`,
               }}
               animate={{
@@ -109,8 +109,8 @@ export default function Signup() {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-2xl font-bold text-white">RB</span>
+            <div className="w-16 h-16 bg-gradient-to-br from-[#F9B233] to-[#FCD34D] rounded-full flex items-center justify-center shadow-lg">
+              <span className="text-2xl font-bold text-[#0046AD]">RB</span>
             </div>
           </motion.div>
           <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
@@ -131,7 +131,7 @@ export default function Signup() {
         )}
         {message && (
           <motion.div
-            className="mb-4 p-3 bg-emerald-500/20 border border-emerald-500/50 rounded-lg text-emerald-200 text-sm flex items-start gap-2"
+            className="mb-4 p-3 bg-[#F9B233]/20 border border-[#F9B233]/50 rounded-lg text-[#FCD34D] text-sm flex items-start gap-2"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -175,7 +175,7 @@ export default function Signup() {
             <div className="w-full border-t border-white/20"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-emerald-900/50 text-white/60">Or sign up with email</span>
+            <span className="px-4 bg-[#001F3F]/50 text-white/60">Or sign up with email</span>
           </div>
         </div>
 
@@ -191,7 +191,7 @@ export default function Signup() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
-                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50"
+                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#F9B233] focus:border-transparent disabled:opacity-50"
                 placeholder="you@example.com"
               />
             </div>
@@ -208,7 +208,7 @@ export default function Signup() {
                 required
                 disabled={loading}
                 minLength={6}
-                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50"
+                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#F9B233] focus:border-transparent disabled:opacity-50"
                 placeholder="At least 6 characters"
               />
             </div>
@@ -225,7 +225,7 @@ export default function Signup() {
                 required
                 disabled={loading}
                 minLength={6}
-                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:opacity-50"
+                className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#F9B233] focus:border-transparent disabled:opacity-50"
                 placeholder="Confirm your password"
               />
             </div>
@@ -234,7 +234,7 @@ export default function Signup() {
           <motion.button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-semibold rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 bg-gradient-to-r from-[#F9B233] to-[#FCD34D] hover:from-[#FCD34D] hover:to-[#F9B233] text-[#0046AD] font-semibold rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             whileHover={{ scale: loading ? 1 : 1.02 }}
             whileTap={{ scale: loading ? 1 : 0.98 }}
           >
@@ -257,7 +257,7 @@ export default function Signup() {
           Already have an account?{' '}
           <Link
             to="/login"
-            className="text-emerald-400 hover:text-emerald-300 font-semibold"
+            className="text-[#F9B233] hover:text-[#FCD34D] font-semibold"
           >
             Sign In
           </Link>

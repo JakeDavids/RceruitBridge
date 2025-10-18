@@ -269,12 +269,17 @@ export default function Layout({ children }) {
     return children;
   }
 
-  // If authenticated and on login page, redirect to Dashboard
-  if (user && location.pathname === '/login') {
+  // If authenticated and on login/signup page, check onboarding first
+  if (user && (location.pathname === '/login' || location.pathname === '/signup')) {
+    // If no onboarding completed, go to Profile
+    if (!user.onboarding_completed) {
+      return <Navigate to="/Profile" replace />;
+    }
+    // Otherwise go to Dashboard
     return <Navigate to="/Dashboard" replace />;
   }
 
-  // If authenticated but no onboarding completed, redirect to Profile
+  // If authenticated but no onboarding completed and not on Profile, redirect to Profile
   if (user && !user.onboarding_completed && location.pathname !== '/Profile') {
     return <Navigate to="/Profile" replace />;
   }

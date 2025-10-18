@@ -38,7 +38,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#001F3F] via-[#0046AD] to-[#001F3F] p-4">
       {/* Animated background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -inset-[10px] opacity-50">
@@ -52,7 +52,7 @@ export default function Login() {
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
                 background: `radial-gradient(circle, ${
-                  i % 2 === 0 ? 'rgba(59, 130, 246, 0.1)' : 'rgba(249, 178, 51, 0.1)'
+                  i % 2 === 0 ? 'rgba(0, 70, 173, 0.15)' : 'rgba(249, 178, 51, 0.12)'
                 }, transparent)`,
               }}
               animate={{
@@ -84,7 +84,7 @@ export default function Login() {
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 bg-gradient-to-br from-[#0046AD] to-[#003580] rounded-full flex items-center justify-center shadow-lg">
               <span className="text-2xl font-bold text-white">RB</span>
             </div>
           </motion.div>
@@ -182,7 +182,7 @@ export default function Login() {
           <motion.button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 bg-gradient-to-r from-[#0046AD] to-[#003580] hover:from-[#003580] hover:to-[#002a66] text-white font-semibold rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             whileHover={{ scale: loading ? 1 : 1.02 }}
             whileTap={{ scale: loading ? 1 : 0.98 }}
           >
@@ -205,7 +205,7 @@ export default function Login() {
           Don't have an account?{' '}
           <Link
             to="/signup"
-            className="text-blue-400 hover:text-blue-300 font-semibold"
+            className="text-[#F9B233] hover:text-[#FCD34D] font-semibold"
           >
             Sign Up
           </Link>
