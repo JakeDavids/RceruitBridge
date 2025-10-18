@@ -99,6 +99,32 @@ CREATE POLICY "Authenticated users can update schools" ON schools
       process.exit(1);
     }
 
+    // First, let's check if we need to fix the enrollment column type
+    console.log('🔧 Checking if enrollment column needs to be fixed...');
+    const testSchool = schools[0];
+    const { error: testError } = await supabase
+      .from('schools')
+      .insert([{
+        ...testSchool,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }])
+      .select();
+
+    if (testError && testError.message.includes('invalid input syntax for type integer')) {
+      console.error('\n❌ ERROR: The enrollment column is set to INTEGER but needs to be TEXT!');
+      console.error('\n📝 QUICK FIX - Run this SQL in Supabase:');
+      console.error('   1. Go to: https://supabase.com/dashboard/project/frabthrbowszsqsjykmy/sql/new');
+      console.error('   2. Paste and run:');
+      console.error('      ALTER TABLE schools ALTER COLUMN enrollment TYPE TEXT;');
+      console.error('   3. Then re-run this script: node scripts/load-schools.js\n');
+      process.exit(1);
+    } else if (testError) {
+      console.warn('Test insert error:', testError.message);
+    } else {
+      console.log('   ✅ Enrollment column is correct type (TEXT)');
+    }
+
     // Clear existing schools (optional - comment out if you want to append)
     console.log('🗑️  Clearing existing schools...');
     const { error: deleteError } = await supabase
