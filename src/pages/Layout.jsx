@@ -270,20 +270,17 @@ export default function Layout({ children }) {
     return children;
   }
 
-  // If authenticated and on login/signup page, check onboarding first
-  if (user && (location.pathname === '/login' || location.pathname === '/signup')) {
-    // If no onboarding completed, go to Profile
-    if (!user.onboarding_completed) {
-      return <Navigate to="/profile" replace />;
-    }
-    // Otherwise go to Dashboard
-    return <Navigate to="/dashboard" replace />;
-  }
+  // TEMPORARY: Disable all auth redirects
+  // if (user && (location.pathname === '/login' || location.pathname === '/signup')) {
+  //   if (!user.onboarding_completed) {
+  //     return <Navigate to="/profile" replace />;
+  //   }
+  //   return <Navigate to="/dashboard" replace />;
+  // }
 
-  // If authenticated but no onboarding completed and not on Profile, redirect to Profile
-  if (user && !user.onboarding_completed && location.pathname !== '/profile') {
-    return <Navigate to="/profile" replace />;
-  }
+  // if (user && !user.onboarding_completed && location.pathname !== '/profile') {
+  //   return <Navigate to="/profile" replace />;
+  // }
 
   // ✅ Authenticated routes with sidebar
   return (
