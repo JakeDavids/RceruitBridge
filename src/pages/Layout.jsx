@@ -46,10 +46,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 
+// TEMPORARY: No public paths - all routes accessible without auth
 const PUBLIC_PATHS = new Set([
-  "/login",
-  "/signup",
-  "/pricing"
+  // "/login",
+  // "/signup",
+  // "/pricing"
 ]);
 
 const bottomNavigationItems = [

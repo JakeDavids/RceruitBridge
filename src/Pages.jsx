@@ -34,33 +34,34 @@ export default function Pages() {
           </div>
         }>
           <Routes>
-            {/* Root redirects to Login for unauthenticated, Dashboard for authenticated */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            {/* TEMPORARY: Root redirects directly to Dashboard (auth disabled) */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            {/* Login/Signup routes kept for future re-enabling */}
+            <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/signup" element={<Navigate to="/dashboard" replace />} />
 
           {/* Main app routes (protected) */}
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/Profile" element={<Profile />} />
-          <Route path="/Schools" element={<Schools />} />
-          <Route path="/CoachContacts" element={<CoachContacts />} />
-          <Route path="/OutreachCompose" element={<OutreachCompose />} />
-          <Route path="/ResponseCenter" element={<ResponseCenter />} />
-          <Route path="/Tracking" element={<Tracking />} />
-          <Route path="/CoachAnalytics" element={<CoachAnalytics />} />
-          <Route path="/Timeline" element={<Timeline />} />
-          <Route path="/Questionnaires" element={<Questionnaires />} />
-          <Route path="/RecruitingCounseling" element={<RecruitingCounseling />} />
-          <Route path="/Feedback" element={<Feedback />} />
-          <Route path="/EmailGuide" element={<EmailGuide />} />
-          <Route path="/ScholarshipsNIL" element={<ScholarshipsNIL />} />
-          <Route path="/MyRecruitingJourney" element={<MyRecruitingJourney />} />
-          <Route path="/Settings" element={<Settings />} />
-          <Route path="/Upgrade" element={<Upgrade />} />
-          <Route path="/BillingPortal" element={<BillingPortal />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/schools" element={<Schools />} />
+          <Route path="/coachcontacts" element={<CoachContacts />} />
+          <Route path="/outreachcompose" element={<OutreachCompose />} />
+          <Route path="/responsecenter" element={<ResponseCenter />} />
+          <Route path="/tracking" element={<Tracking />} />
+          <Route path="/coachanalytics" element={<CoachAnalytics />} />
+          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/questionnaires" element={<Questionnaires />} />
+          <Route path="/recruitingcounseling" element={<RecruitingCounseling />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/emailguide" element={<EmailGuide />} />
+          <Route path="/scholarshipsnil" element={<ScholarshipsNIL />} />
+          <Route path="/myrecruitingjourney" element={<MyRecruitingJourney />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/upgrade" element={<Upgrade />} />
+          <Route path="/billingportal" element={<BillingPortal />} />
 
           {/* Catch all - redirect to Dashboard */}
-          <Route path="*" element={<Navigate to="/Dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
         </React.Suspense>
       </Layout>
