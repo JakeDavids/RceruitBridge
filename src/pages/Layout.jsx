@@ -46,11 +46,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 
-// TEMPORARY: No public paths - all routes accessible without auth
 const PUBLIC_PATHS = new Set([
-  // "/login",
-  // "/signup",
-  // "/pricing"
+  "/login",
+  "/signup",
+  "/auth/callback"
 ]);
 
 const bottomNavigationItems = [
@@ -260,28 +259,15 @@ export default function Layout({ children }) {
   // Check if current path is public
   const isPublicPath = PUBLIC_PATHS.has(location.pathname);
 
-  // TEMPORARY: Skip auth checks - allow access to all pages
-  // TODO: Re-enable auth once production deployment is fixed
-  // if (!user && !isPublicPath) {
-  //   return <Navigate to="/login" replace />;
-  // }
-
   // If not authenticated and on public page, show without sidebar
   if (!user && isPublicPath) {
     return children;
   }
 
-  // TEMPORARY: Disable all auth redirects
-  // if (user && (location.pathname === '/login' || location.pathname === '/signup')) {
-  //   if (!user.onboarding_completed) {
-  //     return <Navigate to="/profile" replace />;
-  //   }
-  //   return <Navigate to="/dashboard" replace />;
-  // }
-
-  // if (user && !user.onboarding_completed && location.pathname !== '/profile') {
-  //   return <Navigate to="/profile" replace />;
-  // }
+  // If authenticated and on login/signup page, redirect to dashboard
+  if (user && (location.pathname === '/login' || location.pathname === '/signup')) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   // ✅ Authenticated routes with sidebar
   return (

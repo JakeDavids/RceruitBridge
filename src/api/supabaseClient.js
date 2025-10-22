@@ -44,9 +44,7 @@ const auth = {
 
   async login() {
     // Sign in with Google OAuth (default)
-    const redirectUrl = import.meta.env.PROD
-      ? 'https://www.recruitbridge.app/dashboard'
-      : 'http://localhost:5173/dashboard';
+    const redirectUrl = `${window.location.origin}/auth/callback`;
 
     const { data, error} = await supabase.auth.signInWithOAuth({
       provider: 'google',
@@ -60,9 +58,7 @@ const auth = {
 
   async signUp(email, password) {
     // Sign up with email/password
-    const redirectUrl = import.meta.env.PROD
-      ? 'https://www.recruitbridge.app/dashboard'
-      : 'http://localhost:5173/dashboard';
+    const redirectUrl = `${window.location.origin}/auth/callback`;
 
     const { data, error } = await supabase.auth.signUp({
       email,

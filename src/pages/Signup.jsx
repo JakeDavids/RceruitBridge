@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { User } from '@/api/supabaseClient';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -45,15 +46,34 @@ export default function Signup() {
     }
 
     try {
-      await User.signUp(email, password);
-      setMessage('Success! Check your email for the confirmation link.');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
+      const { data, error: signupError } = await User.signUp(email, password);
+
+      if (signupError) throw signupError;
+
+      // Check if email confirmation is required
+      if (data?.user?.identities?.length === 0) {
+        // Email already registered
+        setError('This email is already registered. Please login instead.');
+        setLoading(false);
+        return;
+      }
+
+      // If user is confirmed (email confirmation disabled), auto-login
+      if (data?.session) {
+        setMessage('Account created! Redirecting to dashboard...');
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
+      } else {
+        // Email confirmation required
+        setMessage('Success! Check your email for the confirmation link, then login.');
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+      }
     } catch (err) {
       console.error('Signup error:', err);
       setError(err.message || 'Signup failed. Please try again.');
-    } finally {
       setLoading(false);
     }
   };

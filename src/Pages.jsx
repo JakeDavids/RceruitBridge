@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '@/pages/Layout';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 // Lazy load all app pages
 const Login = React.lazy(() => import('@/pages/Login'));
 const Signup = React.lazy(() => import('@/pages/Signup'));
+const AuthCallback = React.lazy(() => import('@/pages/AuthCallback'));
 const Dashboard = React.lazy(() => import('@/pages/Dashboard'));
 const Profile = React.lazy(() => import('@/pages/Profile'));
 const Schools = React.lazy(() => import('@/pages/Schools'));
@@ -34,31 +36,31 @@ export default function Pages() {
           </div>
         }>
           <Routes>
-            {/* TEMPORARY: Root redirects directly to Dashboard (auth disabled) */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            {/* Login/Signup routes kept for future re-enabling */}
-            <Route path="/login" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/signup" element={<Navigate to="/dashboard" replace />} />
+            {/* Public routes */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
 
-          {/* Main app routes (protected) */}
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/schools" element={<Schools />} />
-          <Route path="/coachcontacts" element={<CoachContacts />} />
-          <Route path="/outreachcompose" element={<OutreachCompose />} />
-          <Route path="/responsecenter" element={<ResponseCenter />} />
-          <Route path="/tracking" element={<Tracking />} />
-          <Route path="/coachanalytics" element={<CoachAnalytics />} />
-          <Route path="/timeline" element={<Timeline />} />
-          <Route path="/questionnaires" element={<Questionnaires />} />
-          <Route path="/recruitingcounseling" element={<RecruitingCounseling />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/emailguide" element={<EmailGuide />} />
-          <Route path="/scholarshipsnil" element={<ScholarshipsNIL />} />
-          <Route path="/myrecruitingjourney" element={<MyRecruitingJourney />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/upgrade" element={<Upgrade />} />
-          <Route path="/billingportal" element={<BillingPortal />} />
+          {/* Protected routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/schools" element={<ProtectedRoute><Schools /></ProtectedRoute>} />
+          <Route path="/coachcontacts" element={<ProtectedRoute><CoachContacts /></ProtectedRoute>} />
+          <Route path="/outreachcompose" element={<ProtectedRoute><OutreachCompose /></ProtectedRoute>} />
+          <Route path="/responsecenter" element={<ProtectedRoute><ResponseCenter /></ProtectedRoute>} />
+          <Route path="/tracking" element={<ProtectedRoute><Tracking /></ProtectedRoute>} />
+          <Route path="/coachanalytics" element={<ProtectedRoute><CoachAnalytics /></ProtectedRoute>} />
+          <Route path="/timeline" element={<ProtectedRoute><Timeline /></ProtectedRoute>} />
+          <Route path="/questionnaires" element={<ProtectedRoute><Questionnaires /></ProtectedRoute>} />
+          <Route path="/recruitingcounseling" element={<ProtectedRoute><RecruitingCounseling /></ProtectedRoute>} />
+          <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />
+          <Route path="/emailguide" element={<ProtectedRoute><EmailGuide /></ProtectedRoute>} />
+          <Route path="/scholarshipsnil" element={<ProtectedRoute><ScholarshipsNIL /></ProtectedRoute>} />
+          <Route path="/myrecruitingjourney" element={<ProtectedRoute><MyRecruitingJourney /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path="/upgrade" element={<ProtectedRoute><Upgrade /></ProtectedRoute>} />
+          <Route path="/billingportal" element={<ProtectedRoute><BillingPortal /></ProtectedRoute>} />
 
           {/* Catch all - redirect to Dashboard */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
