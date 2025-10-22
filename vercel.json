@@ -20,5 +20,15 @@
       "destination": "https://www.recruitbridge.app",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/auth/callback",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

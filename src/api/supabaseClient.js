@@ -19,6 +19,12 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 // ============================================
 // Auth Helper Functions
 // ============================================
+
+// Hardcoded redirect URL to avoid apex domain issues
+const REDIRECT_URL = import.meta.env.MODE === 'development'
+  ? 'http://localhost:5173/auth/callback'
+  : 'https://www.recruitbridge.app/auth/callback';
+
 const auth = {
   async me() {
     const { data: { user }, error } = await supabase.auth.getUser();
@@ -44,12 +50,10 @@ const auth = {
 
   async login() {
     // Sign in with Google OAuth (default)
-    const redirectUrl = `${window.location.origin}/auth/callback`;
-
     const { data, error} = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: redirectUrl
+        redirectTo: REDIRECT_URL
       }
     });
     if (error) throw error;
@@ -58,13 +62,11 @@ const auth = {
 
   async signUp(email, password) {
     // Sign up with email/password
-    const redirectUrl = `${window.location.origin}/auth/callback`;
-
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: redirectUrl
+        emailRedirectTo: REDIRECT_URL
       }
     });
     if (error) throw error;
