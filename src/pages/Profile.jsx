@@ -264,6 +264,7 @@ export default function Profile() {
     try {
       const payload = { ...athlete, sport: "football" };
 
+      // Convert empty strings to null for numeric fields
       const numericFields = [
         'weight', 'graduation_year', 'gpa', 'sat_score',
         'act_score', 'forty_time', 'bench_press', 'squat',
@@ -271,6 +272,14 @@ export default function Profile() {
       ];
 
       numericFields.forEach(field => {
+        if (payload[field] === '') {
+          payload[field] = null;
+        }
+      });
+
+      // Convert empty strings to null for date fields (fixes "invalid input syntax for type date" error)
+      const dateFields = ['date_of_birth'];
+      dateFields.forEach(field => {
         if (payload[field] === '') {
           payload[field] = null;
         }
