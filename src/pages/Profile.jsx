@@ -282,18 +282,38 @@ export default function Profile() {
         if (!user.onboarding_completed) {
           await User.updateMyUserData({ onboarding_completed: true });
         }
+        alert("Profile saved successfully!");
         navigate(createPageUrl("Dashboard"));
       } else {
         await Athlete.create(payload);
         // Mark onboarding as complete for first-time users
         await User.updateMyUserData({ onboarding_completed: true });
+        alert("Profile created successfully!");
         navigate(createPageUrl("Dashboard"));
       }
     } catch (error) {
-      console.error("Error saving athlete:", error);
-      alert("There was an error saving your profile. Please try again.");
+      // Surface detailed Supabase error
+      console.error("Error saving athlete - Full error:", error);
+      console.error("Error code:", error.code);
+      console.error("Error message:", error.message);
+      console.error("Error details:", error.details);
+      console.error("Error hint:", error.hint);
+
+      // User-friendly error message with details
+      const errorMsg = error.message || "Unknown error";
+      const errorCode = error.code || "No code";
+      const errorDetails = error.details || "No details";
+
+      alert(
+        `Error saving your profile:\n\n` +
+        `Message: ${errorMsg}\n` +
+        `Code: ${errorCode}\n` +
+        `Details: ${errorDetails}\n\n` +
+        `Please check the console for more information or contact support.`
+      );
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
   };
 
   const handleRegionChange = (region, checked) => {

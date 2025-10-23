@@ -79,12 +79,17 @@ export default function Layout({ children }) {
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
   const [athlete, setAthlete] = React.useState(null);
+  const hasRedirectedRef = React.useRef(false);
 
   React.useEffect(() => {
+    let mounted = true;
+
     const checkUser = async () => {
       try {
         // Check if user is authenticated via Supabase
         const currentUser = await User.me();
+
+        if (!mounted) return;
 
         if (currentUser) {
           setUser(currentUser);
@@ -92,7 +97,7 @@ export default function Layout({ children }) {
           // Load athlete profile if exists
           try {
             const athleteData = await Athlete.filter({ created_by: currentUser.email });
-            if (athleteData.length > 0) {
+            if (mounted && athleteData.length > 0) {
               setAthlete(athleteData[0]);
             }
           } catch (error) {
@@ -104,14 +109,23 @@ export default function Layout({ children }) {
         }
       } catch (error) {
         console.log('Auth check error:', error);
-        setUser(null);
-        setAthlete(null);
+        if (mounted) {
+          setUser(null);
+          setAthlete(null);
+        }
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     };
+
     checkUser();
-  }, [location.pathname]);
+
+    return () => {
+      mounted = false;
+    };
+  }, []); // Only run on mount, not on every pathname change
 
   const handleLogout = async () => {
     try {
@@ -264,9 +278,16 @@ export default function Layout({ children }) {
     return children;
   }
 
-  // If authenticated and on login/signup page, redirect to dashboard
+  // If authenticated and on login/signup page, redirect to dashboard (with loop guard)
   if (user && (location.pathname === '/login' || location.pathname === '/signup')) {
-    return <Navigate to="/dashboard" replace />;
+    if (!hasRedirectedRef.current) {
+      hasRedirectedRef.current = true;
+      console.log('[Layout] Redirecting authenticated user from', location.pathname, 'to /dashboard');
+      return <Navigate to="/dashboard" replace />;
+    }
+  } else {
+    // Reset redirect flag when not on login/signup
+    hasRedirectedRef.current = false;
   }
 
   // ✅ Authenticated routes with sidebar
