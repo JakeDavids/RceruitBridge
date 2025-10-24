@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { School, Athlete, TargetedSchool, User } from "@/api/entities";
+import { supabase } from "@/api/supabaseClient";
 import { InvokeLLM } from "@/api/integrations";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -452,31 +453,54 @@ export default function Schools() {
 
     try {
         if (isCurrentlyTargeted) {
-            // Allow removal for all plans
-            const targetToRemove = targetedSchools.find(ts => ts.school_id === schoolId);
-            if (targetToRemove) {
-                await TargetedSchool.delete(targetToRemove.id);
+            // Use RPC to remove target school (server-side)
+            const { data, error } = await supabase.rpc('remove_target_school', {
+              p_school_id: schoolId
+            });
+
+            if (error) {
+              console.error("Error removing target school:", error);
+              alert(`Error removing school: ${error.message}`);
+              return;
             }
+
+            console.log('[Schools] Removed target school:', data);
         } else {
-            // Check limits before adding a new school
-            const plan = user?.plan || 'free';
+            // Use RPC to add target school (server-side limit enforcement)
+            const { data, error } = await supabase.rpc('add_target_school', {
+              p_school_id: schoolId
+            });
 
-            if (plan === 'unlimited') {
-                // No restrictions for unlimited plan
-            } else if (plan === 'core' && targetedSchools.length >= 15) {
-                alert("Core plan is limited to 15 target schools. Upgrade to Unlimited for no limits!");
+            if (error) {
+              console.error("Error adding target school:", error);
+
+              // Check if limit was reached (server-side enforcement)
+              if (error.message.includes('TARGET_LIMIT_REACHED')) {
+                const plan = user?.plan || 'free';
+                let limitMessage = "Free plan is limited to 3 target schools.";
+
+                if (plan === 'starter') {
+                  limitMessage = "Starter plan is limited to 7 target schools.";
+                } else if (plan === 'core') {
+                  limitMessage = "Core plan is limited to 15 target schools.";
+                }
+
+                alert(
+                  `${limitMessage}\n\n` +
+                  `Upgrade to add more schools!\n\n` +
+                  `Click "Upgrade Plan" in the sidebar to unlock more target schools.`
+                );
                 return;
-            } else if (plan === 'starter' && targetedSchools.length >= 7) {
-                alert("Starter plan is limited to 7 target schools. Upgrade for more!");
-                return;
-            } else if (plan === 'free' && targetedSchools.length >= 3) {
-                alert("Free plan is limited to 3 target schools. Please upgrade!");
-                return;
+              }
+
+              alert(`Error adding school: ${error.message}`);
+              return;
             }
 
-            await TargetedSchool.create({ athlete_id: athlete.id, school_id: schoolId });
+            console.log('[Schools] Added target school:', data);
         }
 
+        // Refresh the list of targeted schools
         const updatedTargetedData = await TargetedSchool.filter({ athlete_id: athlete.id });
         setTargetedSchools(updatedTargetedData);
 
@@ -492,6 +516,7 @@ export default function Schools() {
 
     } catch (error) {
         console.error("Error targeting school:", error);
+        alert(`Unexpected error: ${error.message}`);
     }
   };
 
