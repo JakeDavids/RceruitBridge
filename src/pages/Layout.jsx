@@ -47,6 +47,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const PUBLIC_PATHS = new Set([
+  "/",
   "/login",
   "/signup",
   "/auth/callback"
@@ -276,6 +277,12 @@ export default function Layout({ children }) {
   // If not authenticated and on public page, show without sidebar
   if (!user && isPublicPath) {
     return children;
+  }
+
+  // If not authenticated and trying to access protected page, redirect to login
+  if (!user && !isPublicPath) {
+    console.log('[Layout] Redirecting unauthenticated user from', location.pathname, 'to /login');
+    return <Navigate to="/login" replace />;
   }
 
   // If authenticated and on login/signup page, redirect to dashboard (with loop guard)

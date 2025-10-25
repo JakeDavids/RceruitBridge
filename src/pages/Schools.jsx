@@ -254,7 +254,8 @@ const getFormattedSchoolName = (schoolName) => {
   return schoolNameMappings[schoolName] || schoolName;
 };
 
-const divisions = ["All", "JUCO", "D3", "D2", "FCS", "FBS"];
+// Divisions sorted from highest to lowest level
+const divisions = ["All", "FBS", "FCS", "D2", "D3", "JUCO"];
 
 // New Component for the Target List
 function TargetList({ schools, targetedSchools, onRemove, limitReached }) {
@@ -422,8 +423,8 @@ export default function Schools() {
       const athleteData = await Athlete.filter({ created_by: currentUser.email });
       const currentAthlete = athleteData[0] || null;
 
-      // Load schools from School entity
-      const allSchoolData = await School.list();
+      // Load ALL schools from School entity (no limit)
+      const allSchoolData = await School.all();
 
       // Load targeted schools from Supabase with RLS
       let targetedData = [];
