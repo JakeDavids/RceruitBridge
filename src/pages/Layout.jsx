@@ -45,6 +45,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const PUBLIC_PATHS = new Set([
   "/",
@@ -300,17 +301,20 @@ export default function Layout({ children }) {
   // ✅ Authenticated routes with sidebar
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-50 to-blue-50">
-        <Sidebar className="border-r border-slate-200/60 bg-white/80 backdrop-blur-sm">
-          <SidebarHeader className="border-b border-slate-200/60 p-6">
-            <Link to={createPageUrl("Dashboard")} className="flex items-center gap-3">
-              <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6875a318a0b2d879d617363b/202797ade_recruitbrigdelogo.png"
-                alt="RecruitBridge Logo"
-                className="h-10 w-auto"
-              />
-              <span className="text-xl font-bold text-slate-800 tracking-tighter">RecruitBridge</span>
-            </Link>
+      <div className="min-h-screen flex w-full bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+        <Sidebar className="border-r border-slate-200/60 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm">
+          <SidebarHeader className="border-b border-slate-200/60 dark:border-slate-700 p-6">
+            <div className="flex items-center justify-between gap-3">
+              <Link to={createPageUrl("Dashboard")} className="flex items-center gap-3 flex-1">
+                <img
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6875a318a0b2d879d617363b/202797ade_recruitbrigdelogo.png"
+                  alt="RecruitBridge Logo"
+                  className="h-10 w-auto"
+                />
+                <span className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tighter">RecruitBridge</span>
+              </Link>
+              <ThemeToggle />
+            </div>
           </SidebarHeader>
 
           <SidebarContent className="p-3">
