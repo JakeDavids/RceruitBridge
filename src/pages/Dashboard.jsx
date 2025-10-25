@@ -28,8 +28,9 @@ import RecentActivity from "../components/dashboard/RecentActivity";
 import QuickActions from "../components/dashboard/QuickActions";
 import RecruitingCounseling from "../components/dashboard/RecruitingCounseling";
 import OnboardingWalkthrough from "../components/onboarding/OnboardingWalkthrough";
+import ErrorBoundary from "../components/ErrorBoundary";
 
-export default function Dashboard() {
+function Dashboard() {
   const [athlete, setAthlete] = useState(null);
   const [outreaches, setOutreaches] = useState([]);
   const [schools, setSchools] = useState([]);
@@ -362,5 +363,13 @@ export default function Dashboard() {
         </motion.div>
       </motion.div>
     </div>
+  );
+}
+
+export default function DashboardWithErrorBoundary() {
+  return (
+    <ErrorBoundary pageName="Dashboard">
+      <Dashboard />
+    </ErrorBoundary>
   );
 }

@@ -1,0 +1,811 @@
+Schools,City,State,Division,Confrence,Academic_ranking,Enrollment
+,,,,,,
+Air Force Falcons,Colorado Springs,CO,FBS,Mountain West,Tier 1,"~4,000​"
+Akron Zips,Akron,OH,FBS,Mid-American (MAC),Tier 4,"15,318​"
+Alabama Crimson Tide,Tuscaloosa,AL,FBS,SEC,Tier 2,"40,846​"
+Appalachian State Mtnrs.,Boone,NC,FBS,Sun Belt,Tier 3,"~20,000"
+Arizona State Sun Devils,Tempe,AZ,FBS,Big 12,Tier 4,"~80,000"
+Arizona Wildcats,Tucson,AZ,FBS,Big 12,Tier 3,"~49,000"
+Arkansas Razorbacks,Fayetteville,AR,FBS,SEC,Tier 3,"~30,000"
+Arkansas State Red Wolves,Jonesboro,AR,FBS,Sun Belt,Tier 4,"~12,000"
+Army Black Knights,West Point,NY,FBS,American,Tier 1,"~4,400"
+Auburn Tigers,Auburn,AL,FBS,SEC,Tier 3,"~31,000"
+Ball State Cardinals,Muncie,IN,FBS,Mid-American (MAC),Tier 4,"~15,000"
+Baylor Bears,Waco,TX,FBS,Big 12,Tier 2,"~20,000"
+Boise State Broncos,Boise,ID,FBS,Mountain West,Tier 4,"~26,000"
+Boston College Eagles,Chestnut Hill,MA,FBS,ACC,Tier 1,"~14,000"
+Bowling Green Falcons,Bowling Green,OH,FBS,Mid-American (MAC),Tier 4,"~19,000"
+Buffalo Bulls,Buffalo,NY,FBS,Mid-American (MAC),Tier 4,"~32,000"
+BYU Cougars,Provo,UT,FBS,Big 12,Tier 3,"~34,000"
+California Golden Bears,Berkeley,CA,FBS,ACC,Tier 2,"~45,000"
+Central Michigan Chippewas,Mount Pleasant,MI,FBS,Mid-American (MAC),Tier 1,"~17,000"
+Charlotte 49ers,Charlotte,NC,FBS,American Athletic,Tier 4,"~30,000"
+Cincinnati Bearcats,Cincinnati,OH,FBS,Big 12,Tier 3,"~47,000"
+Clemson Tigers,Clemson,SC,FBS,ACC,Tier 2,"~27,000"
+Coastal Carolina Chant.,Conway,SC,FBS,Sun Belt,Tier 4,"~10,500"
+Colorado Buffaloes,Boulder,CO,FBS,Big 12,Tier 3,"~35,000"
+Colorado State Rams,Fort Collins,CO,FBS,Mountain West,Tier 2,"~33,000"
+Delaware Fightin’ Blue Hens,Newark,DE,FBS,Conference USA,Tier 3,"~24,000"
+Duke Blue Devils,Durham,NC,FBS,ACC,Tier 3,"~16,000"
+East Carolina Pirates,Greenville,NC,FBS,American,Tier 2,"~21,000"
+Eastern Michigan Eagles,Ypsilanti,MI,FBS,Mid-American,Tier 4,"~14,000"
+FIU Panthers,Miami,FL,FBS,Conference USA,Tier 3,"~56,000"
+Florida Atlantic Owls,Boca Raton,FL,FBS,American,Tier 2,"~30,000"
+Florida Gators,Gainesville,FL,FBS,SEC,Tier 2,"~55,000"
+Florida International Pntrs,Miami,FL,FBS,Conference USA,Tier 3,"~56,000"
+Florida State Seminoles,Tallahassee,FL,FBS,ACC,Tier 4,"~45,000"
+Fresno State Bulldogs,Fresno,CA,FBS,Mountain West,Tier 2,"~25,000"
+Georgia Southern Eagles,Statesboro,GA,FBS,Sun Belt,Tier 3,"~26,000"
+Georgia State Panthers,Atlanta,GA,FBS,Sun Belt,Tier 4,"~36,000"
+Georgia Tech Yellow Jackets,Atlanta,GA,FBS,ACC,Tier 4,"~39,000"
+Georgia Bulldogs,Athens,GA,FBS,SEC,Tier 3,"~41,000"
+Hawaii Rainbow Warriors,Honolulu,HI,FBS,Mountain West,Tier 1,"~17,000"
+Houston Cougars,Houston,TX,FBS,Big 12,Tier 1,"~47,000"
+Illinois Fighting Illini,Urbana-Champaign,IL,FBS,Big Ten,Tier 3,"~56,000"
+Indiana Hoosiers,Bloomington,IN,FBS,Big Ten,Tier 3,"~45,000"
+Iowa State Cyclones,Ames,IA,FBS,Big 12,Tier 4,"~30,000"
+Iowa Hawkeyes,Iowa City,IA,FBS,Big Ten,Tier 4,"~31,000"
+Jacksonville State Gamecocks,Jacksonville,AL,FBS,Conference USA,Tier 4,"~9,500"
+James Madison Dukes,Harrisonburg,VA,FBS,Sun Belt,Tier 2,"~22,000"
+Kansas State Wildcats,Manhattan,KS,FBS,Big 12,Tier 3,"~20,000"
+Kansas Jayhawks,Lawrence,KS,FBS,Big 12,Tier 2,"~28,000"
+Kennesaw State Owls,Kennesaw,GA,FBS,Conference USA,Tier 1,"~48,000"
+Kent State Golden Flashes,Kent,OH,FBS,Mid-American,Tier 2,"~25,000"
+Kentucky Wildcats,Lexington,KY,FBS,SEC,Tier 4,"~32,000"
+Liberty Flames,Lynchburg,VA,FBS,Conference USA,Tier 1,"~15,000"
+Louisiana Ragin’ Cajuns,Lafayette,LA,FBS,Sun Belt,Tier 1,"~16,000"
+Louisiana Tech Bulldogs,Ruston,LA,FBS,Conference USA,Tier 2,"~11,000"
+Louisville Cardinals,Louisville,KY,FBS,ACC,Tier 3,"~22,000"
+LSU Tigers,Baton Rouge,LA,FBS,SEC,Tier 4,"~37,000"
+Marshall Thundering Herd,Huntington,WV,FBS,Sun Belt,Tier 3,"~11,000"
+Maryland Terrapins,College Park,MD,FBS,Big Ten,Tier 3,"~40,000"
+Massachusetts Minutemen,Amherst,MA,FBS,MAC,Tier 2,"~32,000"
+Memphis Tigers,Memphis,TN,FBS,American,Tier 4,"~21,000"
+Miami (FL) Hurricanes,Coral Gables,FL,FBS,ACC,Tier 3,"~17,000"
+Miami (OH) RedHawks,Oxford,OH,FBS,MAC,Tier 2,"~18,000"
+Michigan State Spartans,East Lansing,MI,FBS,Big Ten,Tier 3,"~49,000"
+Michigan Wolverines,Ann Arbor,MI,FBS,Big Ten,Tier 2,"~50,000"
+Middle Tennessee Blue Raiders,Murfreesboro,TN,FBS,Conference USA,Tier 3,"~22,000"
+Minnesota Golden Gophers,Minneapolis,MN,FBS,Big Ten,Tier 1,"~50,000"
+Mississippi State Bulldogs,Starkville,MS,FBS,SEC,Tier 2,"~23,000"
+Missouri State Bears,Springfield,MO,FBS,Conference USA,Tier 3,"~26,000"
+Missouri Tigers,Columbia,MO,FBS,SEC,Tier 2,"~31,000"
+Navy Midshipmen,Annapolis,MD,FBS,American,Tier 4,"~4,500"
+NC State Wolfpack,Raleigh,NC,FBS,ACC,Tier 3,"~36,000"
+Nebraska Cornhuskers,Lincoln,NE,FBS,Big Ten,Tier 4,"~19,000"
+Nevada Wolf Pack,Reno,NV,FBS,Mountain West,Tier 2,"~20,000"
+New Mexico Lobos,Albuquerque,NM,FBS,Mountain West,Tier 1,"~22,000"
+New Mexico State Aggies,Las Cruces,NM,FBS,Conference USA,Tier 3,"~13,000"
+North Carolina Tar Heels,Chapel Hill,NC,FBS,ACC,Tier 3,"~31,000"
+North Texas Mean Green,Denton,TX,FBS,American,Tier 3,"~43,000"
+Northern Illinois Huskies,DeKalb,IL,FBS,Mid-American,Tier 2,"~16,000"
+Northwestern Wildcats,Evanston,IL,FBS,Big Ten,Tier 2,"~21,000"
+Notre Dame Fighting Irish,South Bend,IN,FBS,Independent,Tier 1,"~13,000"
+Ohio Bobcats,Athens,OH,FBS,Mid-American,Tier 4,"~21,000"
+Ohio State Buckeyes,Columbus,OH,FBS,Big Ten,Tier 3,"~61,000"
+Oklahoma Sooners,Norman,OK,FBS,SEC,Tier 2,"~28,000"
+Oklahoma State Cowboys,Stillwater,OK,FBS,Big 12,Tier 1,"~24,000"
+Old Dominion Monarchs,Norfolk,VA,FBS,Sun Belt,Tier 3,"~23,000"
+Ole Miss Rebels,Oxford,MS,FBS,SEC,Tier 2,"~22,000"
+Oregon Ducks,Eugene,OR,FBS,Big Ten,Tier 2,"~23,000"
+Oregon State Beavers,Corvallis,OR,FBS,Pac 12,Tier 2,"~29,000"
+Penn State Nittany Lions,University Park,PA,FBS,Big Ten,Tier 4,"~47,000"
+Pittsburgh Panthers,Pittsburgh,PA,FBS,ACC,Tier 3,"~28,000"
+Purdue Boilermakers,West Lafayette,IN,FBS,Big Ten,Tier 1,"~50,000"
+Rice Owls,Houston,TX,FBS,American,Tier 2,"~8,000"
+Rutgers Scarlet Knights,New Brunswick,NJ,FBS,Big Ten,Tier 3,"~50,000"
+Sam Houston Bearkats,Huntsville,TX,FBS,Conference USA,Tier 2,"~21,000"
+San Diego State Aztecs,San Diego,CA,FBS,Mountain West,Tier 4,"~36,000"
+San Jose State Spartans,San Jose,CA,FBS,Mountain West,Tier 1,"~35,000"
+SMU Mustangs,Dallas,TX,FBS,ACC,Tier 3,"~12,500"
+South Alabama Jaguars,Mobile,AL,FBS,Sun Belt,Tier 4,"~14,000"
+South Carolina Gamecocks,Columbia,SC,FBS,SEC,Tier 3,"~26,000"
+South Florida Bulls,Tampa,FL,FBS,American,Tier 2,"~49,000"
+Southern Miss Golden Eagles,Hattiesburg,MS,FBS,Sun Belt,Tier 4,"~14,000"
+Stanford Cardinal,Stanford,CA,FBS,ACC,Tier 3,"~17,000"
+Syracuse Orange,Syracuse,NY,FBS,ACC,Tier 3,"~22,000"
+TCU Horned Frogs,Fort Worth,TX,FBS,Big 12,Tier 1,"~12,500"
+Temple Owls,Philadelphia,PA,FBS,American,Tier 2,"~33,000"
+Tennessee Volunteers,Knoxville,TN,FBS,SEC,Tier 3,"~32,000"
+Texas A&M Aggies,College Station,TX,FBS,SEC,Tier 4,"~73,000"
+Texas Longhorns,Austin,TX,FBS,SEC,Tier 2,"~52,000"
+Texas State Bobcats,San Marcos,TX,FBS,Sun Belt,Tier 1,"~37,000"
+Texas Tech Red Raiders,Lubbock,TX,FBS,Big 12,Tier 3,"~40,000"
+Toledo Rockets,Toledo,OH,FBS,Mid-American,Tier 3,"~16,000"
+Troy Trojans,Troy,AL,FBS,Sun Belt,Tier 2,"~15,000"
+Tulane Green Wave,New Orleans,LA,FBS,American,Tier 2,"~13,000"
+Tulsa Golden Hurricane,Tulsa,OK,FBS,American,Tier 1,"~3,600"
+UAB Blazers,Birmingham,AL,FBS,American,Tier 4,"~21,000"
+UCF Knights,Orlando,FL,FBS,Big 12,Tier 2,"~68,000"
+UCLA Bruins,Los Angeles,CA,FBS,Big Ten,Tier 3,"~47,000"
+UConn Huskies,Storrs,CT,FBS,Independent,Tier 1,"~26,000"
+UL Monroe Warhawks,Monroe,LA,FBS,Sun Belt,Tier 3,"~8,800"
+UNLV Rebels,Las Vegas,NV,FBS,Mountain West,Tier 1,"~30,000"
+USC Trojans,Los Angeles,CA,FBS,Big Ten,Tier 4,"~47,000"
+Utah State Aggies,Logan,UT,FBS,Mountain West,Tier 2,"~29,000"
+Utah Utes,Salt Lake City,UT,FBS,Big 12,Tier 3,"~35,000"
+UTEP Miners,El Paso,TX,FBS,Conference USA,Tier 4,"~23,000"
+UTSA Roadrunners,San Antonio,TX,FBS,American,Tier 3,"~34,000"
+Vanderbilt Commodores,Nashville,TN,FBS,SEC,Tier 4,"~13,000"
+Virginia Cavaliers,Charlottesville,VA,FBS,ACC,Tier 3,"~26,000"
+Virginia Tech Hokies,Blacksburg,VA,FBS,ACC,Tier 4,"~38,000"
+Wake Forest Demon Deacons,Winston-Salem,NC,FBS,ACC,Tier 2,"~8,000"
+Washington Huskies,Seattle,WA,FBS,Big Ten,Tier 3,"~49,000"
+Washington State Cougars,Pullman,WA,FBS,Pac 12,Tier 2,"~18,000"
+West Virginia Mountaineers,Morgantown,WV,FBS,Big 12,Tier 3,"~25,000"
+Western Kentucky Hilltoppers,Bowling Green,KY,FBS,Conference USA,Tier 4,"~16,000"
+Western Michigan Broncos,Kalamazoo,MI,FBS,Mid-American,Tier 4,"~17,000"
+Wisconsin Badgers,Madison,WI,FBS,Big Ten,Tier 1,"~48,000"
+Wyoming Cowboys,Laramie,WY,FBS,Mountain West,Tier 4,"~12,000"
+,,,,,,
+Abilene Christian Wildcats,Abilene,TX,FCS,United Athletic, Tier 4,7274
+Alabama A&M Bulldogs,Huntsville,AL,FCS,SWAC,Tier 5,7295
+Alabama State Hornets,Montgomery,AL,FCS,SWAC,Tier 5,4565
+Albany Great Danes,Albany,NY,FCS,CAA,Tier 3,17000
+Alcorn State Braves,Lorman,MS,FCS,SWAC,Tier 5,2995
+Arkansas–Pine Bluff Golden Lions,Pine Bluff,AR,FCS,SWAC,Tier 5,2049
+Austin Peay Governors,Clarksville,TN,FCS,United Athletic,Tier 4,11185
+Bethune–Cookman Wildcats,Daytona Beach,FL,FCS,SWAC,Tier 5,3123
+Brown Bears,Providence,RI,FCS,Ivy League,Tier 1,10900
+Bryant Bulldogs,Smithfield,RI,FCS,CAA,Tier 3,3614
+Bucknell Bison,Lewisburg,PA,FCS,Patriot,Tier 2,3846
+Butler Bulldogs,Indianapolis,IN,FCS,Pioneer,Tier 3,4482
+Cal Poly Mustangs,San Luis Obispo,CA,FCS,Big Sky,Tier 3,22287
+Campbell Fighting Camels,Buies Creek,NC,FCS,CAA,Tier 3,5624
+Central Arkansas Bears,Conway,AR,FCS,United Athletic,Tier 3,8996
+Central Connecticut Blue Devils,New Britain,CT,FCS,NEC,Tier 4,9057
+Charleston Southern Buccaneers,Charleston,SC,FCS,Big South-OVC,Tier 4,3307
+Chattanooga Mocs,Chattanooga,TN,FCS,SoCon,Tier 3,11283
+The Citadel Bulldogs,Charleston,SC,FCS,SoCon,Tier 3,3693
+Colgate Raiders,Hamilton,NY,FCS,Patriot,Tier 2,3141
+Columbia Lions,New York,NY,FCS,Ivy League,Tier 1,4008
+Cornell Big Red,Ithaca,NY,FCS,Ivy League,Tier 1,3602
+Dartmouth Big Green,Hanover,NH,FCS,Ivy League,Tier 1,3142
+Davidson Wildcats,Davidson,NC,FCS,Pioneer,Tier 3,7802
+Dayton Flyers,Dayton,OH,FCS,Pioneer,Tier 3,4048
+Delaware State Hornets,Dover,DE,FCS,MEAC,Tier 5,1318
+Drake Bulldogs,Des Moines,IA,FCS,Pioneer,Tier 3,2949
+Duquesne Dukes,Pittsburgh,PA,FCS,NEC,Tier 4,3731
+East Tennessee State Buccaneers,Johnson City,TN,FCS,SoCon,Tier 4,8563
+East Texas A&M Lions,Commerce,TX,FCS,Southland,Tier 4,2121
+Eastern Illinois Panthers,Charleston,IL,FCS,Big South-OVC,Tier 4,4384
+Eastern Kentucky Colonels,Richmond,KY,FCS,United Athletic,Tier 3,1284
+Eastern Washington Eagles,Cheney,WA,FCS,Big Sky,Tier 3,7458
+Elon Phoenix,Elon,NC,FCS,CAA,Tier 3,9685
+Florida A&M Rattlers,Tallahassee,FL,FCS,SWAC,Tier 4,8657
+Fordham Rams,Bronx,NY,FCS,Patriot,Tier 2,3604
+Furman Paladins,Greenville,SC,FCS,SoCon,Tier 3,6692
+Gardner–Webb Runnin’ Bulldogs,Boiling Springs,NC,FCS,Big South-OVC,Tier 4,9319
+Georgetown Hoyas,Washington,DC,FCS,Patriot,Tier 2,11193
+Grambling State Tigers,Grambling,LA,FCS,SWAC,Tier 5,3787
+Hampton Pirates,Hampton,VA,FCS,CAA,Tier 4,3498
+Harvard Crimson,Cambridge,MA,FCS,Ivy League,Tier 1,3491
+Holy Cross Crusaders,Worcester,MA,FCS,Patriot,Tier 2,3402
+Houston Christian Huskies,Houston,TX,FCS,Southland,Tier 4,6558
+Howard Bison,Washington,DC,FCS,MEAC,Tier 4,3447
+Idaho Vandals,Moscow,ID,FCS,Big Sky,Tier 3,2688
+Idaho State Bengals,Pocatello,ID,FCS,Big Sky,Tier 4,2107
+Illinois State Redbirds,Normal,IL,FCS,MVFC,Tier 3,12820
+Incarnate Word Cardinals,San Antonio,TX,FCS,Southland,Tier 3,3925
+Indiana State Sycamores,Terre Haute,IN,FCS,MVFC,Tier 4,7039
+Jackson State Tigers,Jackson,MS,FCS,SWAC,Tier 5,3348
+Lafayette Leopards,Easton,PA,FCS,Patriot,Tier 2,2763
+Lamar Cardinals,Beaumont,TX,FCS,Southland,Tier 4,8245
+Lehigh Mountain Hawks,Bethlehem,PA,FCS,Patriot,Tier 2,2251
+Lindenwood Lions,St. Charles,MO,FCS,Big South-OVC,Tier 4,3130
+LIU Sharks,Brooklyn,NY,FCS,NEC,Tier 4,2346
+Maine Black Bears,Orono,ME,FCS,CAA,Tier 3,7401
+Marist Red Foxes,Poughkeepsie,NY,FCS,Pioneer,Tier 3,8572
+McNeese Cowboys,Lake Charles,LA,FCS,Southland,Tier 4,4224
+Mercer Bears,Macon,GA,FCS,SoCon,Tier 3,4201
+Merrimack Warriors,North Andover,MA,FCS,NEC,Tier 4,11688
+Mississippi Valley State Delta Devils,Itta Bena,MS,FCS,SWAC,Tier 5,3221
+Monmouth Hawks,West Long Branch,NJ,FCS,CAA,Tier 3,6125
+Montana Grizzlies,Missoula,MT,FCS,Big Sky,Tier 2,3920
+Montana State Bobcats,Bozeman,MT,FCS,Big Sky,Tier 2,3269
+Morehead State Eagles,Morehead,KY,FCS,Pioneer,Tier 4,4834
+Morgan State Bears,Baltimore,MD,FCS,MEAC,Tier 4,8749
+Murray State Racers,Murray,KY,FCS,MVFC,Tier 4,2039
+New Hampshire Wildcats,Durham,NH,FCS,CAA,Tier 2,10453
+Nicholls Colonels,Thibodaux,LA,FCS,Southland,Tier 4,5205
+Norfolk State Spartans,Norfolk,VA,FCS,MEAC,Tier 4,3034
+North Alabama Lions,Florence,AL,FCS,United Athletic,Tier 4,5258
+North Carolina A&T Aggies,Greensboro,NC,FCS,United Athletic,Tier 3,4571
+North Carolina Central Eagles,Durham,NC,FCS,MEAC,Tier 3,2554
+North Dakota Fighting Hawks,Grand Forks,ND,FCS,MVFC,Tier 3,3214
+North Dakota State Bison,Fargo,ND,FCS,MVFC,Tier 2,9592
+Northern Arizona Lumberjacks,Flagstaff,AZ,FCS,Big Sky,Tier 3,4095
+Northern Colorado Bears,Greeley,CO,FCS,Big Sky,Tier 4,6885
+Northern Iowa Panthers,Cedar Falls,IA,FCS,MVFC,Tier 2,3610
+Northwestern State Demons,Natchitoches,LA,FCS,Southland,Tier 4,4720
+Penn Quakers,Philadelphia,PA,FCS,Ivy League,Tier 1,4197
+Portland State Vikings,Portland,OR,FCS,Big Sky,Tier 4,4268
+Prairie View A&M Panthers,Prairie View,TX,FCS,SWAC,Tier 5,2062
+Presbyterian Blue Hose,Clinton,SC,FCS,Pioneer,Tier 4,3136
+Princeton Tigers,Princeton,NJ,FCS,Ivy League,Tier 1,2909
+Rhode Island Rams,Kingston,RI,FCS,CAA,Tier 3,7340
+Richmond Spiders,Richmond,VA,FCS,CAA,Tier 2,6205
+Robert Morris Colonials,Moon Township,PA,FCS,Big South-OVC,Tier 4,3476
+Sacramento State Hornets,Sacramento,CA,FCS,Big Sky,Tier 2,2733
+Sacred Heart Pioneers,Fairfield,CT,FCS,NEC,Tier 4,3120
+Saint Francis (PA) Red Flash,Loretto,PA,FCS,NEC,Tier 4,9382
+St. Thomas Tommies,St. Paul,MN,FCS,Pioneer,Tier 3,6181
+Samford Bulldogs,Birmingham,AL,FCS,SoCon,Tier 3,5024
+San Diego Toreros,San Diego,CA,FCS,Pioneer,Tier 3,3037
+South Carolina State Bulldogs,Orangeburg,SC,FCS,MEAC,Tier 4,3957
+South Dakota Coyotes,Vermillion,SD,FCS,MVFC,Tier 3,3912
+South Dakota State Jackrabbits,Brookings,SD,FCS,MVFC,Tier 2,2197
+Southeast Missouri State Redhawks,Cape Girardeau,MO,FCS,Big South-OVC,Tier 3,3665
+Southeastern Louisiana Lions,Hammond,LA,FCS,Southland,Tier 3,2398
+Southern Jaguars,Baton Rouge,LA,FCS,SWAC,Tier 5,9189
+Southern Illinois Salukis,Carbondale,IL,FCS,MVFC,Tier 3,10258
+Southern Utah Thunderbirds,Cedar City,UT,FCS,United Athletic,Tier 3,3654
+Stephen F. Austin Lumberjacks,Nacogdoches,TX,FCS,United Athletic,Tier 4,3950
+Stetson Hatters,DeLand,FL,FCS,Pioneer,Tier 4,4119
+Stonehill Skyhawks,Easton,MA,FCS,NEC,Tier 4,3790
+Stony Brook Seawolves,Stony Brook,NY,FCS,CAA,Tier 3,5561
+Tarleton State Texans,Stephenville,TX,FCS,United Athletic,Tier 4,11359
+Tennessee State Tigers,Nashville,TN,FCS,Big South-OVC,Tier 4,3348
+Tennessee Tech Golden Eagles,Cookeville,TN,FCS,Big South-OVC,Tier 4,4992
+Texas Southern Tigers,Houston,TX,FCS,SWAC,Tier 5,4621
+Towson Tigers,Towson,MD,FCS,CAA,Tier 3,8471
+UC Davis Aggies,Davis,CA,FCS,Big Sky,Tier 2,2380
+UT Martin Skyhawks,Martin,TN,FCS,Big South-OVC,Tier 4,6711
+Utah Tech Trailblazers,St. George,UT,FCS,United Athletic,Tier 4,2758
+UTRGV Vaqueros,Edinburg,TX,FCS,United Athletic,Tier 5,11323
+Valparaiso Beacons,Valparaiso,IN,FCS,Pioneer,Tier 4,3186
+Villanova Wildcats,Villanova,PA,FCS,CAA,Tier 2,3466
+VMI Keydets,Lexington,VA,FCS,SoCon,Tier 3,6650
+Wagner Seahawks,Staten Island,NY,FCS,NEC,Tier 4,5295
+Weber State Wildcats,Ogden,UT,FCS,Big Sky,Tier 3,5872
+Western Carolina Catamounts,Cullowhee,NC,FCS,SoCon,Tier 4,2115
+Western Illinois Leathernecks,Macomb,IL,FCS,Big South-OVC,Tier 4,7782
+William & Mary Tribe,Williamsburg,VA,FCS,CAA,Tier 1,3732
+Wofford Terriers,Spartanburg,SC,FCS,SoCon,Tier 3,3748
+Yale Bulldogs,New Haven,CT,FCS,Ivy League,Tier 1,2281
+Youngstown State Penguins,Youngstown,OH,FCS,MVFC,Tier 3,2050
+,,,,,,
+Adams State Grizzlies,Alamosa,CO,Dll,Rocky Mountain Athletic Conference,Tier 4,3000
+Albany State Golden Rams,Albany,GA,Dll,SIAC,Tier 4,6000
+Allen Yellow Jackets,Columbia,SC,Dll,SIAC,Tier 5,800
+American International Yellow Jackets,Springfield,MA,Dll,Northeast-10,Tier 3,1800
+Anderson (SC) Trojans,Anderson,SC,Dll,SAC,Tier 3,4000
+Angelo State Rams,San Angelo,TX,Dll,Lone Star,Tier 3,10000
+Arkansas Tech Wonder Boys,Russellville,AR,Dll,Great American,Tier 3,10000
+Arkansas–Monticello Boll Weevils,Monticello,AR,Dll,Great American,Tier 4,2500
+Ashland Eagles,Ashland,OH,Dll,Great Midwest,Tier 2,6500
+Assumption Greyhounds,Worcester,MA,Dll,Northeast-10,Tier 2,2000
+Augustana (SD) Vikings,Sioux Falls,SD,Dll,NSIC,Tier 3,2100
+Barton Bulldogs,Wilson,NC,Dll,Conference Carolinas,Tier 3,1200
+Bemidji State Beavers,Bemidji,MN,Dll,NSIC,Tier 3,5000
+Benedict Tigers,Columbia,SC,Dll,SIAC,Tier 5,2100
+Bentley Falcons,Waltham,MA,Dll,Northeast-10,Tier 2,5400
+Black Hills State Yellow Jackets,Spearfish,SD,Dll,RMAC,Tier 3,3600
+Bloomsburg Huskies,Bloomsburg,PA,Dll,PSAC,Tier 3,6800
+Bluefield State Big Blue,Bluefield,WV,Dll,CIAA,Tier 4,1400
+Bowie State Bulldogs,Bowie,MD,Dll,CIAA,Tier 4,6100
+California (PA) Vulcans,California,PA,Dll,PSAC,Tier 3,6900
+Carson–Newman Eagles,Jefferson City,TN,Dll,SAC,Tier 3,2500
+Catawba Indians,Salisbury,NC,Dll,SAC,Tier 3,1800
+Central Missouri Mules,Warrensburg,MO,Dll,MIAA,Tier 3,11000
+Central Oklahoma Bronchos,Edmond,OK,Dll,MIAA,Tier 3,14000
+Central State Marauders,Wilberforce,OH,Dll,SIAC,Tier 5,1700
+Central Washington Wildcats,Ellensburg,WA,Dll,GNAC,Tier 3,12000
+Chadron State Eagles,Chadron,NE,Dll,RMAC,Tier 3,2500
+Charleston (WV) Golden Eagles,Charleston,WV,Dll,MEC,Tier 3,2400
+Chowan Hawks,Murfreesboro,NC,Dll,Conference Carolinas,Tier 3,1500
+Clarion Golden Eagles,Clarion,PA,Dll,PSAC,Tier 3,4400
+Clark Atlanta Panthers,Atlanta,GA,Dll,SIAC,Tier 4,3500
+Colorado Mesa Mavericks,Grand Junction,CO,Dll,RMAC,Tier 3,5500
+Colorado Mines Orediggers,Golden,CO,Dll,RMAC,Tier 2,7500
+Concord Mountain Lions,Athens,WV,Dll,MEC,Tier 3,9200
+Concordia–St. Paul Golden Bears,St. Paul,MN,Dll,NSIC,Tier 2,2000
+CSU Pueblo ThunderWolves,Pueblo,CO,Dll,RMAC,Tier 3,3700
+Davenport Panthers,Grand Rapids,MI,Dll,Great Midwest,Tier 3,2100
+Delta State Statesmen,Cleveland,MS,Dll,GSC,Tier 3,1200
+East Central Tigers,Cleveland,OK,Dll,Lone Star,Tier 3,8500
+East Stroudsburg Warriors,Ada,PA,Dll,PSAC,Tier 3,2900
+Eastern New Mexico Greyhounds,Emporia,NM,Dll,Lone Star,Tier 3,1200
+Edinboro Fighting Scots,Due West,PA,Dll,PSAC,Tier 3,3200
+Edward Waters Tigers,Fairmont,FL,Dll,SIAC,Tier 4,2200
+Elizabeth City State Vikings,Fayetteville,NC,Dll,CIAA,Tier 4,1600
+Emory & Henry Wasps,Big Rapids,VA,Dll,SAC,Tier 3,2200
+Emporia State Hornets,Ferrum,KS,Dll,Great American,Tier 3,3000
+Erskine Flying Fleet,Findlay,SC,Dll,Conference Carolinas,Tier 3,3100
+Fairmont State Fighting Falcons,Hays,WV,Dll,MEC,Tier 3,2400
+Fayetteville State Broncos,Durango,NC,Dll,CIAA,Tier 4,5200
+Ferris State Bulldogs,Fort Valley,MI,Dll,GLIAC,Tier 3,9500
+Ferrum Panthers,Ferrum,VA,Dll,Conference Carolinas,Tier 3,1200
+Findlay Oilers,Findlay,OH,Dll,GLIAC,Tier 3,5800
+Fort Hays State Tigers,Hays,KS,Dll,MIAA,Tier 3,8000
+Fort Lewis Skyhawks,Durango,CO,Dll,RMAC,Tier 3,4200
+Fort Valley State Wildcats,Fort Valley,GA,Dll,SIAC,Tier 4,3100
+Franklin Pierce Ravens,Rindge,NH,Dll,Northeast-10,Tier 3,1600
+Frostburg State Bobcats,Frostburg,MD,Dll,PSAC,Tier 3,2800
+Gannon Golden Knights,Erie,PA,Dll,PSAC,Tier 3,3200
+Glenville State Pioneers,Glenville,WV,Dll,MEC,Tier 3,1800
+Grand Valley State Lakers,Allendale,MI,Dll,GLIAC,Tier 3,22000
+Harding Bisons,Searcy,AR,Dll,Great American,Tier 3,3200
+Henderson State Reddies,Arkadelphia,AR,Dll,Great American,Tier 3,2700
+Hillsdale Chargers,Hillsdale,MI,Dll,GLIAC,Tier 1,1600
+Indianapolis Greyhounds,Indianapolis,IN,Dll,GLVC,Tier 3,4500
+Indiana (PA) Crimson Hawks,Jamestown,PA,Dll,PSAC,Tier 3,4900
+Jamestown Jimmies,Charlotte,ND,Dll,NSIC,Tier 3,2800
+Johnson C. Smith Golden Bulls,Frankfort,NC,Dll,SIAC,Tier 4,3500
+Kentucky State Thorobreds,Owensboro,KY,Dll,SIAC,Tier 4,2400
+Kentucky Wesleyan Panthers,Kutztown,KY,Dll,SIAC,Tier 4,2900
+Kutztown Golden Bears,Painesville,PA,Dll,PSAC,Tier 3,3900
+Lake Erie Storm,Jackson,OH,Dll,GLIAC,Tier 3,2300
+Lane Dragons,Hickory,TN,Dll,SIAC,Tier 4,3700
+Lenoir–Rhyne Bears,Jefferson City,NC,Dll,SAC,Tier 3,2200
+Lincoln (MO) Blue Tigers,Oxford,MO,Dll,MIAA,Tier 3,3200
+Lincoln (PA) Lions,Lincoln,PA,Dll,PSAC,Tier 3,2600
+Livingstone Blue Bears,Salisbury,NC,Dll,CIAA,Tier 4,1100
+Lock Haven Bald Eagles,Mars Hill,PA,Dll,PSAC,Tier 3,2100
+Mars Hill Lions,Bismarck,NC,Dll,SAC,Tier 3,2500
+Mary Marauders,Lebanon,ND,Dll,NSIC,Tier 3,1900
+McKendree Bearcats,Lebanon,IL,Dll,GLVC,Tier 3,2800
+Michigan Tech Huskies,St. Charles,MI,Dll,GLIAC,Tier 3,5900
+Midwestern State Mustangs,St. Paul,TX,Dll,Lone Star,Tier 3,5700
+Miles Golden Bears,Las Vegas,AL,Dll,SIAC,Tier 4,1800
+Millersville Marauders,Newberry,PA,Dll,PSAC,Tier 3,3700
+Minnesota Duluth Bulldogs,Tigerville,MN,Dll,NSIC,Tier 3,10400
+Minnesota State Mavericks,Tahlequah,MN,Dll,NSIC,Tier 3,13400
+Minot State Beavers,Marquette,ND,Dll,NSIC,Tier 3,3100
+Missouri S&T Miners,Aberdeen,MO,Dll,GLVC,Tier 3,4600
+Missouri Southern Lions,Midland,MO,Dll,MIAA,Tier 3,6600
+Missouri Western Griffons,Alva,MO,Dll,MIAA,Tier 3,6900
+Morehouse Maroon Tigers,Columbus,GA,Dll,SIAC,Tier 4,3000
+MSU Moorhead Dragons,Shawnee,MN,Dll,NSIC,Tier 3,7400
+Nebraska–Kearney Lopers,Arkadelphia,NE,Dll,MIAA,Tier 3,11000
+New Mexico Highlands Cowboys,Pleasantville,NM,Dll,RMAC,Tier 3,4900
+Newberry Wolves,Pittsburg,SC,Dll,SAC,Tier 3,2800
+North Greenville Crusaders,Waterbury,SC,Dll,Conference Carolinas,Tier 3,3500
+Northeastern State RiverHawks,Quincy,OK,Dll,Lone Star,Tier 3,7400
+Northern Michigan Wildcats,Chicago,MI,Dll,GLIAC,Tier 3,3300
+Northern State Wolves,University Center,SD,Dll,NSIC,Tier 3,7900
+Northwood Timberwolves,Manchester,MI,Dll,GLIAC,Tier 3,5900
+Northwest Missouri State Bearcats,Midland,MO,Dll,MIAA,Tier 3,3700
+Northwestern Oklahoma State Rangers,Maryville,OK,Dll,Great American,Tier 3,2900
+Ohio Dominican Panthers,Alva,OH,Dll,GLVC,Tier 3,3100
+Oklahoma Baptist Bison,Columbus,OK,Dll,GAC,Tier 3,3500
+Ouachita Baptist Tigers,Shawnee,AR,Dll,Great American,Tier 3,2400
+Pace Setters,Arkadelphia,NY,Dll,Northeast-10,Tier 3,5800
+Pittsburg State Gorillas,Pleasantville,KS,Dll,MIAA,Tier 3,1900
+Post Eagles,Pittsburg,CT,Dll,Northeast-10,Tier 3,2300
+Quincy Hawks,Waterbury,IL,Dll,GLVC,Tier 3,3800
+Roosevelt Lakers,Quincy,IL,Dll,GLVC,Tier 3,6900
+Saginaw Valley State Cardinals,Chicago,MI,Dll,GLIAC,Tier 3,2600
+Saint Anselm Hawks,University Center,NH,Dll,Northeast-10,Tier 3,3500
+Savannah State Tigers,Manchester,GA,Dll,SIAC,Tier 4,6700
+Southeastern Oklahoma State Savage Storm,Savannah,OK,Dll,GAC,Tier 3,3600
+Seton Hill Griffins,Durant,PA,Dll,PSAC,Tier 3,2300
+Shaw Bears,Greensburg,NC,Dll,CIAA,Tier 4,2100
+Shepherd Rams,Raleigh,WV,Dll,MEC,Tier 3,2800
+Shippensburg Raiders,Shepherdstown,PA,Dll,PSAC,Tier 3,2600
+Shorter Hawks,Shippensburg,GA,Dll,Conference Carolinas,Tier 3,2900
+Sioux Falls Cougars,Rome,SD,Dll,NSIC,Tier 3,3100
+Slippery Rock The Rock,Sioux Falls,PA,Dll,PSAC,Tier 3,4800
+South Dakota Mines Hardrockers,Slippery Rock,SD,Dll,RMAC,Tier 3,2500
+Southern Arkansas Muleriders,Rapid City,AR,Dll,Great American,Tier 3,3300
+Southern Connecticut Owls,Magnolia,CT,Dll,Northeast-10,Tier 3,3300
+Southern Nazarene Crimson Storm,New Haven,OK,Dll,GAC,Tier 3,3400
+Southwest Baptist Bearcats,Bolivar,MO,Dll,GLVC,Tier 3,2600
+Sul Ross Lobos,Alpine,TX,Dll,Lone Star,Tier 3,2100
+Southwest Minnesota State Mustangs,Marshall,MN,Dll,NSIC,Tier 3,3700
+Southwestern Oklahoma State Bulldogs,Weatherford,OK,Dll,GAC,Tier 3,5400
+Texas A&M–Kingsville Javelinas,Kingsville,TX,Dll,Lone Star,Tier 3,8900
+Thomas More Saints,Crestview Hills,KY,Dll,GMAC,Tier 3,1900
+Tiffin Dragons,Tiffin,OH,Dll,GLIAC,Tier 3,3400
+Truman Bulldogs,Kirksville,MO,Dll,GLVC,Tier 2,3700
+Tusculum Pioneers,Tusculum,TN,Dll,SAC,Tier 3,3200
+Tuskegee Golden Tigers,Tuskegee,AL,Dll,SIAC,Tier 3,3200
+UNC Pembroke Braves,Pembroke,NC,Dll,Conference Carolinas,Tier 3,2800
+Upper Iowa Peacocks,Fayette,IA,Dll,GLIAC,Tier 3,2600
+UT Permian Basin Falcons,Odessa,TX,Dll,Lone Star,Tier 3,7200
+UVA Wise Cavaliers,Wise,VA,Dll,MEC,Tier 3,2400
+Valdosta State Blazers,Valdosta,GA,Dll,GSC,Tier 3,7200
+Virginia State Trojans,Ettrick,VA,Dll,CIAA,Tier 4,2800
+Virginia Union Panthers,Richmond,VA,Dll,CIAA,Tier 4,3100
+Walsh Cavaliers,North Canton,OH,Dll,GLIAC,Tier 3,2700
+Washburn Ichabods,Topeka,KS,Dll,MIAA,Tier 3,4900
+Wayne State (MI) Warriors,Detroit,MI,Dll,GLIAC,Tier 3,2100
+Wayne State (NE) Wildcats,Wayne,NE,Dll,MIAA,Tier 3,4200
+West Alabama Tigers,Livingston,AL,Dll,GSC,Tier 3,9000
+West Chester Golden Rams,West Chester,PA,Dll,PSAC,Tier 3,1700
+West Florida Argonauts,Pensacola,FL,Dll,MEC,Tier 3,2200
+West Liberty Hilltoppers,West Liberty,WV,Dll,MEC,Tier 3,3500
+West Texas A&M Buffaloes,Canyon,TX,Dll,Lone Star,Tier 3,2700
+West Virginia State Yellow Jackets,Institute,WV,Dll,MEC,Tier 3,6100
+West Virginia Wesleyan Bobcats,Buckhannon,WV,Dll,MEC,Tier 3,2600
+Western Colorado Mountaineers,Gunnison,CO,Dll,RMAC,Tier 3,4300
+Western New Mexico Mustangs,Silver City,NM,Dll,RMAC,Tier 3,5600
+Western Oregon Wolves,Monmouth,OR,Dll,GNAC,Tier 3,2700
+Wheeling Cardinals,Wheeling,WV,Dll,MEC,Tier 3,2600
+William Jewell Cardinals,Liberty,MO,Dll,GLVC,Tier 3,2400
+Wingate Bulldogs,Wingate,NC,Dll,SAC,Tier 3,3200
+Winona State Warriors,Winona,MN,Dll,NSIC,Tier 3,6100
+Winston-Salem State Rams,Winston-Salem,NC,Dll,CIAA,Tier 4,2100
+,,,,,,
+Adrian Bulldogs,Adrian,MI,DIII,MIAA,Tier 4,1654
+Albion Britons,Albion,MI,DIII,MIAA,Tier 3,1500
+Albright Lions,Reading,PA,DIII,MAC,Tier 4,2320
+Alfred Saxons,Alfred,NY,DIII,Empire 8,Tier 4,2300
+Alfred State Pioneers,Alfred,NY,DIII,Empire 8,Tier 5,3737
+Allegheny Gators,Meadville,PA,DIII,PAC,Tier 2,1771
+Alma Scots,Alma,MI,DIII,MIAA,Tier 4,1378
+Alvernia Golden Wolves,Reading,PA,DIII,MAC,Tier 4,2900
+Amherst Mammoths,Amherst,MA,DIII,NESCAC,Tier 1,1855
+Anderson Ravens,Anderson,IN,DIII,HCAC,Tier 5,1566
+Anna Maria Amcats,Paxton,MA,DIII,MASCAC,Tier 5,1134
+Augsburg Auggies,Minneapolis,MN,DIII,MIAC,Tier 3,3822
+Augustana (IL) Vikings,Rock Island,IL,DIII,CCIW,Tier 2,3822
+Aurora Spartans,Aurora,IL,DIII,NACC,Tier 4,3800
+Austin Kangaroos,Sherman,TX,DIII,SCAC,Tier 2,1223
+Averett Cougars,Danville,VA,DIII,ODAC,Tier 5,1870
+Baldwin Wallace Yellow Jackets,Berea,OH,DIII,OAC,Tier 3,2912
+Bates Bobcats,Lewiston,ME,DIII,NESCAC,Tier 1,1780
+Belhaven Blazers,Jackson,MS,DIII,USA South,Tier 5,4245
+Beloit Buccaneers,Beloit,WI,DIII,MWC,Tier 3,1402
+Benedictine Eagles,Lisle,IL,DIII,NACC,Tier 4,4885
+Berry Vikings,Mount Berry,GA,DIII,SAA,Tier 2,2110
+Bethany Bison,Bethany,WV,DIII,PAC,Tier 5,650
+Bethel Royals,Arden Hills,MN,DIII,MIAC,Tier 2,2533
+Bluffton Beavers,Bluffton,OH,DIII,HCAC,Tier 5,1094
+Bowdoin Polar Bears,Brunswick,ME,DIII,NESCAC,Tier 1,1805
+Brevard Tornados,Brevard,NC,DIII,USA South,Tier 5,703
+Bridgewater Eagles,Bridgewater,VA,DIII,ODAC,Tier 4,1800
+Bridgewater State Bears,Bridgewater,MA,DIII,MASCAC,Tier 4,10651
+Brockport Golden Eagles,Brockport,NY,DIII,Empire 8,Tier 3,8287
+Buena Vista Beavers,Storm Lake,IA,DIII,ARC,,2775
+Buffalo State Bengals,Buffalo,NY,DIII,Liberty,Tier 4,9118
+Cal Lutheran Kingsmen,Thousand Oaks,CA,DIII,SCIAC,Tier 3,3888
+Calvin Knights,Grand Rapids,MI,DIII,MIAA,Tier 2,3256
+Capital Comets,Columbus,OH,DIII,OAC,Tier 1,3367
+Carleton Knights,Northfield,MN,DIII,MIAC,Tier 3,2105
+Carnegie Mellon Tartans,Pittsburgh,PA,DIII,Centennial,Tier 3,14799
+Carroll (WI) Pioneers,Waukesha,WI,DIII,CCIW,Tier 1,3358
+Carthage Firebirds,Kenosha,WI,DIII,CCIW,Tier 3,2800
+Case Western Reserve Spartans,Cleveland,OH,DIII,PAC,Tier 4,12266
+Catholic University Cardinals,Washington,DC,DIII,Landmark,Tier 3,5956
+Centenary Gentlemen,Shreveport,LA,DIII,SCAC,Tier 4,563
+Central (IA) Dutch,Pella,IA,DIII,ARC,Tier 4,1100
+Centre Colonels,Danville,KY,DIII,SAA,Tier 2,1430
+Chapman Panthers,Orange,CA,DIII,SCIAC,Tier 2,8542
+Chicago Maroons,Chicago,IL,DIII,MWC,Tier 1,16445
+Christopher Newport Captains,Newport News,VA,DIII,NJAC,Tier 2,4957
+Claremont–Mudd–Scripps Stags,Claremont,CA,DIII,SCIAC,Tier 1,8500
+Coast Guard Bears,New London,CT,DIII,NEWMAC,Tier 2,1045
+Coe Kohawks,Cedar Rapids,IA,DIII,ARC,Tier 4,1400
+Colby Mules,Waterville,ME,DIII,NESCAC,Tier 1,1917
+TCNJ Lions,Ewing,NJ,DIII,NJAC,Tier 2,7340
+Concordia (IL) Cougars,River Forest,IL,DIII,NACC,Tier 4,6005
+Concordia (Moorhead) Cobbers,Moorhead,MN,DIII,MIAC,Tier 3,2531
+Concordia (WI) Falcons,Mequon,WI,DIII,NACC,Tier 3,7721
+Cornell (IA) Rams,Mount Vernon,IA,DIII,MWC,Tier 4,1033
+Cortland Red Dragons,Cortland,NY,DIII,Empire 8,Tier 3,6858
+Crown Polars,St. Bonifacius,MN,DIII,UMAC,Tier 5,1320
+Curry Colonels,Milton,MA,DIII,CNE,Tier 5,4700
+Dean Bulldogs,Franklin,MA,DIII,MASCAC,Tier 5,1355
+Delaware Valley Aggies,Doylestown,PA,DIII,MAC,Tier 3,1950
+Denison Big Red,Granville,OH,DIII,NCAC,Tier 2,2300
+DePauw Tigers,Greencastle,IN,DIII,NCAC,Tier 2,2315
+Dickinson Red Devils,Carlisle,PA,DIII,Centennial,Tier 2,2420
+Dubuque Spartans,Dubuque,IA,DIII,ARC,Tier 4,2190
+East Texas Baptist Tigers,Marshall,TX,DIII,ASC,Tier 5,1613
+Eastern Eagles,St. Davids,PA,DIII,MAC,Tier 5,3420
+Elmhurst Bluejays,Elmhurst,IL,DIII,CCIW,Tier 3,3350
+Endicott Gulls,Beverly,MA,DIII,CNE,Tier 3,5685
+Eureka Red Devils,Eureka,IL,DIII,NACC,Tier 5,567
+Fairleigh Dickinson–Florham Devils,Madison,NJ,DIII,MAC,Tier 3,2546
+Fitchburg State Falcons,Fitchburg,MA,DIII,MASCAC,Tier 5,4659
+Framingham State Rams,Framingham,MA,DIII,MASCAC,Tier 4,4876
+Franklin Grizzlies,Franklin,IN,DIII,HCAC,Tier 4,1000
+Franklin & Marshall Diplomats,Lancaster,PA,DIII,Centennial,Tier 1,2426
+Gallaudet Bison,Washington,DC,DIII,ODAC,Tier 5,1860
+Geneva Golden Tornadoes,Beaver Falls,PA,DIII,PAC,Tier 4,1418
+George Fox Bruins,Newberg,OR,DIII,NWC,Tier 2,3747
+Gettysburg Bullets,Gettysburg,PA,DIII,Centennial,Tier 1,2451
+Greensboro Pride,Greensboro,NC,DIII,USA South,Tier 5,1300
+Greenville Panthers,Greenville,IL,DIII,UMAC,Tier 4,872
+Grinnell Pioneers,Grinnell,IA,DIII,MWC,Tier 2,1733
+Grove City Wolverines,Grove City,PA,DIII,PAC,Tier 2,2400
+Guilford Quakers,Greensboro,NC,DIII,ODAC,Tier 5,2137
+Gustavus Adolphus Gusties,St. Peter,MN,DIII,MIAC,Tier 3,2450
+Hamilton Continentals,Clinton,NY,DIII,NESCAC,Tier 1,1850
+Hamline Pipers,St. Paul,MN,DIII,MIAC,Tier 3,3717
+Hampden–Sydney Tigers,Hampden Sydney,VA,DIII,ODAC,Tier 2,993
+Hanover Panthers,Hanover,IN,DIII,HCAC,Tier 3,1089
+Hardin–Simmons Cowboys,Abilene,TX,DIII,ASC,Tier 3,2392
+Hartwick Hawks,Oneonta,NY,DIII,Empire 8,Tier 4,1200
+Heidelberg Student Princes,Tiffin,OH,DIII,OAC,Tier 3,1300
+Hendrix Warriors,Conway,AR,DIII,SCAC,Tier 2,1348
+Hilbert Hawks,Hamburg,NY,DIII,Liberty,Tier 5,1100
+Hiram Terriers,Hiram,OH,DIII,PAC,Tier 5,1116
+Hobart Statesmen,Geneva,NY,DIII,Liberty,Tier 1,2229
+Hope Flying Dutchmen,Holland,MI,DIII,MIAA,Tier 2,3149
+Howard Payne Yellow Jackets,Brownwood,TX,DIII,ASC,Tier 4,1170
+Huntingdon Hawks,Montgomery,AL,DIII,USA South,Tier 4,1107
+Husson Eagles,Bangor,ME,DIII,CNE,Tier 3,3500
+Illinois College Blueboys,Jacksonville,IL,DIII,MWC,Tier 2,1048
+Illinois Wesleyan Titans,Bloomington,IL,DIII,CCIW,Tier 3,1893
+Ithaca Bombers,Ithaca,NY,DIII,Liberty,Tier 4,6266
+John Carroll Blue Streaks,University Heights,OH,DIII,NCAC,Tier 3,3673
+Johns Hopkins Blue Jays,Baltimore,MD,DIII,Centennial,Tier 4,26402
+Juniata Eagles,Huntingdon,PA,DIII,Landmark,Tier 3,1573
+Kalamazoo Hornets,Kalamazoo,MI,DIII,MIAA,Tier 4,1436
+Kean Cougars,Union Township,NJ,DIII,NJAC,Tier 2,16633
+Kenyon Owls,Gambier,OH,DIII,NCAC,Tier 1,1676
+Keystone Giants,La Plume,PA,DIII,Independent,Tier 3,1600
+King's Monarchs,Wilkes-Barre,PA,DIII,MAC,Tier 2,2300
+Knox Prairie Fire,Galesburg,IL,DIII,MWC,Tier 2,1200
+La Verne Leopards,La Verne,CA,DIII,SCIAC,Tier 1,2713
+LaGrange Panthers,LaGrange,GA,DIII,USA South,Tier 4,1137
+Lake Forest Foresters,Lake Forest,IL,DIII,MWC,Tier 2,1592
+Lakeland Muskies,Sheboygan,WI,DIII,NACC,Tier 5,3973
+Lawrence Vikings,Appleton,WI,DIII,MWC,Tier 3,1555
+Lebanon Valley Flying Dutchmen,Annville,WI,DIII,MAC,Tier 4,1916
+Lewis & Clark Pioneers,Portland,PA,DIII,NWC,Tier 4,3390
+Linfield Wildcats,McMinnville,OR,DIII,NWC,Tier 5,2282
+Loras Duhawks,Dubuque,IA,DIII,ARC,Tier 5,"1,690"
+Luther Norse,Decorah,IA,DIII,ARC,Tier 2,"2,015"
+Lycoming Warriors,Williamsport,PA,DIII,MAC,Tier 3,"1,140"
+Lyon Scots,Batesville,AR,DIII,SCAC,Tier 4,600
+Macalester Scots,Saint Paul,MN,DIII,MIAC,Tier 5,"2,251"
+Maine Maritime Mariners,Castine,ME,DIII,CCC,Tier 2,"1,042"
+Manchester Spartans,North Manchester,IN,DIII,HCAC,Tier 2,"1,216"
+Marietta Pioneers,Marietta,OH,DIII,OAC,Tier 2,"1,263"
+Martin Luther Knights,New Ulm,MN,DIII,UMAC,Tier 4,930
+Mary Hardin–Baylor Crusaders,Belton,TX,DIII,ASC,Tier 5,"3,914"
+Maryville (TN) Scots,Maryville,TN,DIII,SAA,Tier 3,"1,213"
+UMass Dartmouth Corsairs,North Dartmouth,MA,DIII,MASCAC,Tier 3,"8,513"
+Massachusetts Maritime Buccaneers,Buzzards Bay,MA,DIII,MASCAC,Tier 5,"1,637"
+McDaniel Green Terror,Westminster,MD,DIII,Centennial,Tier 4,"1,629"
+McMurry War Hawks,Abilene,TX,DIII,ASC,Tier 4,"1,176"
+Merchant Marine Mariners,Kings Point,NY,DIII,NEWMAC,Tier 5,"1,011"
+Methodist Monarchs,Fayetteville,NC,DIII,USA South,Tier 3,"2,200"
+Middlebury Panthers,Middlebury,VT,DIII,NESCAC,Tier 4,"2,549"
+Millikin Big Blue,Decatur,IL,DIII,CCIW,Tier 2,"2,000"
+Millsaps Majors,Jackson,MS,DIII,SAA,Tier 2,985
+Minnesota Morris Cougars,Morris,MN,DIII,UMAC,Tier 4,"1,431"
+Misericordia Cougars,Dallas,PA,DIII,MAC,Tier 3,"3,196"
+MIT Engineers,Cambridge,MA,DIII,NEWMAC,Tier 2,"11,520"
+Monmouth (IL) Fighting Scots,Monmouth,IL,DIII,MWC,Tier 2,"1,100"
+Montclair State Red Hawks,Upper Montclair,NJ,DIII,NJAC,Tier 4,"21,115"
+Moravian Greyhounds,Bethlehem,PA,DIII,Landmark,Tier 5,"2,075"
+Mount Union Purple Raiders,Alliance,OH,DIII,OAC,Tier 4,"2,200"
+Mount St. Joseph Lions,Cincinnati,OH,DIII,HCAC,Tier 4,"1,889"
+Muhlenberg Mules,Allentown,PA,DIII,Centennial,Tier 4,"2,225"
+Muskingum Fighting Muskies,New Concord,OH,DIII,OAC,Tier 1,"2,600"
+Nebraska Wesleyan Prairie Wolves,Lincoln,NE,DIII,ARC,Tier 2,"2,095"
+New England (ME) Nor'easters,Biddeford,ME,DIII,CCC,Tier 3,"3,743"
+New England College Pilgrims,Henniker,NH,DIII,MASCAC,Tier 2,"1,433"
+Nichols Bison,Dudley,MA,DIII,MASCAC,Tier 4,"1,570"
+North Carolina Wesleyan Battling Bishops,Rocky Mount,NC,DIII,USA South,Tier 4,"2,093"
+North Central (IL) Cardinals,Naperville,IL,DIII,CCIW,Tier 5,"3,000"
+North Park Vikings,Chicago,IL,DIII,CCIW,Tier 3,"3,136"
+Northwestern (MN) Eagles,Roseville,MN,DIII,UMAC,Tier 4,"1,800"
+Norwich Cadets,Northfield,VT,DIII,NEWMAC,Tier 3,"3,400"
+Oberlin Yeomen,Oberlin,OH,DIII,NCAC,Tier 2,"1,210"
+Ohio Northern Polar Bears,Ada,OH,DIII,OAC,Tier 2,"3,088"
+Ohio Wesleyan Battling Bishops,Delaware,OH,DIII,NCAC,Tier 1,"1,600"
+Olivet Comets,Olivet,MI,DIII,MIAA,Tier 2,"1,040"
+Otterbein Cardinals,Westerville,OH,DIII,OAC,Tier 2,"2,342"
+Pacific (OR) Boxers,Forest Grove,OR,DIII,NWC,Tier 3,"2,282"
+Pacific Lutheran Lutes,Tacoma,WA,DIII,NWC,Tier 3,"3,100"
+Plymouth State Panthers,Plymouth,NH,DIII,MASCAC,Tier 4,"4,491"
+Pomona-Pitzer Sagehens,Claremont,CA,DIII,SCIAC,Tier 2,"1,734"
+Puget Sound Loggers,Tacoma,WA,DIII,NWC,Tier 1,"2,666"
+Randolph–Macon Yellow Jackets,Ashland,VA,DIII,ODAC,Tier 1,"1,419"
+Redlands Bulldogs,Redlands,CA,DIII,SCIAC,Tier 1,"4,898"
+Rhodes Lynx,Memphis,TN,DIII,SAA,Tier 3,"2,030"
+Ripon Red Hawks,Ripon,WI,DIII,MWC,Tier 2,807
+Roanoke Maroons,Salem,VA,DIII,ODAC,Tier 3,"1,920"
+Rochester Yellowjackets,Rochester,NY,DIII,Liberty,Tier 1,"12,233"
+Rockford Regents,Rockford,IL,DIII,NACC,Tier 2,"1,298"
+Rose–Hulman Engineers,Terre Haute,IN,DIII,HCAC,Tier 3,"2,233"
+Rowan Profs,Glassboro,NJ,DIII,NJAC,Tier 2,"19,465"
+RPI Engineers,Troy,NY,DIII,Liberty,Tier 4,"8,142"
+St. John Fisher Cardinals,Pittsford,NY,DIII,Liberty,Tier 4,"3,700"
+Saint John's (MN) Johnnies,Collegeville,MN,DIII,MIAC,Tier 5,"3,640"
+St. Lawrence Saints,Canton,NY,DIII,Liberty,Tier 3,"2,493"
+St. Norbert Green Knights,De Pere,WI,DIII,NACC,Tier 4,"2,132"
+St. Olaf Oles,Northfield,MN,DIII,MIAC,Tier 3,"3,048"
+St. Scholastica Saints,Duluth,MN,DIII,MIAC,Tier 2,"3,906"
+St. Vincent Bearcats,Latrobe,PA,DIII,PAC,Tier 2,"1,867"
+Salisbury Seagulls,Salisbury,MD,DIII,NJAC,Tier 1,"8,650"
+Salve Regina Seahawks,Newport,RI,DIII,NEWMAC,Tier 2,"2,600"
+Sewanee Tigers,Sewanee,TN,DIII,SAA,Tier 2,"1,653"
+Shenandoah Hornets,Winchester,VA,DIII,ODAC,Tier 3,"2,034"
+Simpson Storm,Indianola,IA,DIII,ARC,Tier 3,"1,444"
+Southern Virginia Knights,Buena Vista,VA,DIII,USA South,Tier 4,"1,444"
+Southwestern Pirates,Georgetown,TX,DIII,SAA,Tier 2,"1,515"
+Springfield Pride,Springfield,MA,DIII,NEWMAC,Tier 1,"5,021"
+Stevenson Mustangs,Owings Mills,MD,DIII,MAC,Tier 1,"3,615"
+SUNY-Maritime Privateers,Bronx,NY,DIII,NEWMAC,Tier 1,"1,734"
+Morrisville Mustangs,Morrisville,NY,DIII,Empire 8,Tier 3,"2,986"
+Susquehanna River Hawks,Selinsgrove,PA,DIII,Landmark,Tier 2,"2,203"
+Texas Lutheran Bulldogs,Seguin,TX,DIII,SCAC,Tier 3,"2,203"
+Thiel Tomcats,Greenville,PA,DIII,PAC,Tier 5,894
+Trine Thunder,Angola,IN,DIII,MIAA,Tier 4,"5,074"
+Trinity (CT) Bantams,Hartford,CT,DIII,NESCAC,Tier 2,"2,235"
+Trinity (TX) Tigers,San Antonio,TX,DIII,SAA,Tier 3,"2,606"
+Tufts Jumbos,Medford,MA,DIII,NESCAC,Tier 2,"6,200"
+Union Garnet Chargers,Schenectady,NY,DIII,Liberty,Tier 1,"2,200"
+Ursinus Bears,Collegeville,PA,DIII,Centennial,Tier 3,"1,472"
+Utica Pioneers,Utica,NY,DIII,Empire 8,Tier 3,"4,184"
+Vermont State Castleton Spartans,Castleton,VT,DIII,LEC,Tier 4,"1,852"
+Wabash Little Giants,Crawfordsville,IN,DIII,NCAC,Tier 2,882
+Wartburg Knights,Waverly,IA,DIII,ARC,Tier 2,"2,095"
+Washington & Jefferson Presidents,Washington,PA,DIII,PAC,Tier 4,"1,416"
+Washington & Lee Generals,Lexington,VA,DIII,ODAC,Tier 2,"2,223"
+Washington (St. Louis) Bears,St. Louis,MO,DIII,CCIW,Tier 1,"15,045"
+Waynesburg Yellow Jackets,Waynesburg,PA,DIII,PAC,Tier 1,"1,800"
+Wesleyan Cardinals,Middletown,CT,DIII,NESCAC,Tier 2,"3,230"
+Western Connecticut Wolves,Danbury,CT,DIII,LEC,Tier 3,"5,246"
+Western New England Golden Bears,Springfield,MA,DIII,CCC,Tier 2,"3,955"
+Westfield State Owls,Westfield,MA,DIII,MASCAC,Tier 3,"5,400"
+Westminster (MO) Blue Jays,Fulton,MO,DIII,UMAC,Tier 3,658
+Westminster (PA) Titans,New Wilmington,PA,DIII,PAC,Tier 4,"1,138"
+Wheaton (IL) Thunder,Wheaton,IL,DIII,CCIW,Tier 3,"2,810"
+Whitworth Pirates,Spokane,WA,DIII,NWC,Tier 5,"3,100"
+Widener Pride,Chester,PA,DIII,MAC,Tier 4,"6,464"
+Wilkes Colonels,Wilkes-Barre,PA,DIII,MAC,Tier 4,"2,245"
+Willamette Bearcats,Salem,OR,DIII,NWC,Tier 4,"1,800"
+William Paterson Pioneers,Wayne,NJ,DIII,NJAC,Tier 5,"10,252"
+Williams Ephs,Williamstown,MA,DIII,NESCAC,Tier 1,"2,081"
+Wilmington Quakers,Wilmington,OH,DIII,OAC,Tier 4,"1,103"
+Wisconsin Lutheran Warriors,Milwaukee,WI,DIII,NACC,Tier 4,"1,188"
+Wisconsin–Eau Claire Blugolds,Eau Claire,WI,DIII,WIAC,Tier 4,"10,737"
+Wisconsin–La Crosse Eagles,La Crosse,WI,DIII,WIAC,Tier 4,"9,617"
+Wisconsin–Oshkosh Titans,Oshkosh,WI,DIII,WIAC,Tier 4,"13,902"
+Wisconsin–Platteville Pioneers,Platteville,WI,DIII,WIAC,Tier 4,"8,712"
+Wisconsin–River Falls Falcons,River Falls,WI,DIII,WIAC,Tier 4,"6,061"
+Wisconsin–Stevens Point Pointers,Stevens Point,WI,DIII,WIAC,Tier 4,"7,725"
+Wisconsin–Stout Blue Devils,Menomonie,WI,DIII,WIAC,Tier 4,"9,401"
+Wisconsin–Whitewater Warhawks,Whitewater,WI,DIII,WIAC,Tier 2,"11,142"
+Wittenberg Tigers,Springfield,OH,DIII,NCAC,Tier 2,"1,794"
+Wooster Fighting Scots,Wooster,OH,DIII,NCAC,Tier 2,"2,000"
+WPI Engineers,Worcester,MA,DIII,NEWMAC,Tier 2,"6,077"
+Worcester State Lancers,Worcester,MA,DIII,MASCAC,Tier 2,"6,434"
+,,,,,,
+Allan Hancock College Bulldogs,Santa Maria,CA,JUCO,WSC,Tier 5,"10,100"
+American River College Beavers,Sacramento,CA,JUCO,B8,Tier 5,"29,000"
+Andrew College Fighting Tigers,Cuthbert,GA,JUCO,SSAC*,Tier 5,602
+Antelope Valley College Marauders,Lancaster,CA,JUCO,SCFA-NDA,Tier 5,"12,000"
+Bakersfield College Renegades,Bakersfield,CA,JUCO,SCFA-NDC,Tier 5,"33,000"
+Blinn College Buccaneers,Brenham,TX,JUCO,SWJCFC,Tier 5,"18,220"
+Butler Community College Grizzlies,El Dorado,KS,JUCO,KJCCC,Tier 5,"11,000"
+Butte College Roadrunners,Oroville,CA,JUCO,NCFC,Tier 5,"10,395"
+Central Lakes College Raiders,Brainerd,MN,JUCO,MCAC,Tier 5,"4,491"
+Chabot College Gladiators,Hayward,CA,JUCO,CCCAA-B6,Tier 5,"13,500"
+Chaffey College Panthers,Rancho Cucamonga,CA,JUCO,CCCAA-IE,Tier 5,"21,800"
+Citrus College Owls,Glendora,CA,JUCO,CCCAA-CC,Tier 5,"12,000"
+Cisco College Wranglers,Cisco,TX,JUCO,SWJCFC,Tier 5,"3,001"
+Coahoma Community College Tigers,Clarksdale,MS,JUCO,MACCC,Tier 5,"2,065"
+Coffeyville Community College Red Ravens,Coffeyville,KS,JUCO,KJCCC,Tier 5,"2,000"
+College of DuPage Chaparrals,Glen Ellyn,IL,JUCO,NIFC,Tier 5,"21,000"
+College of San Mateo Bulldogs,San Mateo,CA,JUCO,CCCAA-B6,Tier 5,"11,500"
+College of the Canyons Cougars,Santa Clarita,CA,JUCO,CCCAA-NC,Tier 5,"20,000"
+College of the Desert Roadrunners,Palm Desert,CA,JUCO,CCCAA-SC,Tier 5,"9,500"
+College of the Redwoods Corsairs,Eureka,CA,JUCO,CCCAA-GV,Tier 5,"7,800"
+College of the Sequoias Giants,Visalia,CA,JUCO,CCCAA–GV,Tier 5,"16,256"
+College of the Siskiyous Eagles,Weed,CA,JUCO,CCCAA–GV,Tier 5,"4,500"
+Contra Costa College Comets,San Pablo,CA,JUCO,CCCAA–NC,Tier 5,"6,249"
+Community Christian College Saints,Redlands,CA,JUCO,CCCAA–PC,Tier 5,300
+Copiah-Lincoln Community College Wolves,Wesson,MS,JUCO,MACCC,Tier 5,"3,018"
+De Anza College Dons,Cupertino,CA,JUCO,CCCAA–NC,Tier 5,"17,000"
+Diablo Valley College Vikings,Pleasant Hill,CA,JUCO,CCCAA–NC,Tier 5,"21,000"
+Dodge City Community College Conquistadors,Dodge City,KS,JUCO,CCCAA–NC,Tier 5,"1,525"
+East Central Community College Warriors,Decatur,MS,JUCO,MACCC,Tier 5,"3,016"
+East Los Angeles College Huskies,Monterey Park,CA,JUCO,CCCAA–NC,Tier 5,"30,000"
+East Mississippi Community College Lions,Scooba,MS,JUCO,MACCC,Tier 5,"7,580"
+El Camino College Warriors,Torrance,CA,JUCO,SCFA–NC,Tier 5,"33,397"
+Ellsworth Community College Panthers,Iowa Falls,IA,JUCO,NORCAL,Tier 5,"2,800"
+Erie Community College Kats,Buffalo,NY,JUCO,CCCAA–PC,Tier 5,"10,967"
+Feather River College Golden Eagles,Quincy,CA,JUCO,GSFC,Tier 5,"2,795"
+Foothill College Owls,Los Altos Hills,CA,JUCO,SCFA–NC,Tier 5,"2,100"
+Fresno City College Rams,Fresno,CA,JUCO,CCCAA–GV,Tier 5,"4,500"
+Fullerton College Hornets,Fullerton,CA,JUCO,CCCAA–GV,Tier 5,"12,000"
+Garden City Community College Broncbusters,Garden City,KS,JUCO,CCCAA–GV,Tier 5,"11,112"
+Gavilan College Rams,Gilroy,CA,JUCO,MACCC,Tier 5,"7,055"
+Georgia Military College Bulldogs,Milledgeville,GA,JUCO,GSFC,Tier 5,"7,400"
+Glendale Community College Vaqueros,Glendale,AZ,JUCO,SCFA–NC,Tier 5,"16,000"
+Golden West College Rustlers,Huntington Beach,CA,JUCO,CCCAA–NC,Tier 5,"13,000"
+Gordon State College Highlanders,Barnesville,GA,JUCO,CCCAA–NC,Tier 5,"2,900"
+Hartnell College Panthers,Salinas,CA,JUCO,MCAC,Tier 5,"9,100"
+Highland Community College Scotties,Freeport,IL,JUCO,MACCC,Tier 5,"4,400"
+Hinds Community College Eagles,Raymond,MS,JUCO,SCFA–NC,Tier 5,"4,000"
+Hocking College Hawks,Nelsonville,OH,JUCO,NORCAL,Tier 5,"3,355"
+Holmes Community College Bulldogs,Goodman,MS,JUCO,GSFC,Tier 5,"2,700"
+Hutchinson Community College Blue Dragons,Hutchinson,KS,JUCO,WSFL,Tier 5,"4,563"
+Independence Community College Pirates,Independence,KS,JUCO,CCCAA–NC,Tier 5,"5,470"
+Iowa Central Community College Tritons,Fort Dodge,IA,JUCO,MACCC,Tier 5,"7,450"
+Iowa Western Community College Reivers,Council Bluffs,IA,JUCO,KJCCC,Tier 5,"10,445"
+Itawamba Community College Indians,Fulton,MS,JUCO,MACCC,Tier 5,"6,780"
+Jones College Bobcats,Ellisville,MS,JUCO,KJCCC,Tier 5,"6,000"
+Kilgore College Rangers,Kilgore,TX,JUCO,CCCAA–NC,Tier 5,"2,500"
+Lackawanna College Falcons,Scranton,PA,JUCO,SCFA–NC,Tier 5,"14,600"
+Laney College Eagles,Oakland,CA,JUCO,GSFC,Tier 5,"8,954"
+Los Angeles Harbor College Seahawks,San Pedro,CA,JUCO,MACCC,Tier 5,"7,445"
+Los Angeles Pierce College Brahmas,Woodland Hills,CA,JUCO,SWJCFC,Tier 5,"21,716"
+Los Angeles Southwest College Cougars,Los Angeles,CA,JUCO,SCFA–SC,Tier 5,"12,700"
+Los Angeles Valley College Monarchs,Valley Glen,CA,JUCO,SCFA–SC,Tier 5,"1,137"
+Louisburg College Hurricanes,Louisburg,NC,JUCO,SCFA–SC,Tier 5,"4,699"
+Merced College Blue Devils,Merced,CA,JUCO,CCCAA–SC,Tier 5,"2,195"
+Mesabi Range College Norse,Virginia,MN,JUCO,SCFA–SC,Tier 5,"3,437"
+Minnesota North College – Vermilion Ironmen,Ely,MN,JUCO,GSFC,Tier 5,"3,773"
+Minnesota State Community & Technical College,Detroit Lakes,MN,JUCO,CCCAA–NC,Tier 5,"2,281"
+Minnesota West Community & Technical College,Worthington,MN,JUCO,WSFL,Tier 5,"8,397"
+Mississippi Delta Community College Trojans,Moorhead,MS,JUCO,GSFC,Tier 5,"13,680"
+Mississippi Gulf Coast Community College,Perkinston,MS,JUCO,SCFA–NC,Tier 5,"7,631"
+Modesto Junior College Pirates,Modesto,CA,JUCO,SCFA–NC,Tier 5,"15,125"
+Monroe College Mustangs,New Rochelle,NY,JUCO,GSFC,Tier 5,"12,323"
+Monterey Peninsula College Lobos,Monterey,CA,JUCO,CCCAA–NC,Tier 5,"19,302"
+Moorpark College Raiders,Moorpark,CA,JUCO,SWJCFC,Tier 5,"17,143"
+Mt. San Antonio College Mounties,Walnut,CA,JUCO,CCCAA–GV,Tier 5,"29,000"
+Mt. San Jacinto College Eagles,San Jacinto,CA,JUCO,CCCAA–GV,Tier 5,"12,700"
+Nassau Community College Lions,Hempstead,NY,JUCO,MCAC,Tier 5,"11,200"
+Navarro College Bulldogs,Corsicana,TX,JUCO,CCCAA–GV,Tier 5,"11,162"
+New Mexico Military Institute Broncos,Roswell,NM,JUCO,GSFC,Tier 5,"10,916"
+North Dakota State College of Science Wildcats,Wahpeton,ND,JUCO,CCCAA–SC,Tier 5,"14,993"
+Northeast Mississippi Community College Tigers,Booneville,MS,JUCO,MACCC,Tier 5,"11,322"
+Northeastern Oklahoma A&M College Norsemen,Miami,OK,JUCO,MACCC,Tier 5,"17,258"
+Northwest Mississippi Community College Rangers,Senatobia,MS,JUCO,SWJCFC,Tier 5,"6,291"
+Orange Coast College Pirates,Costa Mesa,CA,JUCO,MACCC,Tier 5,"11,679"
+Palomar College Comets,San Marcos,CA,JUCO,KJCCC,Tier 5,"12,636"
+Pasadena City College Lancers,Pasadena,CA,JUCO,MACCC,Tier 5,"10,445"
+Pearl River Community College Wildcats,Poplarville,MS,JUCO,MACCC,Tier 5,"6,780"
+Pima Community College Aztecs,Tucson,AZ,JUCO,MACCC,Tier 5,"6,000"
+Pratt Community College Beavers,Pratt,KS,JUCO,MACCC,Tier 5,"2,500"
+Reedley College Tigers,Reedley,CA,JUCO,SWJCFC,Tier 5,"14,600"
+Riverside City College Tigers,Riverside,CA,JUCO,MACCC,Tier 5,"8,954"
+Rochester Community & Technical College,Rochester,MN,JUCO,NORCAL,Tier 5,"7,445"
+Sacramento City College Panthers,Sacramento,CA,JUCO,SCFA–SC,Tier 5,"21,716"
+Saddleback College Bobcats,Mission Viejo,CA,JUCO,CCCAA–B6,Tier 5,"12,700"
+San Bernardino Valley College Wolverines,San Bernardino,CA,JUCO,CCCAA–NC,Tier 5,"1,137"
+San Diego Mesa College Olympians,San Diego,CA,JUCO,GSFC,Tier 5,"4,699"
+San Joaquin Delta College Mustangs,Stockton,CA,JUCO,CCCAA–NC,Tier 5,"2,195"
+San Jose City College Jaguars,San Jose,CA,JUCO,MACCC,Tier 5,"3,437"
+Santa Barbara City College Vaqueros,Santa Barbara,CA,JUCO,CCCAA–GV,Tier 5,"3,773"
+Santa Monica College Corsairs,Santa Monica,CA,JUCO,SCFA–SC,Tier 5,"2,281"
+Santa Rosa Junior College Bear Cubs,Santa Rosa,CA,JUCO,CCCAA–NC,Tier 5,"8,397"
+Shasta College Knights,Redding,CA,JUCO,CCCAA–GV,Tier 5,"13,680"
+Snow College Badgers,Ephraim,UT,JUCO,CCCAA–GV,Tier 5,"7,631"
+Southwest Mississippi Community College Bears,Summit,MS,JUCO,CCCAA–GV,Tier 5,"15,125"
+Southwestern College Jaguars,Chula Vista,CA,JUCO,SCFA–SC,Tier 5,"12,323"
+Thaddeus Stevens College of Technology Bulldogs,Lancaster,PA,JUCO,CCCAA–SC,Tier 5,"19,302"
+Trinity Valley Community College Cardinals,Athens,TX,JUCO,SCFA–NC,Tier 5,"17,143"
+Tyler Junior College Apaches,Tyler,TX,JUCO,SCFA–NC,Tier 5,"29,000"
+Ventura College Pirates,Ventura,CA,JUCO,GSFC,Tier 5,"12,700"
+Victor Valley College Rams,Victorville,CA,JUCO,SWJCFC,Tier 5,"11,200"
+Vermilion Community College Ironmen,Ely,MN,JUCO,SWJCFC,Tier 5,"11,162"
+West Hills College Coalinga Falcons,Coalinga,CA,JUCO,SCFA–SC,Tier 5,"10,916"
+West Los Angeles College Wildcats,Culver City,CA,JUCO,GSFC,Tier 5,"14,993"
+Williamson College of the Trades Mechanics,Media,PA,JUCO,GSFC,Tier 5,"11,322"
+,,,,,,
+,,,,"Confrence info CCCAA: California Community College Athletic Association
+
+GV: Golden Valley
+
+NC: Northern California Conference
+
+PC: Pacific Conference
+
+MACCC: Mississippi Association of Community Colleges Conference
+
+SCFA: Southern California Football Association
+
+NORCAL: Northern California Football Conference
+
+GSFC: Georgia State Football Conference (occasionally used for Georgia JUCOs, confirm for each)
+
+B8: Big 8 Conference
+
+SWJCFC: Southwest Junior College Football Conference
+
+KJCCC: Kansas Jayhawk Community College Conference
+
+MCAC: Minnesota College Athletic Conference
+
+NIFC: Northern Illinois Football Conference",,

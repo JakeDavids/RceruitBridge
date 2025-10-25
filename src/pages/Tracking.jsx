@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Users, Edit, Bot, Trash2, Plus, Network, Search, Loader2 } from "lucide-react";
 import { format } from "date-fns";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 function AIFollowUpModal({ isOpen, onClose, coachContact, athlete, onFollowUpGenerated }) {
   const [coachReply, setCoachReply] = useState("");
@@ -381,7 +382,7 @@ const getSchoolColorClass = (schoolName) => {
   return colorClasses[hash % colorClasses.length];
 };
 
-export default function Tracking() {
+function Tracking() {
   const [coachContacts, setCoachContacts] = useState([]);
   const [schools, setSchools] = useState([]);
   const [connections, setConnections] = useState([]);
@@ -796,7 +797,7 @@ export default function Tracking() {
             ) : (
               <div className="text-center py-12">
                 <Network className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-                <h3 className="lg font-semibold text-slate-700 mb-2">No Personal Connections Yet</h3>
+                <h3 className="text-lg font-semibold text-slate-700 mb-2">No Personal Connections Yet</h3>
                 <p className="text-slate-500 mb-6">
                   Add personal connections you have to schools to leverage in your recruiting process
                 </p>
@@ -930,5 +931,13 @@ export default function Tracking() {
         </Dialog>
       </div>
     </div>
+  );
+}
+
+export default function TrackingWithErrorBoundary() {
+  return (
+    <ErrorBoundary pageName="Coach Tracking">
+      <Tracking />
+    </ErrorBoundary>
   );
 }
