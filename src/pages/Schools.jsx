@@ -15,6 +15,35 @@ import { createPageUrl } from "@/utils";
 import PageGuide from "@/components/onboarding/PageGuide";
 import useGuidedTour from "@/components/hooks/useGuidedTour";
 
+// Academic Tier Definitions (for tooltips)
+const ACADEMIC_TIERS = {
+  1: {
+    label: "Tier 1 – Most Competitive",
+    description: "Elite academic institutions (e.g., Ivy League level)",
+    color: "bg-purple-100 text-purple-800 border-purple-300"
+  },
+  2: {
+    label: "Tier 2 – Highly Competitive",
+    description: "Very selective schools with high academic rigor",
+    color: "bg-blue-100 text-blue-800 border-blue-300"
+  },
+  3: {
+    label: "Tier 3 – Competitive",
+    description: "Solid academic programs with moderate selectivity",
+    color: "bg-green-100 text-green-800 border-green-300"
+  },
+  4: {
+    label: "Tier 4 – Less Competitive",
+    description: "Generally accessible schools with higher acceptance rates",
+    color: "bg-yellow-100 text-yellow-800 border-yellow-300"
+  },
+  5: {
+    label: "Tier 5 – Least Competitive",
+    description: "Open enrollment or minimally selective schools",
+    color: "bg-gray-100 text-gray-800 border-gray-300"
+  }
+};
+
 // Central utility function for formatted school names
 const getFormattedSchoolName = (schoolName) => {
   const schoolNameMappings = {
@@ -690,16 +719,25 @@ export default function Schools() {
                                       <Badge className={conferenceColors[school.conference] || conferenceColors.default}>
                                           {school.conference?.replace("Conference", "").trim()}
                                       </Badge>
+                                      {school.academic_ranking && ACADEMIC_TIERS[school.academic_ranking] && (
+                                        <TooltipProvider>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <Badge
+                                                className={`cursor-help border ${ACADEMIC_TIERS[school.academic_ranking].color}`}
+                                              >
+                                                🎓 {ACADEMIC_TIERS[school.academic_ranking].label.split(' –')[0]}
+                                              </Badge>
+                                            </TooltipTrigger>
+                                            <TooltipContent className="max-w-xs">
+                                              <p className="font-semibold">{ACADEMIC_TIERS[school.academic_ranking].label}</p>
+                                              <p className="text-sm mt-1">{ACADEMIC_TIERS[school.academic_ranking].description}</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </TooltipProvider>
+                                      )}
                                   </div>
                                   <div>
-                                    <Tooltip>
-                                      <TooltipTrigger asChild>
-                                        <Badge variant="outline" className="mb-2 cursor-help">{school.academic_ranking}</Badge>
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <p className="max-w-xs">{tierDefinitions[school.academic_ranking] || "No definition available."}</p>
-                                      </TooltipContent>
-                                    </Tooltip>
                                       {school.enrollment && (
                                           <p className="text-sm text-slate-600">
                                               📊 {school.enrollment.toLocaleString()} students
