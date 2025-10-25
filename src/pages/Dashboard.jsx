@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Athlete, Outreach, School, Coach } from "@/api/entities";
 import { User } from "@/api/entities";
+import { supabase } from "@/api/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -34,6 +35,7 @@ function Dashboard() {
   const [athlete, setAthlete] = useState(null);
   const [outreaches, setOutreaches] = useState([]);
   const [schools, setSchools] = useState([]);
+  const [targetedSchools, setTargetedSchools] = useState([]);
   const [coaches, setCoaches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,6 +78,24 @@ function Dashboard() {
         }
 
         try {
+          // Load targeted schools from Supabase with RLS
+          const { data: supabaseUser } = await supabase.auth.getUser();
+          if (supabaseUser?.user) {
+            const { data, error } = await supabase
+              .from('targeted_schools')
+              .select('*')
+              .eq('user_id', supabaseUser.user.id);
+
+            if (!error && data) {
+              setTargetedSchools(data);
+            }
+          }
+        } catch (targetError) {
+          console.warn("Could not load targeted schools:", targetError);
+          setTargetedSchools([]);
+        }
+
+        try {
           // Load school data with a delay
           await delay(300);
           const schoolData = await School.list();
@@ -115,7 +135,7 @@ function Dashboard() {
       totalReplied: repliedMessages,
       openRate,
       conversionRate,
-      targetSchools: schools.length,
+      targetSchools: targetedSchools.length, // Use actual targeted schools count
       activeConversations: repliedMessages
     };
   };

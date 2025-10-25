@@ -260,14 +260,76 @@ export const UploadFile = async ({ file }) => {
   return { file_url: publicUrl };
 };
 
-// For AI integration - you'll need to set up Edge Functions or use external API
+// For AI integration - Using Claude API via Anthropic
 export const InvokeLLM = async ({ prompt, add_context_from_internet, response_json_schema }) => {
-  console.warn('InvokeLLM needs to be implemented with Supabase Edge Functions or external API');
-  // For now, return mock response
-  return {
-    message: "AI integration needs to be set up. Use Supabase Edge Functions or external Claude API."
-  };
+  try {
+    // Use Claude API key from environment
+    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
+
+    if (!apiKey) {
+      console.warn('No VITE_ANTHROPIC_API_KEY found in environment');
+      // Return a helpful template instead
+      return generateEmailTemplate(prompt);
+    }
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-3-5-sonnet-20241022',
+        max_tokens: 1024,
+        messages: [{
+          role: 'user',
+          content: prompt
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Claude API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const generatedText = data.content[0].text;
+
+    // If response_json_schema is provided, parse as JSON
+    if (response_json_schema) {
+      return JSON.parse(generatedText);
+    }
+
+    return generatedText;
+  } catch (error) {
+    console.error('InvokeLLM error:', error);
+    // Fallback to template generation
+    return generateEmailTemplate(prompt);
+  }
 };
+
+// Helper function to generate email templates when AI is unavailable
+function generateEmailTemplate(prompt) {
+  // Extract athlete info from prompt if possible
+  const nameMatch = prompt.match(/name is ([^,]+)/i);
+  const sportMatch = prompt.match(/sport.*?:\s*([^\n]+)/i);
+  const athleteName = nameMatch ? nameMatch[1] : '[Your Name]';
+  const sport = sportMatch ? sportMatch[1] : '[Your Sport]';
+
+  return `Subject: ${sport} Recruit - ${athleteName}
+
+Dear Coach [Coach's Name],
+
+My name is ${athleteName}, and I am a ${sport} athlete interested in your program at [College Name]. I am reaching out to express my strong interest in joining your team.
+
+I believe my skills, work ethic, and dedication would make me a valuable addition to your program. I would love the opportunity to discuss how I can contribute to your team's success.
+
+Thank you for your time and consideration. I look forward to hearing from you.
+
+Best regards,
+${athleteName}`;
+}
 
 // For email sending - needs to be implemented via Edge Functions or external service
 export const SendEmail = async (params) => {
