@@ -450,9 +450,20 @@ export default function Schools() {
     }
 
     const isCurrentlyTargeted = targetedSchools.some(ts => ts.school_id === schoolId);
+    const plan = user?.plan || 'free';
 
     try {
         if (isCurrentlyTargeted) {
+            // Prevent removal if free plan is at limit (lock the 3 schools)
+            if (plan === 'free' && targetedSchools.length >= 3) {
+              alert(
+                "🔒 Your 3 target schools are locked on the Free plan.\n\n" +
+                "Upgrade to unlock the ability to change your target schools!\n\n" +
+                "Click 'Upgrade Plan' in the sidebar to unlock more flexibility."
+              );
+              return;
+            }
+
             // Use RPC to remove target school (server-side)
             const { data, error } = await supabase.rpc('remove_target_school', {
               p_school_id: schoolId

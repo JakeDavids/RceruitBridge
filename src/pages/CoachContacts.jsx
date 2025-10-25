@@ -132,16 +132,25 @@ function AddCoachModal({ isOpen, onClose, athlete, schools, onSave, onTourAdvanc
             alert("School and Coach Name are required.");
             return;
         }
-        await CoachContact.create({
-          ...newCoach,
-          athlete_id: athlete.id
-        });
-        setNewCoach(initialCoachState);
-        onSave();
-        if (onTourAdvance) {
-          onTourAdvance();
+
+        try {
+            await CoachContact.create({
+              ...newCoach,
+              athlete_id: athlete.id,
+              response_status: newCoach.response_status || "not_contacted"
+            });
+
+            alert("✅ Coach contact saved successfully!");
+            setNewCoach(initialCoachState);
+            onSave();
+            if (onTourAdvance) {
+              onTourAdvance();
+            }
+            onClose();
+        } catch (error) {
+            console.error("Error saving coach contact:", error);
+            alert(`Error saving contact: ${error.message}`);
         }
-        onClose();
     };
 
     return (
@@ -234,18 +243,41 @@ function BulkImportModal({ isOpen, onClose, athlete, schools, onSave }) {
     };
 
     const handleSave = async () => {
-        if (!athlete || !selectedSchoolId) return;
+        if (!athlete || !selectedSchoolId) {
+            alert("Please select a school and ensure you have an athlete profile.");
+            return;
+        }
         const toSave = parsedContacts.filter(c => c.selected);
-        if (toSave.length === 0) return;
+        if (toSave.length === 0) {
+            alert("Please select at least one contact to save.");
+            return;
+        }
+
         setSaving(true);
-        const records = toSave.map(c => ({
-            athlete_id: athlete.id, school_id: selectedSchoolId, coach_name: c.name, coach_title: c.title,
-            coach_email: c.email || "", coach_twitter: c.twitter || "", coach_phone: c.phone || "", response_status: "not_contacted"
-        }));
-        await CoachContact.bulkCreate(records);
-        setSaving(false);
-        onSave();
-        onClose();
+        try {
+            // Create contacts one by one (bulkCreate doesn't exist in entity helper)
+            for (const c of toSave) {
+                await CoachContact.create({
+                    athlete_id: athlete.id,
+                    school_id: selectedSchoolId,
+                    coach_name: c.name,
+                    coach_title: c.title,
+                    coach_email: c.email || "",
+                    coach_twitter: c.twitter || "",
+                    coach_phone: c.phone || "",
+                    response_status: "not_contacted"
+                });
+            }
+
+            alert(`✅ Successfully saved ${toSave.length} coach contact(s)!`);
+            onSave();
+            onClose();
+        } catch (error) {
+            console.error("Error saving coach contacts:", error);
+            alert(`Error saving contacts: ${error.message}`);
+        } finally {
+            setSaving(false);
+        }
     };
 
     const school = schools.find(s => s.id === selectedSchoolId);
