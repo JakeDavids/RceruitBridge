@@ -30,6 +30,7 @@ export default function OutreachCompose() {
 
   const [sending, setSending] = useState(false);
   const [user, setUser] = useState(null);
+  const [athlete, setAthlete] = useState(null);
   const [toast, setToast] = useState(null);
 
   const showToast = (message, type) => {
@@ -55,6 +56,7 @@ export default function OutreachCompose() {
       if (currentUser && currentUser.id) {
         const athleteData = await Athlete.filter({ created_by: currentUser.email });
         const currentAthlete = athleteData[0];
+        setAthlete(currentAthlete); // Store athlete data for email generation
         if (currentAthlete && currentAthlete.id) {
           const targetedData = await TargetedSchool.filter({ athlete_id: currentAthlete.id });
           setTargetedSchools(targetedData);
@@ -107,38 +109,90 @@ export default function OutreachCompose() {
   const generateWithAI = async () => {
     setGenerating(true);
     try {
-      const prompt = `Write a short, engaging, and professional email to a college coach.
-                      The email should express strong interest in their program and highlight enthusiasm.
-                      Include placeholders for customization:
-                      - [Coach's Name]
-                      - [College Name]
-                      - [Your Name]
-                      - [Your Sport]
+      if (!athlete) {
+        showToast("Please complete your profile first!", "error");
+        setGenerating(false);
+        return;
+      }
 
-                      Subject: Interest in [College Name] [Your Sport] Program - [Your Name]
+      // Build detailed athlete profile for AI
+      const athleteInfo = {
+        name: `${athlete.first_name} ${athlete.last_name}`,
+        sport: athlete.sport || 'football',
+        position: athlete.position || '',
+        gradYear: athlete.graduation_year || '',
+        gpa: athlete.gpa || '',
+        height: athlete.height || '',
+        weight: athlete.weight || '',
+        stats: athlete.key_stats || '',
+        achievements: athlete.achievements || '',
+        city: athlete.city || '',
+        state: athlete.state || '',
+        highSchool: athlete.high_school || ''
+      };
 
-                      Body:
-                      Dear Coach [Coach's Name],
+      const prompt = `You are an expert college recruiting consultant. Write an EXTREMELY attention-grabbing, personalized email from a high school athlete to a college football coach. This email must stand out among hundreds of recruit emails.
 
-                      My name is [Your Name], and I am a [Your Sport] athlete. I am writing to express my strong interest in your [College Name] [Your Sport] program.
+ATHLETE PROFILE:
+- Name: ${athleteInfo.name}
+- Sport: ${athleteInfo.sport}
+- Position: ${athleteInfo.position}
+- Grad Year: ${athleteInfo.gradYear}
+- GPA: ${athleteInfo.gpa}
+- Height: ${athleteInfo.height}, Weight: ${athleteInfo.weight}
+- Key Stats/Achievements: ${athleteInfo.stats || athleteInfo.achievements || 'Dedicated team player with strong work ethic'}
+- Location: ${athleteInfo.city}, ${athleteInfo.state}
+- High School: ${athleteInfo.highSchool}
 
-                      I believe my skills and dedication would be a great asset to your team. I am eager to learn more about your program and how I might contribute.
+REQUIREMENTS:
+1. Subject line must be SHORT (5-8 words), ATTENTION-GRABBING, and mention a specific accomplishment or standout quality
+2. Email must be 3-4 short paragraphs maximum
+3. Lead with the MOST impressive stat/achievement immediately
+4. Show genuine research about their program
+5. Include specific, measurable accomplishments
+6. End with a clear call-to-action
+7. Sound authentic and confident, NOT generic or robotic
+8. Use placeholders: [Coach's Name], [College Name], [Coach's Title]
 
-                      Thank you for your time and consideration. I look forward to hearing from you.
+FORMAT:
+Subject: [Your attention-grabbing subject here]
 
-                      Sincerely,
-                      [Your Name]
-                      `;
+Dear Coach [Coach's Name],
+
+[First paragraph: Open with your most impressive stat/achievement. Make it impossible to ignore.]
+
+[Second paragraph: Show you've researched their program. Mention specific aspects that align with your strengths.]
+
+[Third paragraph: Brief but impactful summary of other key achievements, grades, character.]
+
+[Final paragraph: Strong call-to-action. Request film review or conversation.]
+
+Best regards,
+${athleteInfo.name}
+${athleteInfo.position} | Class of ${athleteInfo.gradYear}
+${athleteInfo.highSchool}
+[Your Phone] | [Your Email]
+
+DO NOT use generic phrases like "I believe I would be a great fit" or "I am writing to express my interest". Be specific, confident, and results-driven. Make coaches WANT to open this email and respond.`;
+
       const response = await InvokeLLM({prompt});
       if (response) {
-        const [generatedSubject, ...generatedBodyLines] = response.split('\n').filter(line => line.trim() !== '');
-        setEmailSubject(generatedSubject.replace('Subject: ', ''));
-        setEmailBody(generatedBodyLines.join('\n'));
-        showToast("Email generated successfully!", "success");
+        const lines = response.split('\n').filter(line => line.trim() !== '');
+        const subjectLine = lines.find(line => line.toLowerCase().startsWith('subject:'));
+
+        if (subjectLine) {
+          setEmailSubject(subjectLine.replace(/^subject:\s*/i, '').trim());
+          const bodyStartIndex = lines.indexOf(subjectLine) + 1;
+          setEmailBody(lines.slice(bodyStartIndex).join('\n').trim());
+        } else {
+          setEmailBody(response);
+        }
+
+        showToast("Personalized email generated!", "success");
       }
     } catch (error) {
       console.error("Error generating email:", error);
-      showToast("Failed to generate email.", "error");
+      showToast("Failed to generate email. Please try again.", "error");
     }
     setGenerating(false);
   };

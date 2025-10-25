@@ -311,30 +311,60 @@ export const InvokeLLM = async ({ prompt, add_context_from_internet, response_js
 
 // Helper function to generate email templates when AI is unavailable
 function generateEmailTemplate(prompt) {
-  // Extract athlete info from prompt if possible
-  const nameMatch = prompt.match(/name is ([^,]+)/i);
-  const sportMatch = prompt.match(/sport.*?:\s*([^\n]+)/i);
-  const athleteName = nameMatch ? nameMatch[1] : '[Your Name]';
-  const sport = sportMatch ? sportMatch[1] : '[Your Sport]';
+  // Extract athlete info from prompt
+  const nameMatch = prompt.match(/Name:\s*([^\n]+)/i);
+  const sportMatch = prompt.match(/Sport:\s*([^\n]+)/i);
+  const positionMatch = prompt.match(/Position:\s*([^\n]+)/i);
+  const gradYearMatch = prompt.match(/Grad Year:\s*([^\n]+)/i);
+  const gpaMatch = prompt.match(/GPA:\s*([^\n]+)/i);
+  const statsMatch = prompt.match(/Key Stats\/Achievements:\s*([^\n]+)/i);
 
-  return `Subject: ${sport} Recruit - ${athleteName}
+  const athleteName = nameMatch ? nameMatch[1].trim() : '[Your Name]';
+  const sport = sportMatch ? sportMatch[1].trim() : '[Your Sport]';
+  const position = positionMatch ? positionMatch[1].trim() : '[Your Position]';
+  const gradYear = gradYearMatch ? gradYearMatch[1].trim() : '[Grad Year]';
+  const gpa = gpaMatch ? gpaMatch[1].trim() : '';
+  const stats = statsMatch ? statsMatch[1].trim() : '';
+
+  // Create attention-grabbing subject based on available info
+  let subject = `${position} | ${athleteName} - Class of ${gradYear}`;
+  if (stats && stats.length > 10) {
+    subject = `${stats.substring(0, 40)}... | ${athleteName}`;
+  }
+
+  return `Subject: ${subject}
 
 Dear Coach [Coach's Name],
 
-My name is ${athleteName}, and I am a ${sport} athlete interested in your program at [College Name]. I am reaching out to express my strong interest in joining your team.
+${stats ? `${stats} - that's my track record, and I'm ready to bring that same intensity to [College Name].` : `I'm ${athleteName}, a ${position} from [High School], and I'm ready to make an impact at [College Name].`}
 
-I believe my skills, work ethic, and dedication would make me a valuable addition to your program. I would love the opportunity to discuss how I can contribute to your team's success.
+Your program's ${sport} style aligns perfectly with my strengths. ${gpa ? `I maintain a ${gpa} GPA while competing at the highest level,` : 'I excel both on the field and in the classroom,'} proving I can handle the demands of college athletics.
 
-Thank you for your time and consideration. I look forward to hearing from you.
+I'd love to send you my film and discuss how I can contribute to your program's success. When's a good time for a quick call this week?
 
 Best regards,
-${athleteName}`;
+${athleteName}
+${position} | Class of ${gradYear}
+[Your Phone] | [Your Email]`;
 }
 
-// For email sending - needs to be implemented via Edge Functions or external service
-export const SendEmail = async (params) => {
-  console.warn('SendEmail needs to be implemented with Supabase Edge Functions or email service');
-  return { success: true };
+// For email sending - uses Supabase Edge Function with Mailgun
+export const SendEmail = async ({ to, from, subject, text, html }) => {
+  try {
+    const { data, error } = await supabase.functions.invoke('send-email', {
+      body: { to, from, subject, text, html }
+    });
+
+    if (error) {
+      console.error('SendEmail error:', error);
+      throw error;
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Failed to send email:', error);
+    throw error;
+  }
 };
 
 // ============================================
