@@ -145,6 +145,17 @@ export default function NewLanding() {
                 Get Started
               </Button>
             </nav>
+
+            {/* Mobile Get Started Button */}
+            <div className="md:hidden">
+              <Button
+                onClick={handleGetStarted}
+                className="text-white hover:opacity-90"
+                style={{ backgroundColor: '#0046AD' }}
+              >
+                Get Started
+              </Button>
+            </div>
           </div>
         </div>
       </header>

@@ -421,15 +421,31 @@ export default function Schools() {
       setUser(currentUser);
       const athleteData = await Athlete.filter({ created_by: currentUser.email });
       const currentAthlete = athleteData[0] || null;
-      
-      const [allSchoolData, targetedData] = await Promise.all([
-        School.list(),
-        currentAthlete ? TargetedSchool.filter({ athlete_id: currentAthlete.id }) : Promise.resolve([]),
-      ]);
-      
+
+      // Load schools from School entity
+      const allSchoolData = await School.list();
+
+      // Load targeted schools from Supabase with RLS
+      let targetedData = [];
+      if (currentAthlete) {
+        const { data: supabaseUser } = await supabase.auth.getUser();
+        if (supabaseUser?.user) {
+          const { data, error } = await supabase
+            .from('targeted_schools')
+            .select('*')
+            .eq('user_id', supabaseUser.user.id);
+
+          if (error) {
+            console.error('Error loading targeted schools:', error);
+          } else {
+            targetedData = data || [];
+          }
+        }
+      }
+
       // Filter schools to only include those with an academic ranking
       const schoolData = allSchoolData.filter(s => s.academic_ranking);
-      
+
       setSchools(schoolData);
       setAthlete(currentAthlete);
       setTargetedSchools(targetedData);
@@ -540,9 +556,22 @@ export default function Schools() {
             console.log('[Schools] Added target school:', data);
         }
 
-        // Refresh the list of targeted schools
-        const updatedTargetedData = await TargetedSchool.filter({ athlete_id: athlete.id });
-        setTargetedSchools(updatedTargetedData);
+        // Refresh the list of targeted schools from Supabase
+        const { data: supabaseUser } = await supabase.auth.getUser();
+        let updatedTargetedData = [];
+        if (supabaseUser?.user) {
+          const { data, error } = await supabase
+            .from('targeted_schools')
+            .select('*')
+            .eq('user_id', supabaseUser.user.id);
+
+          if (error) {
+            console.error('Error refreshing targeted schools:', error);
+          } else {
+            updatedTargetedData = data || [];
+            setTargetedSchools(updatedTargetedData);
+          }
+        }
 
         // If in guided tour and this is the first school added, advance to next step
         if (isStepActive(TOUR_STEPS.SCHOOLS) && updatedTargetedData.length === 1 && !isCurrentlyTargeted) {
