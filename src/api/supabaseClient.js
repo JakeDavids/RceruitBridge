@@ -177,7 +177,13 @@ function createEntityHelper(tableName) {
       const { data: { user } } = await supabase.auth.getUser();
       if (user && !payload.created_by) {
         payload.created_by = user.email;
-        payload.user_id = user.id;
+
+        // Only add user_id for tables that have this column
+        // Tables like coach_contacts use athlete_id instead
+        const tablesWithUserId = ['targeted_schools', 'athletes', 'outreach'];
+        if (tablesWithUserId.includes(tableName)) {
+          payload.user_id = user.id;
+        }
       }
 
       const { data, error } = await supabase

@@ -443,10 +443,8 @@ export default function Schools() {
         }
       }
 
-      // Filter schools to only include those with an academic ranking
-      const schoolData = allSchoolData.filter(s => s.academic_ranking);
-
-      setSchools(schoolData);
+      // Show all schools (no filter needed - show schools with or without academic_ranking)
+      setSchools(allSchoolData);
       setAthlete(currentAthlete);
       setTargetedSchools(targetedData);
 
