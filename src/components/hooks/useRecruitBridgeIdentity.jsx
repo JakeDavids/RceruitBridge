@@ -1,49 +1,6 @@
 import { useState, useCallback } from 'react';
 import { User } from '@/api/entities';
-
-const PUBLIC_TOKEN = "78by89nu298sum98ms209ims09m76sb87";
-
-// Check if EmailIdentity exists using your working sendEmail function
-async function checkEmailIdentity(userId, username) {
-  try {
-    // Test if EmailIdentity exists by trying to create one with existing email
-    const response = await fetch("/functions/sendEmail", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "x-rb-public": PUBLIC_TOKEN,
-        "x-user-id": userId
-      },
-      body: JSON.stringify({
-        to: "test@example.com",
-        subject: "Identity Check",
-        message: "Checking if identity exists",
-        from: `${username}@recruitbridge.net`
-      })
-    });
-    
-    const result = await response.json();
-    
-    // If it succeeds and has fromIdentity, EmailIdentity exists
-    if (result.success && result.fromIdentity) {
-      return {
-        exists: true,
-        identity: {
-          address: `${username}@recruitbridge.net`,
-          displayName: username.charAt(0).toUpperCase() + username.slice(1),
-          username: username,
-          domain: "recruitbridge.net",
-          replyTo: `${username}@recruitbridge.net`,
-          verified: true
-        }
-      };
-    }
-    
-    return { exists: false, identity: null };
-  } catch (err) {
-    return { exists: false, identity: null };
-  }
-}
+import { supabase } from '@/api/supabaseClient';
 
 export function useRecruitBridgeIdentity() {
   const [loading, setLoading] = useState(false);
@@ -54,26 +11,41 @@ export function useRecruitBridgeIdentity() {
     setLoading(true);
     setError(null);
     try {
-      const user = await User.me();
-      
-      // Check EmailIdentity first - try common username patterns
-      const possibleUsernames = [
-        user.email?.split('@')[0],
-        user.name?.toLowerCase().replace(/\s+/g, ''),
-        'user' + user.id?.slice(-4)
-      ].filter(Boolean);
-      
-      for (const username of possibleUsernames) {
-        const emailCheck = await checkEmailIdentity(user.id, username);
-        if (emailCheck.exists) {
-          setIdentity(emailCheck.identity);
-          return;
-        }
+      // Get current user from Supabase
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        setIdentity(null);
+        setLoading(false);
+        return;
       }
-      
-      // No EmailIdentity found
-      setIdentity(null);
-      
+
+      // Query email_identities table
+      const { data, error: dbError } = await supabase
+        .from('email_identities')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (dbError) {
+        if (dbError.code === 'PGRST116') {
+          // No identity found
+          setIdentity(null);
+        } else {
+          console.error('Error fetching identity:', dbError);
+          setError(dbError.message);
+        }
+      } else if (data) {
+        // Format identity for UI
+        setIdentity({
+          id: data.id,
+          address: `${data.username}@${data.domain}`,
+          username: data.username,
+          domain: data.domain,
+          displayName: data.display_name,
+          verified: data.verified
+        });
+      }
     } catch (err) {
       console.error('Error getting identity:', err);
       setError(err.message);
@@ -84,14 +56,32 @@ export function useRecruitBridgeIdentity() {
 
   const checkUsername = useCallback(async (username) => {
     try {
-      // Simple username validation
+      // Validate username format
       const isValid = /^[a-z0-9._-]{3,64}$/.test(username);
-      const isAvailable = true; // For now, assume available
-      
+
+      if (!isValid) {
+        return {
+          ok: true,
+          available: false,
+          error: 'Invalid username format'
+        };
+      }
+
+      // Call Supabase Edge Function to check availability
+      const { data, error } = await supabase.functions.invoke('check-username', {
+        body: { username }
+      });
+
+      if (error) {
+        console.error('Error checking username:', error);
+        return { ok: false, error: error.message };
+      }
+
       return {
         ok: true,
-        available: isValid && isAvailable,
-        username: username
+        available: data.available,
+        username: data.username,
+        message: data.message
       };
     } catch (err) {
       console.error('Error checking username:', err);
@@ -101,31 +91,30 @@ export function useRecruitBridgeIdentity() {
 
   const createIdentity = useCallback(async (username, displayName) => {
     try {
-      // Use your working sendEmail function to create EmailIdentity
-      const user = await User.me();
-      const response = await fetch("/functions/sendEmail", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "x-rb-public": PUBLIC_TOKEN,
-          "x-user-id": user?.id || ""
-        },
-        body: JSON.stringify({
-          to: "system@recruitbridge.net",
-          subject: "Email Identity Created",
-          message: `Creating email identity for ${displayName}`,
-          from: `${username}@recruitbridge.net`
-        })
+      // Call Supabase Edge Function to create identity in Mailgun and database
+      const { data, error } = await supabase.functions.invoke('create-email-identity', {
+        body: {
+          username,
+          displayName
+        }
       });
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        await getMe(); // Refresh identity after creation
-        return { ok: true, identity: result };
-      } else {
-        return { ok: false, error: result.error };
+
+      if (error) {
+        console.error('Error creating identity:', error);
+        return { ok: false, error: error.message };
       }
+
+      if (!data.success) {
+        return { ok: false, error: data.error || 'Failed to create email identity' };
+      }
+
+      // Refresh identity after creation
+      await getMe();
+
+      return {
+        ok: true,
+        identity: data.identity
+      };
     } catch (err) {
       console.error('Error creating identity:', err);
       return { ok: false, error: err.message };
