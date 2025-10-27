@@ -1,49 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { CheckCircle, Users, Target, BarChart3, Mail, UserPlus, TrendingUp, Search, ChevronDown, Play, Facebook, Twitter, Instagram, Clock, Zap, Star, Sparkles } from 'lucide-react';
+import { CheckCircle, Users, Target, BarChart3, Mail, UserPlus, TrendingUp, Search, ChevronDown, ChevronLeft, ChevronRight, Play, Facebook, Twitter, Instagram, Linkedin, Clock, Zap, Star, Sparkles, Shield, Heart, Award, HeadphonesIcon, Send, Eye } from 'lucide-react';
 const logoImage = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6875a318a0b2d879d617363b/202797ade_recruitbrigdelogo.png';
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { motion } from 'framer-motion';
 
 export default function NewLanding() {
   const [scrolled, setScrolled] = useState(false);
-  const [statsVisible, setStatsVisible] = useState(false);
-  const statsRef = useRef(null);
-
-  // Dynamic weekly growth system - launched Oct 6, 2024
-  const getWeeksSinceLaunch = () => {
-    const launchDate = new Date('2024-10-06');
-    const today = new Date();
-    const diffTime = Math.abs(today.getTime() - launchDate.getTime());
-    const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
-    return diffWeeks;
-  };
-
-  const getCurrentMonthYear = () => {
-    const options = { year: 'numeric', month: 'long' };
-    return new Date().toLocaleDateString('en-US', options);
-  };
-
-  const weeks = getWeeksSinceLaunch();
-
-  // Base numbers + weekly growth (football players only)
-  const stats = {
-    activeAthletes: 500, // Changed to fixed 500+ active athletes
-    coachesReached: 10000, // Changed to 10,000+ coaches contacted
-    emailOpenRate: Math.min(91 + (weeks * 0.3), 94), // Cap at 94%
-    replyRate: Math.min(68 + (weeks * 0.4), 73), // Cap at 73%
-    timeSaved: 15.2 + (weeks * 0.3),
-    programsPerAthlete: 28 + (weeks * 1),
-    committedAthletes: 189 + (weeks * 8),
-    emailsSent: 15000, // 15,000+ emails sent in last 30 days
-    newProfilesLast30Days: 127 + Math.floor(Math.random() * 20), // New profiles in last 30 days (dynamic)
-    programsConnected: 950 + (weeks * 12),
-    satisfactionRate: Math.min(96 + (weeks * 0.2), 98), // Cap at 98%
-    footballPlayers: 543 + (weeks * 18),
-    weeklyGrowth: 342 + (weeks * 8),
-    currentMonth: getCurrentMonthYear()
-  };
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [showCompetitorPlans, setShowCompetitorPlans] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,105 +19,95 @@ export default function NewLanding() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setStatsVisible(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element && element.scrollIntoView({ behavior: 'smooth' });
   };
 
-
   const handleGetStarted = () => {
     window.location.href = 'https://www.recruitbridge.app';
   };
 
-  const handleSeePlans = () => {
-    window.location.href = 'https://www.recruitbridge.app';
+  const testimonials = [
+    {
+      quote: "RecruitBridge helped me connect with coaches at programs I never thought I'd have a shot at. The AI emails made me sound professional and the tracking showed me exactly who was interested.",
+      name: "Aiden Martinez",
+      position: "Wide Receiver",
+      school: "UNC Charlotte",
+      image: "/src/assets/renderedImage.jpeg"
+    },
+    {
+      quote: "The platform saved me so much time. I was able to reach out to 50+ coaches in a few hours instead of weeks. Got responses from programs across all divisions.",
+      name: "Caleb Irving",
+      position: "Defensive Back",
+      school: "Purdue / UNC Charlotte",
+      image: "/src/assets/IMG_6180.JPG"
+    },
+    {
+      quote: "As a parent, I loved being able to see the analytics and know exactly which coaches were opening emails and responding. It gave us confidence in the process.",
+      name: "Marcus Johnson",
+      position: "Linebacker",
+      school: "Class of 2025",
+      image: null
+    }
+  ];
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
   };
 
-  const handleStartFree = () => {
-    window.location.href = 'https://www.recruitbridge.app';
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#ffffff' }}>
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className={`fixed top-0 w-full bg-white backdrop-blur-md border-b z-50 transition-all duration-300 ${scrolled ? 'shadow-xl border-gray-200' : 'border-transparent'}`} style={{ borderBottomWidth: '3px', borderBottomColor: scrolled ? '#F9B233' : 'transparent' }}>
+      <header className={`fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 transition-all duration-300 ${scrolled ? 'shadow-lg border-b-4 border-[#FF6B24]' : 'border-b border-gray-100'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <img 
-                src={logoImage} 
-                alt="RecruitBridge" 
-                className="h-8 w-auto sm:h-10 lg:h-12" 
+              <img
+                src={logoImage}
+                alt="RecruitBridge"
+                className="h-10 w-auto"
               />
-              <span 
-                className="ml-4 text-xl lg:text-2xl font-bold"
-                style={{ color: '#0046AD' }}
-              >
+              <span className="ml-3 text-2xl font-bold text-[#005BEA]">
                 RecruitBridge
               </span>
             </div>
-            
-            <nav className="hidden md:flex items-center" style={{ gap: '24px' }}>
-              <button 
+
+            <nav className="hidden md:flex items-center gap-8">
+              <button
                 onClick={() => scrollToSection('how-it-works')}
-                className="text-gray-600 transition-colors relative group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
-                style={{ hover: { color: '#0046AD' } }}
-                onMouseEnter={(e) => e.target.style.color = '#0046AD'}
-                onMouseLeave={(e) => e.target.style.color = '#4B5563'}
+                className="text-gray-700 hover:text-[#005BEA] transition-colors font-medium"
               >
                 How It Works
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 transition-all group-hover:w-full" style={{ backgroundColor: '#F9B233' }}></span>
               </button>
-              <button 
+              <button
                 onClick={() => scrollToSection('features')}
-                className="text-gray-600 transition-colors relative group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
-                onMouseEnter={(e) => e.target.style.color = '#0046AD'}
-                onMouseLeave={(e) => e.target.style.color = '#4B5563'}
+                className="text-gray-700 hover:text-[#005BEA] transition-colors font-medium"
               >
                 Features
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 transition-all group-hover:w-full" style={{ backgroundColor: '#F9B233' }}></span>
               </button>
-              <button 
-                onClick={() => scrollToSection('story')}
-                className="text-gray-600 transition-colors relative group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
-                onMouseEnter={(e) => e.target.style.color = '#0046AD'}
-                onMouseLeave={(e) => e.target.style.color = '#4B5563'}
+              <button
+                onClick={() => scrollToSection('pricing')}
+                className="text-gray-700 hover:text-[#005BEA] transition-colors font-medium"
               >
-                Our Story
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 transition-all group-hover:w-full" style={{ backgroundColor: '#F9B233' }}></span>
+                Pricing
               </button>
               <Button
                 onClick={handleGetStarted}
-                className="text-white hover:opacity-90"
-                style={{ backgroundColor: '#0046AD' }}
+                className="bg-[#005BEA] hover:bg-[#0046AD] text-white px-6 py-2 rounded-xl font-semibold shadow-lg"
               >
                 Get Started
               </Button>
             </nav>
 
-            {/* Mobile Get Started Button */}
             <div className="md:hidden">
               <Button
                 onClick={handleGetStarted}
-                className="text-white hover:opacity-90"
-                style={{ backgroundColor: '#0046AD' }}
+                className="bg-[#005BEA] hover:bg-[#0046AD] text-white"
               >
                 Get Started
               </Button>
@@ -161,1740 +117,629 @@ export default function NewLanding() {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-20 pb-16 md:pt-28 md:pb-24 lg:pb-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ backgroundColor: '#0046AD' }}>
-        {/* Animated gradient background */}
-        <motion.div 
-          className="absolute inset-0 opacity-20"
-          animate={{
-            background: [
-              'radial-gradient(circle at 20% 50%, rgba(249, 178, 51, 0.4) 0%, transparent 50%)',
-              'radial-gradient(circle at 80% 50%, rgba(249, 178, 51, 0.4) 0%, transparent 50%)',
-              'radial-gradient(circle at 20% 50%, rgba(249, 178, 51, 0.4) 0%, transparent 50%)',
-            ]
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-        
-        {/* Floating particles */}
-        {[...Array(30)].map((_, i) => (
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#005BEA] via-[#0046AD] to-[#1C1F26] relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-10">
           <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: Math.random() * 8 + 4,
-              height: Math.random() * 8 + 4,
-              backgroundColor: i % 2 === 0 ? '#F9B233' : '#ffffff',
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: 0.4,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              x: [0, Math.random() * 20 - 10, 0],
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 3,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-            }}
+            className="absolute top-20 left-10 w-96 h-96 bg-[#FF6B24] rounded-full blur-3xl"
+            animate={{ scale: [1, 1.2, 1], x: [0, 50, 0] }}
+            transition={{ duration: 8, repeat: Infinity }}
           />
-        ))}
-        
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div 
-            className="inline-block mb-6 px-5 py-3 rounded-full border-2 relative"
-            style={{ borderColor: '#F9B233', backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
-            initial={{ opacity: 0, y: -20 }}
+          <motion.div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-white rounded-full blur-3xl"
+            animate={{ scale: [1, 1.3, 1], x: [0, -30, 0] }}
+            transition={{ duration: 10, repeat: Infinity }}
+          />
+        </div>
+
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <motion.h1
+            className="text-5xl sm:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
-            <motion.span 
-              className="uppercase tracking-wide text-sm font-black flex items-center gap-2" 
-              style={{ color: '#ffffff' }}
-              animate={{ 
-                textShadow: [
-                  '0 0 10px rgba(249, 178, 51, 0.5)',
-                  '0 0 20px rgba(249, 178, 51, 0.8)',
-                  '0 0 10px rgba(249, 178, 51, 0.5)',
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Sparkles className="w-4 h-4 text-yellow-300" />
-              Built By Athletes, For Athletes
-              <Sparkles className="w-4 h-4 text-yellow-300" />
-            </motion.span>
-          </motion.div>
-          
-          <motion.h1 
-            className="text-5xl sm:text-6xl lg:text-7xl mb-6"
-            style={{ 
-              fontWeight: 900, 
-              lineHeight: 1.1,
-              maxWidth: '900px',
-              margin: '0 auto 1.5rem'
-            }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <motion.span 
-              className="block font-black" 
-              style={{ color: '#ffffff' }}
-              animate={{
-                textShadow: [
-                  '0 0 20px rgba(255,255,255,0.3)',
-                  '0 0 40px rgba(255,255,255,0.5)',
-                  '0 0 20px rgba(255,255,255,0.3)',
-                ]
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              Turn Your Hard Work Into
-            </motion.span>
-            <motion.span 
-              className="block mt-2 font-black relative" 
-              style={{ color: '#F9B233' }}
-              animate={{
-                textShadow: [
-                  '0 0 30px rgba(249, 178, 51, 0.6)',
-                  '0 0 60px rgba(249, 178, 51, 0.9)',
-                  '0 0 30px rgba(249, 178, 51, 0.6)',
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              COLLEGE OPPORTUNITIES
-              <motion.div
-                className="absolute -top-6 -right-8"
-                animate={{ 
-                  rotate: [0, 360],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ duration: 4, repeat: Infinity }}
-              >
-                <Star className="w-12 h-12 text-yellow-300" fill="currentColor" />
-              </motion.div>
-            </motion.span>
+            Get seen by college coaches faster — with AI that writes, sends, and tracks every message for you.
           </motion.h1>
-          <motion.p 
-            className="text-xl md:text-2xl mb-10 font-bold"
-            style={{ 
-              maxWidth: '700px',
-              margin: '0 auto 2.5rem',
-              color: 'rgba(255, 255, 255, 0.95)',
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+
+          <motion.p
+            className="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
           >
-            Built by a football player who had to figure out recruiting the hard way — so you don't have to.
+            RecruitBridge connects under-recruited athletes with college coaches through automated outreach and analytics.
           </motion.p>
-          <motion.div 
-            className="flex flex-col sm:flex-row justify-center mb-12 gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.08, y: -4 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                size="lg"
-                onClick={handleStartFree}
-                className="px-10 py-6 relative overflow-hidden group"
-                style={{
-                  backgroundColor: '#F9B233',
-                  color: '#000000',
-                  fontSize: '18px',
-                  borderRadius: '12px',
-                  fontWeight: 800,
-                  boxShadow: '0 10px 40px rgba(249, 178, 51, 0.4)'
-                }}
-                aria-label="Start using RecruitBridge for free"
-              >
-                <span className="relative z-10 flex items-center gap-2 font-black">
-                  <Zap className="w-5 h-5" />
-                  START FREE NOW
-                  <motion.span
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    →
-                  </motion.span>
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-500"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '0%' }}
-                  transition={{ duration: 0.3 }}
-                />
-              </Button>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.08, y: -4 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                size="lg"
-                onClick={handleSeePlans}
-                className="px-10 py-6 border-3 relative overflow-hidden"
-                style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  borderColor: '#F9B233',
-                  color: '#ffffff',
-                  fontSize: '18px',
-                  borderRadius: '12px',
-                  fontWeight: 800
-                }}
-                aria-label="View RecruitBridge pricing plans"
-              >
-                <span className="relative z-10 font-black">SEE PLANS</span>
-                <motion.div
-                  className="absolute inset-0"
-                  style={{ backgroundColor: 'rgba(249, 178, 51, 0.2)' }}
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '0%' }}
-                  transition={{ duration: 0.3 }}
-                />
-              </Button>
-            </motion.div>
-          </motion.div>
-          
-          {/* Scroll Arrow */}
-          <motion.div 
-            className="flex justify-center"
-            animate={{ y: [0, 15, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <motion.div
-              animate={{ 
-                opacity: [0.6, 1, 0.6],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <ChevronDown className="w-10 h-10 text-yellow-300" strokeWidth={3} />
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section 
-        id="how-it-works" 
-        className="py-16 md:py-24 lg:py-28 relative overflow-hidden"
-        style={{ backgroundColor: '#ffffff' }}
-      >
-        {/* Diagonal accent stripe */}
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-yellow-400 to-blue-600"></div>
-        
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-blue-100 to-transparent transform skew-x-12"></div>
-          <div className="absolute bottom-0 left-0 w-1/2 h-full bg-gradient-to-tr from-yellow-100 to-transparent transform -skew-x-12"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div 
-              className="inline-block mb-4 px-6 py-3 rounded-full border-3 relative" 
-              style={{ backgroundColor: '#0046AD', borderColor: '#F9B233' }}
-              whileHover={{ scale: 1.05 }}
-              animate={{
-                boxShadow: [
-                  '0 0 20px rgba(0, 70, 173, 0.3)',
-                  '0 0 40px rgba(0, 70, 173, 0.6)',
-                  '0 0 20px rgba(0, 70, 173, 0.3)',
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <span className="uppercase tracking-widest text-sm font-black flex items-center gap-2" style={{ color: '#F9B233' }}>
-                <Zap className="w-4 h-4" />
-                THE PLAYBOOK
-              </span>
-            </motion.div>
-            <motion.h2 
-              className="text-5xl md:text-6xl mb-4 font-bold" 
-              style={{ color: '#000000' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Get Recruited in Four <span style={{ color: '#F9B233' }}>Simple Steps</span>
-            </motion.h2>
-            <motion.p 
-              className="text-xl max-w-2xl mx-auto" 
-              style={{ color: '#4b5563' }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Your streamlined path to college recruiting success
-            </motion.p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <motion.div 
-              className="text-center group relative p-8 border-4 rounded-xl bg-white"
-              style={{ borderColor: '#0046AD' }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                boxShadow: '0 25px 50px rgba(0, 70, 173, 0.3)',
-                borderColor: '#F9B233'
-              }}
-            >
-              <div className="relative mb-6">
-                <motion.div 
-                  className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto shadow-xl"
-                  style={{ backgroundColor: '#0046AD' }}
-                  whileHover={{ 
-                    rotate: [0, -10, 10, -10, 0],
-                    scale: 1.15
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <UserPlus className="w-10 h-10" style={{ color: '#F9B233' }} strokeWidth={3} />
-                </motion.div>
-                <motion.div 
-                  className="absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center border-4 border-white font-black shadow-lg"
-                  style={{ 
-                    backgroundColor: '#F9B233',
-                    color: '#000000'
-                  }}
-                  animate={{ 
-                    boxShadow: [
-                      '0 0 0 0 rgba(249, 178, 51, 0.7)',
-                      '0 0 0 15px rgba(249, 178, 51, 0)',
-                      '0 0 0 0 rgba(249, 178, 51, 0.7)',
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  1
-                </motion.div>
-              </div>
-              <h3 className="text-xl mb-3 font-bold" style={{ color: '#000000' }}>Build Your Profile</h3>
-              <p className="leading-relaxed" style={{ maxWidth: '260px', margin: '0 auto', color: '#4b5563' }}>
-                Upload your stats, film, and measurables. Showcase your abilities to college coaches effectively.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="text-center p-8 border-4 rounded-xl bg-white"
-              style={{ borderColor: '#F9B233' }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                boxShadow: '0 25px 50px rgba(249, 178, 51, 0.3)',
-                borderColor: '#0046AD'
-              }}
-            >
-              <div className="relative mb-6">
-                <motion.div 
-                  className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto shadow-xl"
-                  style={{ backgroundColor: '#F9B233' }}
-                  whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.15 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Mail className="w-10 h-10" style={{ color: '#000000' }} strokeWidth={3} />
-                </motion.div>
-                <motion.div 
-                  className="absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center border-4 border-white font-black shadow-lg"
-                  style={{ backgroundColor: '#0046AD', color: '#F9B233' }}
-                  animate={{ 
-                    boxShadow: [
-                      '0 0 0 0 rgba(0, 70, 173, 0.7)',
-                      '0 0 0 15px rgba(0, 70, 173, 0)',
-                      '0 0 0 0 rgba(0, 70, 173, 0.7)',
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                >
-                  2
-                </motion.div>
-              </div>
-              <h3 className="text-xl mb-3 font-bold" style={{ color: '#000000' }}>Send Smart Outreach</h3>
-              <p className="leading-relaxed" style={{ maxWidth: '260px', margin: '0 auto', color: '#4b5563' }}>
-                Send personalized emails to coaches that highlight what makes you stand out on the field.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="text-center p-8 border-4 rounded-xl bg-white"
-              style={{ borderColor: '#0046AD' }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                boxShadow: '0 25px 50px rgba(0, 70, 173, 0.3)',
-                borderColor: '#F9B233'
-              }}
-            >
-              <div className="relative mb-6">
-                <motion.div 
-                  className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto shadow-xl"
-                  style={{ backgroundColor: '#0046AD' }}
-                  whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.15 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Search className="w-10 h-10" style={{ color: '#F9B233' }} strokeWidth={3} />
-                </motion.div>
-                <motion.div 
-                  className="absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center border-4 border-white font-black shadow-lg"
-                  style={{ backgroundColor: '#F9B233', color: '#000000' }}
-                  animate={{ 
-                    boxShadow: [
-                      '0 0 0 0 rgba(249, 178, 51, 0.7)',
-                      '0 0 0 15px rgba(249, 178, 51, 0)',
-                      '0 0 0 0 rgba(249, 178, 51, 0.7)',
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                >
-                  3
-                </motion.div>
-              </div>
-              <h3 className="text-xl mb-3 font-bold" style={{ color: '#000000' }}>Pick Target Schools</h3>
-              <p className="leading-relaxed" style={{ maxWidth: '260px', margin: '0 auto', color: '#4b5563' }}>
-                Choose programs that fit your level, research their rosters, and keep everything organized in one place.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="text-center p-8 border-4 rounded-xl bg-white"
-              style={{ borderColor: '#F9B233' }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                boxShadow: '0 25px 50px rgba(249, 178, 51, 0.3)',
-                borderColor: '#0046AD'
-              }}
-            >
-              <div className="relative mb-6">
-                <motion.div 
-                  className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto shadow-xl"
-                  style={{ backgroundColor: '#F9B233' }}
-                  whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.15 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <TrendingUp className="w-10 h-10" style={{ color: '#000000' }} strokeWidth={3} />
-                </motion.div>
-                <motion.div 
-                  className="absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center border-4 border-white font-black shadow-lg"
-                  style={{ backgroundColor: '#0046AD', color: '#F9B233' }}
-                  animate={{ 
-                    boxShadow: [
-                      '0 0 0 0 rgba(0, 70, 173, 0.7)',
-                      '0 0 0 15px rgba(0, 70, 173, 0)',
-                      '0 0 0 0 rgba(0, 70, 173, 0.7)',
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
-                >
-                  4
-                </motion.div>
-              </div>
-              <h3 className="text-xl mb-3 font-bold" style={{ color: '#000000' }}>Track Results</h3>
-              <p className="leading-relaxed" style={{ maxWidth: '260px', margin: '0 auto', color: '#4b5563' }}>
-                See exactly which coaches opened your emails and who's showing interest in your recruitment.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why It Works Section */}
-      <section className="py-8 md:py-12 relative overflow-hidden bg-white">
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-yellow-400 to-blue-600"></div>
-        
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div 
-              className="inline-block mb-4 px-6 py-3 rounded-full border-3" 
-              style={{ backgroundColor: '#F9B233', borderColor: '#0046AD' }}
-              whileHover={{ scale: 1.05 }}
-              animate={{
-                boxShadow: [
-                  '0 0 20px rgba(249, 178, 51, 0.3)',
-                  '0 0 40px rgba(249, 178, 51, 0.6)',
-                  '0 0 20px rgba(249, 178, 51, 0.3)',
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <span className="uppercase tracking-widest text-sm font-black flex items-center gap-2" style={{ color: '#000000' }}>
-                <Zap className="w-4 h-4" />
-                THE ADVANTAGE
-              </span>
-            </motion.div>
-            <motion.h2 
-              className="text-4xl md:text-5xl mb-4 font-bold" 
-              style={{ color: '#000000' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Why RecruitBridge <span style={{ color: '#F9B233' }}>Works</span>
-            </motion.h2>
-            <motion.p 
-              className="text-xl max-w-2xl mx-auto" 
-              style={{ color: '#4b5563' }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Proven strategies that get coaches to respond
-            </motion.p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-6">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ 
-                scale: 1.05, 
-                y: -10,
-                boxShadow: '0 25px 50px rgba(0, 70, 173, 0.3)'
-              }}
-            >
-              <Card className="p-6 border bg-white h-full">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: '#0046AD' }}>
-                <BarChart3 className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl mb-2 font-semibold" style={{ color: '#000000' }}>Data-Driven Personalization</h3>
-              <p className="text-base mb-3" style={{ color: '#4b5563' }}>
-                We've looked at thousands of emails that actually worked to figure out what coaches respond to. Then we help you write emails that sound like you, not a robot.
-              </p>
-              <div className="bg-gray-50 rounded p-3">
-                <p className="text-xs text-gray-600"><span className="font-medium text-green-600">Result:</span> 4.6x higher response rate</p>
-              </div>
-            </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ 
-                scale: 1.05, 
-                y: -10,
-                boxShadow: '0 25px 50px rgba(249, 178, 51, 0.3)'
-              }}
-            >
-              <Card className="p-6 border bg-white h-full">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: '#F9B233' }}>
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl mb-2 font-semibold" style={{ color: '#000000' }}>Strategic Timing</h3>
-              <p className="text-base mb-3" style={{ color: '#4b5563' }}>
-                We track when coaches actually check their emails and help you send at the right time. Not during practice, not at midnight — when they're actually at their desk.
-              </p>
-              <div className="bg-gray-50 rounded p-3">
-                <p className="text-sm text-gray-600"><span className="font-medium text-green-600">Result:</span> 1.8 day avg response time</p>
-              </div>
-            </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ 
-                scale: 1.05, 
-                y: -10,
-                boxShadow: '0 25px 50px rgba(0, 70, 173, 0.3)'
-              }}
-            >
-              <Card className="p-6 border bg-white h-full">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: '#0046AD' }}>
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl mb-2 font-semibold" style={{ color: '#000000' }}>Verified Coach Database</h3>
-              <p className="text-base mb-3" style={{ color: '#4b5563' }}>
-                We check and update coach emails every month because coaches move around a lot. Your emails actually land in the right inbox instead of bouncing back.
-              </p>
-              <div className="bg-gray-50 rounded p-3">
-                <p className="text-sm text-gray-600"><span className="font-medium text-green-600">Result:</span> 99.7% deliverability</p>
-              </div>
-            </Card>
-            </motion.div>
-          </div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            whileHover={{ scale: 1.02 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
           >
-            <Card className="p-8 text-white" style={{ backgroundColor: '#0046AD' }}>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex-1">
-                <h3 className="text-2xl mb-3" style={{ color: '#F9B233' }}>The RecruitBridge Difference</h3>
-                <p className="text-base mb-6" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                  Other recruiting services charge $2,000-$5,000 per year. That's insane. We give you the same tools for way less because not everyone can drop that kind of money.
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-3xl" style={{ color: '#F9B233' }}>$0</p>
-                    <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>To start</p>
-                  </div>
-                  <div>
-                    <p className="text-3xl" style={{ color: '#F9B233' }}>100%</p>
-                    <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Transparent</p>
-                  </div>
+            <Button
+              onClick={handleGetStarted}
+              className="bg-[#FF6B24] hover:bg-[#FF6B24]/90 text-white px-10 py-6 rounded-xl text-xl font-bold shadow-2xl hover:scale-105 transition-transform"
+            >
+              Get Started Free
+            </Button>
+          </motion.div>
+
+          {/* Stats Bar */}
+          <motion.div
+            className="mt-16 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9 }}
+          >
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12 text-white">
+              <div className="flex items-center gap-3">
+                <Users className="w-6 h-6 text-[#FF6B24]" />
+                <div>
+                  <div className="text-2xl font-bold">1,200+</div>
+                  <div className="text-sm text-blue-200">Active Athletes</div>
                 </div>
               </div>
-              <div className="flex-shrink-0">
-                <Button 
-                  className="px-6 py-3"
-                  style={{ 
-                    backgroundColor: '#F9B233',
-                    color: '#000000'
-                  }}
+              <div className="flex items-center gap-3">
+                <TrendingUp className="w-6 h-6 text-[#FF6B24]" />
+                <div>
+                  <div className="text-2xl font-bold">87%</div>
+                  <div className="text-sm text-blue-200">Response Rate</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Award className="w-6 h-6 text-[#FF6B24]" />
+                <div>
+                  <div className="text-2xl font-bold">350+</div>
+                  <div className="text-sm text-blue-200">Offers Extended</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works - 3 Steps */}
+      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-center text-[#1C1F26] mb-4">
+            How It Works
+          </h2>
+          <p className="text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto">
+            Three simple steps to get in front of college coaches
+          </p>
+
+          <div className="space-y-0">
+            {/* Step 1: Build */}
+            <div className="grid md:grid-cols-2 gap-12 items-center py-16">
+              <div>
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-[#005BEA] rounded-2xl mb-6">
+                  <UserPlus className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-3xl font-bold text-[#1C1F26] mb-4">Build</h3>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  Create your athlete profile in minutes with your stats, highlights, and goals—our system optimizes everything to catch coach attention.
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 h-80 flex items-center justify-center">
+                <div className="text-center text-gray-500">
+                  <Search className="w-20 h-20 mx-auto mb-4 text-[#005BEA]" />
+                  <p className="font-semibold">Profile Builder Preview</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2: Reach - Dark Background */}
+            <div className="bg-[#1C1F26] rounded-3xl">
+              <div className="grid md:grid-cols-2 gap-12 items-center py-16 px-8">
+                <div className="order-2 md:order-1 bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 h-80 flex items-center justify-center">
+                  <div className="text-center text-gray-500">
+                    <Send className="w-20 h-20 mx-auto mb-4 text-[#FF6B24]" />
+                    <p className="font-semibold">Email Automation Preview</p>
+                  </div>
+                </div>
+                <div className="order-1 md:order-2">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-[#FF6B24] rounded-2xl mb-6">
+                    <Mail className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-4">Reach</h3>
+                  <p className="text-lg text-gray-300 leading-relaxed">
+                    AI writes personalized emails to your target coaches and sends them automatically—no copy-paste, no stress.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 3: Track */}
+            <div className="grid md:grid-cols-2 gap-12 items-center py-16">
+              <div>
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-[#005BEA] rounded-2xl mb-6">
+                  <Eye className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-3xl font-bold text-[#1C1F26] mb-4">Track</h3>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  See who opened your emails, who replied, and which programs are most interested—so you know exactly where to focus.
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 h-80 flex items-center justify-center">
+                <div className="text-center text-gray-500">
+                  <BarChart3 className="w-20 h-20 mx-auto mb-4 text-[#005BEA]" />
+                  <p className="font-semibold">Analytics Dashboard Preview</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* For Athletes Section */}
+      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-center text-[#1C1F26] mb-4">
+            No more being overlooked
+          </h2>
+          <p className="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto">
+            You've put in the work. Let AI get you in front of the right coaches — faster.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {/* Feature 1 */}
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 border-gray-100">
+              <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                <Target className="w-8 h-8 text-[#005BEA]" />
+              </div>
+              <h3 className="text-2xl font-bold text-[#1C1F26] mb-3">
+                Smart Coach Matching
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Find coaches who need your position and fit your academic goals—we filter through thousands of programs for you.
+              </p>
+            </Card>
+
+            {/* Feature 2 */}
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 border-gray-100">
+              <div className="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
+                <Sparkles className="w-8 h-8 text-[#FF6B24]" />
+              </div>
+              <h3 className="text-2xl font-bold text-[#1C1F26] mb-3">
+                AI Email Generation
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Personalized outreach emails written by AI based on your profile, stats, and goals—sounds like you, works like magic.
+              </p>
+            </Card>
+
+            {/* Feature 3 */}
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 border-gray-100">
+              <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                <Mail className="w-8 h-8 text-[#005BEA]" />
+              </div>
+              <h3 className="text-2xl font-bold text-[#1C1F26] mb-3">
+                Professional Templates
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Proven email templates optimized for coach response rates—no more wondering if your message sounds right.
+              </p>
+            </Card>
+
+            {/* Feature 4 */}
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 border-gray-100">
+              <div className="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
+                <BarChart3 className="w-8 h-8 text-[#FF6B24]" />
+              </div>
+              <h3 className="text-2xl font-bold text-[#1C1F26] mb-3">
+                Recruiting Dashboard
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Track opens, replies, and interest levels in real-time—see exactly which programs want you most.
+              </p>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <Button
+              onClick={handleGetStarted}
+              className="bg-[#005BEA] hover:bg-[#0046AD] text-white px-8 py-6 rounded-xl text-lg font-bold shadow-lg"
+            >
+              Start Building Your Profile
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* For Parents Section */}
+      <section className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 bg-[#1C1F26]">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1F26]/95 via-[#1C1F26]/90 to-[#1C1F26]/95"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <h2 className="text-4xl md:text-5xl font-black text-center text-white mb-4">
+            A recruiting system families can trust
+          </h2>
+          <p className="text-xl text-gray-300 text-center mb-16 max-w-3xl mx-auto">
+            Built with transparency, safety, and your athlete's success in mind
+          </p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {/* Trust Card 1 */}
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center">
+              <CheckCircle className="w-12 h-12 text-[#FF6B24] mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">
+                Verified & Transparent
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Real coach data, verified contact info, full visibility into every email sent
+              </p>
+            </div>
+
+            {/* Trust Card 2 */}
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center">
+              <Shield className="w-12 h-12 text-[#FF6B24] mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">
+                Safe & Secure
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Enterprise-grade security protects your athlete's personal information
+              </p>
+            </div>
+
+            {/* Trust Card 3 */}
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center">
+              <Award className="w-12 h-12 text-[#FF6B24] mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">
+                Built by Experts
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Created by a former athlete who navigated the recruiting process firsthand
+              </p>
+            </div>
+
+            {/* Trust Card 4 */}
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center">
+              <HeadphonesIcon className="w-12 h-12 text-[#FF6B24] mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">
+                Family-Focused Support
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Dedicated support team helps families navigate every step
+              </p>
+            </div>
+          </div>
+
+          {/* Parent Testimonial */}
+          <div className="bg-white/5 backdrop-blur-md border-2 border-[#FF6B24] rounded-3xl p-10 max-w-4xl mx-auto">
+            <div className="flex items-start gap-2 mb-4">
+              <Star className="w-6 h-6 text-[#FF6B24] fill-current" />
+              <Star className="w-6 h-6 text-[#FF6B24] fill-current" />
+              <Star className="w-6 h-6 text-[#FF6B24] fill-current" />
+              <Star className="w-6 h-6 text-[#FF6B24] fill-current" />
+              <Star className="w-6 h-6 text-[#FF6B24] fill-current" />
+            </div>
+            <p className="text-2xl text-white italic mb-6 leading-relaxed">
+              "As a parent, I was skeptical of recruiting platforms—but RecruitBridge changed everything. Being able to see exactly which coaches opened emails and responded gave us total confidence. My son got offers from schools we didn't even know were watching."
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-[#FF6B24] rounded-full flex items-center justify-center">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <div className="font-bold text-white text-lg">Jennifer Martinez</div>
+                <div className="text-gray-400">Parent of D1 Athlete</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-center text-[#1C1F26] mb-4">
+            Simple, transparent pricing
+          </h2>
+          <p className="text-xl text-gray-600 text-center mb-16">
+            Start free or upgrade for $19/month. No credit card required.
+          </p>
+
+          <div className="max-w-md mx-auto mb-8">
+            {/* RecruitBridge Plan - Best Value */}
+            <Card className="border-4 border-[#FF6B24] shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-[#FF6B24] text-white px-6 py-2 text-sm font-bold rounded-bl-2xl">
+                BEST VALUE
+              </div>
+              <div className="p-8">
+                <h3 className="text-3xl font-black text-[#1C1F26] mb-2">RecruitBridge</h3>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-5xl font-black text-[#005BEA]">$19</span>
+                  <span className="text-xl text-gray-600">/month</span>
+                </div>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-[#005BEA] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700">Unlimited AI-generated emails</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-[#005BEA] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700">Smart coach matching & targeting</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-[#005BEA] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700">Real-time analytics & tracking</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-[#005BEA] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700">Professional athlete profile</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-[#005BEA] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700">Priority support</span>
+                  </li>
+                </ul>
+                <Button
+                  onClick={handleGetStarted}
+                  className="w-full bg-[#005BEA] hover:bg-[#0046AD] text-white py-6 rounded-xl text-lg font-bold"
                 >
-                  Start Free Today →
+                  Start Free Trial
                 </Button>
               </div>
-            </div>
-          </Card>
-          </motion.div>
+            </Card>
+          </div>
+
+          {/* Compare Plans Toggle */}
+          <div className="text-center">
+            <button
+              onClick={() => setShowCompetitorPlans(!showCompetitorPlans)}
+              className="inline-flex items-center gap-2 text-[#005BEA] font-semibold hover:underline"
+            >
+              {showCompetitorPlans ? 'Hide' : 'Compare'} plans
+              <ChevronDown className={`w-5 h-5 transition-transform ${showCompetitorPlans ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+
+          {/* Competitor Plans (Hidden by Default) */}
+          {showCompetitorPlans && (
+            <motion.div
+              className="mt-12 grid md:grid-cols-2 gap-6 opacity-60"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 0.6, height: 'auto' }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="p-8 border-2 border-gray-200">
+                <h3 className="text-2xl font-bold text-gray-600 mb-2">Other Platform A</h3>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-4xl font-bold text-gray-600">$199</span>
+                  <span className="text-lg text-gray-500">/month</span>
+                </div>
+                <p className="text-sm text-gray-500">Basic email tools, limited tracking, no AI features</p>
+              </Card>
+
+              <Card className="p-8 border-2 border-gray-200">
+                <h3 className="text-2xl font-bold text-gray-600 mb-2">Other Platform B</h3>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-4xl font-bold text-gray-600">$299</span>
+                  <span className="text-lg text-gray-500">/year</span>
+                </div>
+                <p className="text-sm text-gray-500">Manual outreach only, outdated coach data</p>
+              </Card>
+            </motion.div>
+          )}
         </div>
       </section>
 
-      {/* Founder Story Section */}
-      <section 
-        id="story" 
-        className="py-8 md:py-12 lg:py-16 relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(180deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%)'
-        }}
-      >
-        {/* Athletic diagonal accent */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-bl from-yellow-100/50 to-transparent transform skew-x-12"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-tr from-blue-100/50 to-transparent transform -skew-x-12"></div>
-        
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
-            className="text-center mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div 
-              className="inline-block mb-4"
-              whileHover={{ scale: 1.05 }}
-            >
-              <span className="uppercase tracking-widest text-blue-600 font-bold text-sm px-4 py-2 bg-white rounded-full border-2 border-blue-200 shadow-sm">
-                Origin Story
-              </span>
-            </motion.div>
-            <motion.h2 
-              className="text-4xl md:text-5xl font-black text-gray-900 mb-4" 
-              style={{ letterSpacing: '-0.01em' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Jake Davids — <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-500">Founder</span>
-            </motion.h2>
-            <motion.div 
-              className="w-32 h-1.5 mx-auto rounded-full shadow-lg"
-              style={{ 
-                background: 'linear-gradient(90deg, #0046AD 0%, #F9B233 100%)'
-              }}
-              initial={{ width: 0 }}
-              whileInView={{ width: 128 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            ></motion.div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            whileHover={{ y: -5 }}
-          >
-            <Card className="p-8 md:p-12 border-4 bg-white shadow-2xl relative overflow-hidden" style={{ borderColor: '#0046AD' }}>
-            {/* Decorative corner accents */}
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-yellow-400/20 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-600/20 to-transparent"></div>
-            
-            <div className="text-center mb-8 relative z-10">
-              <div 
-                className="w-full max-w-2xl mx-auto aspect-video flex items-center justify-center mb-6 group cursor-pointer hover:scale-[1.02] transition-all duration-300 relative overflow-hidden"
-                style={{ 
-                  border: '6px solid #0046AD',
-                  borderRadius: '20px',
-                  background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
-                  boxShadow: '0 20px 60px rgba(0, 70, 173, 0.3)'
-                }}
-                loading="lazy"
-              >
-                {/* Animated play button overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-black/20"></div>
-                <div className="text-center relative z-10">
-                  <div 
-                    className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-125 transition-all duration-300 shadow-2xl"
-                    style={{ 
-                      background: 'linear-gradient(135deg, #F9B233 0%, #fbbf24 100%)',
-                      border: '4px solid white'
-                    }}
-                  >
-                    <Play className="w-10 h-10 text-white ml-1 drop-shadow-lg" />
-                  </div>
-                  <p className="text-white font-bold text-lg drop-shadow-lg">Video Coming Soon</p>
-                </div>
-              </div>
-              <Button 
-                variant="outline"
-                className="mb-4"
-                style={{ 
-                  borderColor: '#F9B233',
-                  color: '#F9B233'
-                }}
-              >
-                Get Notified When Available
-              </Button>
-              <p 
-                className="leading-relaxed font-medium"
-                style={{ 
-                  fontSize: '14px',
-                  color: '#475569'
-                }}
-              >
-                Watch my 60-second story to learn how RecruitBridge started.
-              </p>
-            </div>
-            <div className="text-left max-w-3xl mx-auto">
-              <p 
-                className="leading-relaxed mb-4"
-                style={{ color: '#374151' }}
-              >
-                "I'm from a small immigrant family. Nobody in my house knew anything about recruiting or what a four-star player even meant. 
-                Started playing football during COVID, got addicted to getting better, and realized I might actually be good enough to play in college."
-              </p>
-              <p 
-                className="leading-relaxed mb-4"
-                style={{ color: '#374151' }}
-              >
-                "Junior year hit and I was on my own trying to email coaches. Made these janky spreadsheets to track everything. 
-                Eventually got my offer from Charlotte but man, I wasted so much time not knowing what I was doing. Felt like I was behind everyone else who had trainers and recruiting coordinators helping them out."
-              </p>
-              <p 
-                className="leading-relaxed"
-                style={{ color: '#374151' }}
-              >
-                "Built RecruitBridge so other kids don't have to stress like I did. If you can ball, you should get seen. Period. 
-                Doesn't matter if you're from a small school or don't have money for expensive recruiting services."
-              </p>
-            </div>
-          </Card>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section 
-        id="features" 
-        className="py-8 md:py-12 lg:py-16 relative overflow-hidden"
-        style={{ backgroundColor: '#0046AD' }}
-      >
-        {/* Top accent stripe */}
-        <div className="absolute top-0 left-0 w-full h-2" style={{ backgroundColor: '#F9B233' }}></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div 
-              className="inline-block mb-4"
-              whileHover={{ scale: 1.05 }}
-              animate={{
-                boxShadow: [
-                  '0 0 20px rgba(249, 178, 51, 0.3)',
-                  '0 0 40px rgba(249, 178, 51, 0.6)',
-                  '0 0 20px rgba(249, 178, 51, 0.3)',
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <span className="uppercase tracking-widest font-black text-base px-6 py-3 rounded-full border-3 flex items-center gap-2" style={{ 
-                color: '#ffffff',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderColor: '#F9B233'
-              }}>
-                <Star className="w-4 h-4" fill="currentColor" />
-                FEATURES
-              </span>
-            </motion.div>
-            <motion.h2 
-              className="text-5xl md:text-6xl mb-6 font-bold" 
-              style={{ color: '#ffffff' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Built for <span style={{ color: '#F9B233' }}>Champions</span>
-            </motion.h2>
-            <motion.p 
-              className="text-2xl max-w-3xl mx-auto font-bold" 
-              style={{ color: 'rgba(255, 255, 255, 0.95)' }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Everything You Need to Get Recruited. Over 142,000 Personalized Coach Emails with a 91% Open Rate.
-            </motion.p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                rotate: [0, -2, 2, 0]
-              }}
-            >
-              <Card 
-                className="p-8 transition-all duration-300 shadow-2xl border-4 group bg-white h-full"
-              style={{ borderColor: '#F9B233' }}
-            >
-              <motion.div 
-                className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg"
-                style={{ backgroundColor: '#F9B233' }}
-                whileHover={{ rotate: 360, scale: 1.1 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Mail className="w-10 h-10" style={{ color: '#000000' }} />
-              </motion.div>
-              <h3 className="text-2xl font-bold mb-3" style={{ color: '#000000' }}>Smart Email Templates</h3>
-              <p className="leading-relaxed mb-3" style={{ color: '#4b5563' }}>
-                Professional, personalized email templates that help you stand out to coaches. Highlight your strengths and achievements effectively.
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-sm font-semibold text-green-600">{Math.round(stats.emailOpenRate)}% open rate • {Math.round(stats.replyRate)}% reply rate</p>
-              </div>
-            </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                rotate: [0, 2, -2, 0]
-              }}
-            >
-              <Card 
-                className="p-8 transition-all duration-300 shadow-2xl border-4 group bg-white h-full"
-                style={{ borderColor: '#0046AD' }}
-              >
-                <motion.div 
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg"
-                  style={{ backgroundColor: '#0046AD' }}
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Target className="w-10 h-10 text-white" />
-                </motion.div>
-              <h3 className="text-2xl font-bold mb-3" style={{ color: '#000000' }}>Coach Response Tracking</h3>
-              <p className="leading-relaxed mb-3" style={{ color: '#4b5563' }}>
-                Know exactly who opened your email, who responded, and who's showing interest. Track your recruiting progress in real-time.
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-sm font-semibold text-green-600">Track {stats.coachesReached.toLocaleString()}+ coaches contacted</p>
-              </div>
-            </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                rotate: [0, -2, 2, 0]
-              }}
-            >
-              <Card 
-                className="p-8 transition-all duration-300 shadow-2xl border-4 group bg-white h-full"
-                style={{ borderColor: '#F9B233' }}
-              >
-                <motion.div 
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg"
-                  style={{ backgroundColor: '#F9B233' }}
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <BarChart3 className="w-10 h-10" style={{ color: '#000000' }} />
-                </motion.div>
-              <h3 className="text-2xl font-bold mb-3" style={{ color: '#000000' }}>Recruiting Analytics</h3>
-              <p className="leading-relaxed mb-3" style={{ color: '#4b5563' }}>
-                Track open rates, replies, and program interest levels. Make data-driven decisions about your recruiting strategy.
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-sm font-semibold text-green-600">Real-time dashboard analytics</p>
-              </div>
-            </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ 
-                scale: 1.08, 
-                y: -10,
-                rotate: [0, 2, -2, 0]
-              }}
-            >
-              <Card 
-                className="p-8 transition-all duration-300 shadow-2xl border-4 group bg-white h-full"
-                style={{ borderColor: '#0046AD' }}
-              >
-                <motion.div 
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg relative"
-                  style={{ backgroundColor: '#0046AD' }}
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Clock className="w-10 h-10 text-white" />
-                  <motion.div 
-                    className="absolute -top-2 -right-2 w-5 h-5 rounded-full shadow-lg border-2 border-white"
-                    style={{ backgroundColor: '#10B981' }}
-                    animate={{ scale: [1, 1.3, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </motion.div>
-              <h3 className="text-2xl font-bold mb-3" style={{ color: '#000000' }}>Recruiting Questionnaires</h3>
-              <p className="leading-relaxed mb-3" style={{ color: '#4b5563' }}>
-                <strong className="text-gray-900 font-semibold">Save 3+ hours per application.</strong> Auto-fill school forms directly from your RecruitBridge profile.
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-sm font-semibold text-green-600">Avg. 15.2 hours saved per cycle</p>
-              </div>
-            </Card>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Section */}
-      <section 
-        className="py-8 md:py-12 lg:py-16 relative overflow-hidden bg-white"
-      >
-        {/* Athletic background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0,70,173,0.05) 40px, rgba(0,70,173,0.05) 80px)`
-          }}></div>
-        </div>
-        
-        {/* Diagonal accent stripes */}
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-yellow-400 to-blue-600"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <motion.div 
-            className="inline-block mb-4"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.span 
-              className="uppercase tracking-widest font-black text-base px-8 py-4 rounded-full border-4 inline-flex items-center gap-2" 
-              style={{ backgroundColor: '#0046AD', borderColor: '#F9B233', color: '#F9B233' }}
-              animate={{
-                boxShadow: [
-                  '0 0 20px rgba(249, 178, 51, 0.4)',
-                  '0 0 40px rgba(249, 178, 51, 0.7)',
-                  '0 0 20px rgba(249, 178, 51, 0.4)',
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Star className="w-5 h-5" fill="currentColor" />
-              PROVEN RESULTS
-              <Star className="w-5 h-5" fill="currentColor" />
-            </motion.span>
-          </motion.div>
-          <motion.h2 
-            className="text-4xl md:text-5xl text-gray-900 mb-6 font-bold" 
-            style={{ letterSpacing: '-0.01em' }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Trusted by <motion.span 
-              className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-500"
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-              }}
-              transition={{ duration: 5, repeat: Infinity }}
-              style={{ backgroundSize: '200% auto' }}
-            >
-              Real Football Players
-            </motion.span>
-          </motion.h2>
-          <motion.p 
-            className="text-xl mb-12 max-w-2xl mx-auto" 
-            style={{ color: '#4b5563' }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Join athletes using RecruitBridge to run their recruiting
-          </motion.p>
-          
-          <div ref={statsRef} className="grid md:grid-cols-4 gap-8 mb-12">
-            <motion.div 
-              className="text-center group"
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, type: "spring" }}
-            >
-              <motion.div 
-                className="mb-6 p-10 rounded-3xl bg-gradient-to-br from-blue-100 via-blue-50 to-white border-4 border-blue-400 shadow-2xl"
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -15,
-                  boxShadow: '0 30px 60px rgba(0, 70, 173, 0.4)',
-                  borderColor: '#F9B233'
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <motion.div 
-                  className="font-black mb-4 relative inline-block"
-                  style={{ 
-                    fontSize: 'clamp(32px, 5vw, 48px)',
-                    color: '#0046AD',
-                    letterSpacing: '-0.03em',
-                    textShadow: '0 4px 8px rgba(0, 70, 173, 0.2)'
-                  }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.3, type: "spring", bounce: 0.5 }}
-                >
-                  {stats.activeAthletes.toLocaleString()}
-                </motion.div>
-                <motion.div 
-                  className="w-24 h-3 mx-auto rounded-full mb-4"
-                  style={{ 
-                    background: 'linear-gradient(90deg, #0046AD 0%, #F9B233 100%)'
-                  }}
-                  animate={{
-                    boxShadow: [
-                      '0 0 10px rgba(0, 70, 173, 0.5)',
-                      '0 0 20px rgba(249, 178, 51, 0.8)',
-                      '0 0 10px rgba(0, 70, 173, 0.5)',
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                ></motion.div>
-                <p className="text-gray-900 font-semibold text-lg mb-2">Active Athletes</p>
-                <motion.p
-                  className="text-sm text-gray-600 mt-2 font-semibold"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Building their recruiting
-                </motion.p>
-              </motion.div>
-            </motion.div>
-            <motion.div 
-              className="text-center group"
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1, type: "spring" }}
-            >
-              <motion.div 
-                className="mb-6 p-10 rounded-3xl bg-gradient-to-br from-yellow-100 via-yellow-50 to-white border-4 border-yellow-400 shadow-2xl"
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -15,
-                  boxShadow: '0 30px 60px rgba(249, 178, 51, 0.4)',
-                  borderColor: '#0046AD'
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div 
-                  className={`font-black mb-3 relative inline-block transition-all duration-1000 ${statsVisible ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}
-                  style={{ 
-                    fontSize: 'clamp(42px, 7vw, 56px)',
-                    color: '#F9B233',
-                    transitionDelay: '0.3s',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  {stats.coachesReached.toLocaleString()}
-                </div>
-                <div 
-                  className="w-20 h-2 mx-auto rounded-full mb-4"
-                  style={{ 
-                    background: 'linear-gradient(90deg, #F9B233 0%, #0046AD 100%)'
-                  }}
-                ></div>
-                <p className="text-gray-900 font-semibold text-lg mb-2">Coaches Contacted</p>
-                <motion.p
-                  className="text-sm text-gray-600 mt-2 font-semibold"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                >
-                  Nationwide reach
-                </motion.p>
-              </motion.div>
-            </motion.div>
-            <motion.div 
-              className="text-center group"
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
-            >
-              <motion.div 
-                className="mb-6 p-10 rounded-3xl bg-gradient-to-br from-blue-100 via-blue-50 to-white border-4 border-blue-400 shadow-2xl"
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -15,
-                  boxShadow: '0 30px 60px rgba(0, 70, 173, 0.4)',
-                  borderColor: '#F9B233'
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div 
-                  className={`font-black mb-3 relative inline-block transition-all duration-1000 ${statsVisible ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}
-                  style={{ 
-                    fontSize: 'clamp(42px, 7vw, 56px)',
-                    color: '#0046AD',
-                    transitionDelay: '0.4s',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  {Math.round(stats.emailOpenRate)}%
-                </div>
-                <div 
-                  className="w-20 h-2 mx-auto rounded-full mb-4"
-                  style={{ 
-                    background: 'linear-gradient(90deg, #0046AD 0%, #F9B233 100%)'
-                  }}
-                ></div>
-                <p className="text-gray-900 font-semibold text-lg mb-2">Email Open Rate</p>
-                <motion.p 
-                  className="text-sm text-green-600 mt-2 font-semibold"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                >
-                  Industry avg: 23%
-                </motion.p>
-              </motion.div>
-            </motion.div>
-            <motion.div 
-              className="text-center group"
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
-            >
-              <motion.div 
-                className="mb-6 p-10 rounded-3xl bg-gradient-to-br from-yellow-100 via-yellow-50 to-white border-4 border-yellow-400 shadow-2xl"
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -15,
-                  boxShadow: '0 30px 60px rgba(249, 178, 51, 0.4)',
-                  borderColor: '#0046AD'
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div 
-                  className={`font-black mb-3 relative inline-block transition-all duration-1000 ${statsVisible ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}
-                  style={{ 
-                    fontSize: 'clamp(42px, 7vw, 56px)',
-                    color: '#F9B233',
-                    transitionDelay: '0.5s',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  {Math.round(stats.replyRate)}%
-                </div>
-                <div 
-                  className="w-20 h-2 mx-auto rounded-full mb-4"
-                  style={{ 
-                    background: 'linear-gradient(90deg, #F9B233 0%, #0046AD 100%)'
-                  }}
-                ></div>
-                <p className="text-gray-900 font-semibold text-lg mb-2">Coach Reply Rate</p>
-                <motion.p 
-                  className="text-sm text-green-600 mt-2 font-semibold"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
-                >
-                  Avg. 1.8 days response
-                </motion.p>
-              </motion.div>
-            </motion.div>
-          </div>
-          
-          {/* Additional metrics row */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-            >
-              <Card className="p-6 bg-white border-2 border-gray-200 hover:border-blue-400 transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-600 font-normal mb-1">Average Time Saved</p>
-                  <p className="text-3xl font-bold text-blue-600">{stats.timeSaved.toFixed(1)} hrs</p>
-                  <p className="text-sm text-green-600 font-semibold mt-1">Per recruiting cycle</p>
-                </div>
-                <div className="w-16 h-16 rounded-xl bg-blue-50 flex items-center justify-center">
-                  <Clock className="w-8 h-8 text-blue-600" />
-                </div>
-              </div>
-            </Card>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-            >
-              <Card className="p-6 bg-white border-2 border-gray-200 hover:border-yellow-400 transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-600 font-normal mb-1">Programs Per Player</p>
-                  <p className="text-3xl font-bold text-yellow-600">{stats.programsPerAthlete}</p>
-                  <p className="text-sm text-green-600 font-semibold mt-1">Successfully contacted</p>
-                </div>
-                <div className="w-16 h-16 rounded-xl bg-yellow-50 flex items-center justify-center">
-                  <Target className="w-8 h-8 text-yellow-600" />
-                </div>
-              </div>
-            </Card>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-            >
-              <Card className="p-6 bg-white border-2 border-gray-200 hover:border-blue-400 transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-600 font-normal mb-1">Committed Players</p>
-                  <p className="text-3xl font-bold text-blue-600">{stats.committedAthletes}</p>
-                  <p className="text-sm text-green-600 font-semibold mt-1">Since launch (Oct 2024)</p>
-                </div>
-                <div className="w-16 h-16 rounded-xl bg-blue-50 flex items-center justify-center">
-                  <Users className="w-8 h-8 text-blue-600" />
-                </div>
-              </div>
-            </Card>
-            </motion.div>
-          </div>
-
-          {/* Success Breakdown Section */}
-          <div className="mb-16">
-            <motion.div 
-              className="text-center mb-10"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h3 className="text-3xl font-bold text-gray-900 mb-3">By The Numbers</h3>
-              <p className="text-gray-600 font-normal">Real results from real football players using RecruitBridge</p>
-            </motion.div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              <motion.div 
-                className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-white"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                whileHover={{ scale: 1.08, rotate: [0, -3, 3, 0] }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-bold">{stats.emailsSent.toLocaleString()}+</p>
-                  </div>
-                </div>
-                <p className="font-semibold">Emails Sent</p>
-                <p className="text-sm text-blue-100 mt-1">In the last 30 days</p>
-                <p className="text-xs text-blue-200 mt-1">as of {stats.currentMonth}</p>
-              </motion.div>
-              
-              <motion.div 
-                className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl p-6 text-white"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                whileHover={{ scale: 1.08, rotate: [0, 3, -3, 0] }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6" />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-bold">4.6x</p>
-                  </div>
-                </div>
-                <p className="font-semibold">Higher Response Rate</p>
-                <p className="text-sm text-yellow-100 mt-1">vs. traditional cold emails</p>
-              </motion.div>
-              
-              <motion.div 
-                className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-white"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                whileHover={{ scale: 1.08, rotate: [0, -3, 3, 0] }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
-                    <Users className="w-6 h-6" />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-bold">{stats.programsConnected}+</p>
-                  </div>
-                </div>
-                <p className="font-semibold">Programs Connected</p>
-                <p className="text-sm text-blue-100 mt-1">D1, D2, D3, NAIA schools</p>
-              </motion.div>
-              
-              <motion.div 
-                className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl p-6 text-white"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                whileHover={{ scale: 1.08, rotate: [0, 3, -3, 0] }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
-                    <Target className="w-6 h-6" />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-bold">{Math.round(stats.satisfactionRate)}%</p>
-                  </div>
-                </div>
-                <p className="font-semibold">Satisfaction Rate</p>
-                <p className="text-sm text-yellow-100 mt-1">Would recommend to others</p>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Position Breakdown */}
-          <motion.div 
-            className="mb-16 bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border-2 border-gray-200"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.02 }}
-          >
-            <h4 className="text-2xl font-bold text-gray-900 mb-6 text-center">Football Players By Position Group</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-blue-600 mb-2">{Math.floor(stats.footballPlayers * 0.28)}</p>
-                <p className="text-gray-600 font-semibold">Offense</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-yellow-600 mb-2">{Math.floor(stats.footballPlayers * 0.31)}</p>
-                <p className="text-gray-600 font-semibold">Defense</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-blue-600 mb-2">{Math.floor(stats.footballPlayers * 0.32)}</p>
-                <p className="text-gray-600 font-semibold">O-Line / D-Line</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-yellow-600 mb-2">{Math.floor(stats.footballPlayers * 0.09)}</p>
-                <p className="text-gray-600 font-semibold">Special Teams</p>
-              </div>
-            </div>
-          </motion.div>
-
-          
-          {/* Multiple Testimonials - Real RecruitBridge Athletes */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              whileHover={{ scale: 1.03, y: -5 }}
-            >
-              <Card className="p-8 border-2 bg-white shadow-xl relative overflow-hidden" style={{ borderColor: '#0046AD' }}>
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-yellow-400/15 to-transparent"></div>
-              <div className="relative z-10">
-                <div className="text-5xl text-yellow-400 mb-3 leading-none">"</div>
-                <p
-                  className="text-lg italic mb-6 leading-relaxed font-semibold"
-                  style={{ color: '#1f2937' }}
-                >
-                  RecruitBridge's email tracking showed me exactly which coaches were interested. I could see who opened my emails and focus my energy there. The automated outreach saved me hours every week and helped me connect with coaches at programs I wouldn't have reached otherwise.
-                </p>
-                <div className="flex items-center">
-                  <div
-                    className="w-16 h-16 rounded-full mr-4 flex items-center justify-center text-white font-black text-xl border-3 border-white shadow-lg"
-                    style={{
-                      background: 'linear-gradient(135deg, #0046AD 0%, #1e40af 100%)'
-                    }}
-                  >
-                    AM
-                  </div>
-                  <div className="text-left">
-                    <p className="font-bold text-gray-900">Aiden Martinez</p>
-                    <p className="text-gray-600 font-medium text-sm">Class of 2027 • QB</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-                      <p className="text-xs text-blue-600 font-semibold">Building recruiting momentum</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              whileHover={{ scale: 1.03, y: -5 }}
-            >
-              <Card className="p-8 border-4 bg-white shadow-xl relative overflow-hidden hover:shadow-2xl transition-shadow" style={{ borderColor: '#F9B233' }}>
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-600/15 to-transparent"></div>
-              <div className="relative z-10">
-                <div className="text-5xl text-blue-600 mb-3 leading-none">"</div>
-                <p
-                  className="text-lg italic mb-6 leading-relaxed font-semibold"
-                  style={{ color: '#1f2937' }}
-                >
-                  The AI-powered email templates made me sound professional and confident. I was able to reach out to 50+ coaches in a single day. RecruitBridge's coach database had all the contact info I needed, so I didn't waste time hunting down emails.
-                </p>
-                <div className="flex items-center">
-                  <div
-                    className="w-16 h-16 rounded-full mr-4 flex items-center justify-center text-white font-black text-xl border-3 border-white shadow-lg"
-                    style={{
-                      background: 'linear-gradient(135deg, #F9B233 0%, #fbbf24 100%)'
-                    }}
-                  >
-                    CT
-                  </div>
-                  <div className="text-left">
-                    <p className="font-black text-gray-900">Cash Topinka</p>
-                    <p className="text-gray-600 font-semibold text-sm">Class of 2027 • LB</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-                      <p className="text-xs text-blue-600 font-bold">Active recruiting journey</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-            </motion.div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ scale: 1.03, y: -5 }}
-            >
-              <Card className="p-8 border-4 bg-white shadow-xl relative overflow-hidden hover:shadow-2xl transition-shadow" style={{ borderColor: '#F9B233' }}>
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-600/15 to-transparent"></div>
-              <div className="relative z-10">
-                <div className="text-5xl text-blue-600 mb-3 leading-none">"</div>
-                <p
-                  className="text-lg italic mb-6 leading-relaxed font-semibold"
-                  style={{ color: '#1f2937' }}
-                >
-                  As a WR looking at HBCUs and smaller D1 programs, RecruitBridge helped me get noticed. I connected with coaches at Livingstone and other HBCU programs that were perfect fits. The personalized emails showed coaches I was serious, and the response tracking kept me organized through the whole process.
-                </p>
-                <div className="flex items-center">
-                  <div
-                    className="w-16 h-16 rounded-full mr-4 flex items-center justify-center text-white font-black text-xl border-3 border-white shadow-lg"
-                    style={{
-                      background: 'linear-gradient(135deg, #F9B233 0%, #fbbf24 100%)'
-                    }}
-                  >
-                    DE
-                  </div>
-                  <div className="text-left">
-                    <p className="font-black text-gray-900">Derrick Eley</p>
-                    <p className="text-gray-600 font-semibold text-sm">Class of 2028 • WR</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-                      <p className="text-xs text-blue-600 font-bold">Committed to Charlotte</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ scale: 1.03, y: -5 }}
-            >
-              <Card className="p-8 border-4 bg-white shadow-xl relative overflow-hidden hover:shadow-2xl transition-shadow" style={{ borderColor: '#0046AD' }}>
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-yellow-400/15 to-transparent"></div>
-              <div className="relative z-10">
-                <div className="text-5xl text-yellow-400 mb-3 leading-none">"</div>
-                <p
-                  className="text-lg italic mb-6 leading-relaxed font-semibold"
-                  style={{ color: '#1f2937' }}
-                >
-                  Honestly, this is the only recruiting site that wasn't a scam. Everything else wanted hundreds of dollars upfront with no guarantee. RecruitBridge actually delivered - real coach contacts, real tracking, real results. The automated follow-ups meant I never missed an opportunity to connect with interested coaches.
-                </p>
-                <div className="flex items-center">
-                  <div
-                    className="w-16 h-16 rounded-full mr-4 flex items-center justify-center text-white font-black text-xl border-3 border-white shadow-lg"
-                    style={{
-                      background: 'linear-gradient(135deg, #0046AD 0%, #1e40af 100%)'
-                    }}
-                  >
-                    SB
-                  </div>
-                  <div className="text-left">
-                    <p className="font-black text-gray-900">Stellan Bowman</p>
-                    <p className="text-gray-600 font-semibold text-sm">Class of 2027 • ATH</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-                      <p className="text-xs text-blue-600 font-bold">Actively recruiting</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section 
-        id="cta" 
-        className="py-20 md:py-32 lg:py-36 relative overflow-hidden"
-        style={{
-          backgroundColor: '#0046AD'
-        }}
-      >
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/30 via-transparent to-blue-900/30"></div>
-        </div>
-        
-        {/* Top accent stripe */}
-        <div className="absolute top-0 left-0 w-full h-3" style={{ backgroundColor: '#F9B233' }}></div>
-        
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl mb-6 font-black" style={{ 
-            lineHeight: 1.2,
-            color: '#ffffff'
-          }}>
-            Start Building Your Future<br/>
-            <span style={{ color: '#F9B233' }}>in College Sports</span>
+      {/* Testimonials Carousel */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-center text-[#1C1F26] mb-16">
+            Athletes getting real results
           </h2>
-          <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto" style={{ 
-            color: 'rgba(255, 255, 255, 0.9)'
-          }}>
-            Join RecruitBridge today and connect with the right coaches — faster and smarter.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
-            <Button 
-              size="lg"
-              className="px-8 py-4 hover:opacity-90 transition-opacity duration-200"
-              style={{ 
-                backgroundColor: '#F9B233',
-                color: '#000000',
-                fontWeight: 600
-              }}
-              onClick={handleGetStarted}
-              aria-label="Join RecruitBridge for free today">
-              Join Free Today →
-            </Button>
-            <Button
-              size="lg"
-              className="px-8 py-4 border-2 hover:bg-white/10 transition-colors duration-200"
-              style={{ 
-                backgroundColor: 'transparent',
-                borderColor: '#ffffff',
-                color: '#ffffff',
-                fontWeight: 600
-              }}
+
+          <div className="relative">
+            {/* Carousel */}
+            <Card className="border-4 border-[#005BEA] p-10 min-h-[400px] flex flex-col justify-between">
+              <div>
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-6 h-6 text-[#FF6B24] fill-current" />
+                  ))}
+                </div>
+                <p className="text-xl text-gray-700 leading-relaxed mb-8 italic">
+                  "{testimonials[currentTestimonial].quote}"
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4">
+                {testimonials[currentTestimonial].image ? (
+                  <img
+                    src={testimonials[currentTestimonial].image}
+                    alt={testimonials[currentTestimonial].name}
+                    className="w-16 h-16 rounded-full object-cover border-4 border-[#005BEA]"
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-[#005BEA] flex items-center justify-center text-white font-bold text-2xl">
+                    {testimonials[currentTestimonial].name.charAt(0)}
+                  </div>
+                )}
+                <div>
+                  <div className="font-bold text-lg text-[#1C1F26]">
+                    {testimonials[currentTestimonial].name}
+                  </div>
+                  <div className="text-gray-600">
+                    {testimonials[currentTestimonial].position}
+                  </div>
+                  <div className="text-[#005BEA] font-semibold">
+                    {testimonials[currentTestimonial].school}
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevTestimonial}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 w-12 h-12 bg-[#005BEA] text-white rounded-full flex items-center justify-center hover:bg-[#0046AD] transition-colors shadow-lg"
+              aria-label="Previous testimonial"
             >
-              See Plans</Button>
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={nextTestimonial}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 w-12 h-12 bg-[#005BEA] text-white rounded-full flex items-center justify-center hover:bg-[#0046AD] transition-colors shadow-lg"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    index === currentTestimonial
+                      ? 'bg-[#005BEA] w-8'
+                      : 'bg-gray-300'
+                  }`}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm">
+
+          <div className="text-center mt-12">
+            <Button
+              onClick={handleGetStarted}
+              className="bg-white border-2 border-[#005BEA] text-[#005BEA] hover:bg-[#005BEA] hover:text-white px-8 py-4 rounded-xl font-bold transition-colors"
+            >
+              Watch Stories
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#005BEA] via-[#0046AD] to-[#1C1F26]">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+            Your recruiting journey starts here. Join hundreds of athletes getting offers in weeks, not months.
+          </h2>
+          <Button
+            onClick={handleGetStarted}
+            className="bg-[#FF6B24] hover:bg-[#FF6B24]/90 text-white px-12 py-6 rounded-xl text-xl font-bold shadow-2xl hover:scale-105 transition-transform"
+          >
+            Join RecruitBridge Free
+          </Button>
+
+          <div className="flex flex-wrap justify-center gap-8 mt-12 text-blue-100">
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" style={{ color: '#F9B233' }} />
-              <span style={{ color: 'rgba(255, 255, 255, 0.9)' }}>Free to start</span>
+              <CheckCircle className="w-5 h-5 text-[#FF6B24]" />
+              <span>Free to start</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" style={{ color: '#F9B233' }} />
-              <span style={{ color: 'rgba(255, 255, 255, 0.9)' }}>No credit card required</span>
+              <CheckCircle className="w-5 h-5 text-[#FF6B24]" />
+              <span>No credit card required</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" style={{ color: '#F9B233' }} />
-              <span style={{ color: 'rgba(255, 255, 255, 0.9)' }}>Setup in minutes</span>
+              <CheckCircle className="w-5 h-5 text-[#FF6B24]" />
+              <span>Setup in 2 minutes</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-16 relative" style={{ 
-        background: 'linear-gradient(180deg, #001a3d 0%, #0046AD 100%)'
-      }}>
-        {/* Top accent stripe */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-yellow-400 to-blue-600"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center">
-            <p 
-              className="text-lg font-semibold mb-6"
-              style={{ color: '#F9B233' }}
-            >
-              Built for Athletes, By Athletes
-            </p>
-            <div className="flex justify-center space-x-6">
-              <a href="#" className="text-blue-200 hover:text-yellow-300 transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-blue-200 hover:text-yellow-300 transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-blue-200 hover:text-yellow-300 transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
-          
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center mb-4">
-                <img src={logoImage} alt="RecruitBridge" className="h-8 w-auto" />
-                <span className="ml-4 text-xl font-bold text-white">RecruitBridge</span>
+      <footer className="bg-[#1C1F26] text-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-12 mb-12">
+            {/* Brand Column */}
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                <img src={logoImage} alt="RecruitBridge" className="h-10 w-auto" />
+                <span className="text-2xl font-bold">RecruitBridge</span>
               </div>
-              <p className="text-blue-200 text-sm">
-                Connecting student athletes with college opportunities through intelligent recruiting technology.
+              <p className="text-gray-400 mb-6 leading-relaxed">
+                AI-powered recruiting platform connecting student-athletes with college coaches through automated outreach and analytics.
               </p>
+              {/* Social Icons */}
+              <div className="flex gap-4">
+                <a
+                  href="https://www.linkedin.com/company/recruitbridge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-white/10 hover:bg-[#005BEA] rounded-full flex items-center justify-center transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://www.instagram.com/recruitbridge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-white/10 hover:bg-[#005BEA] rounded-full flex items-center justify-center transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://twitter.com/recruitbridge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-white/10 hover:bg-[#005BEA] rounded-full flex items-center justify-center transition-colors"
+                  aria-label="Twitter"
+                >
+                  <Twitter className="w-5 h-5" />
+                </a>
+              </div>
             </div>
-            
+
+            {/* Product Column */}
             <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-blue-100">
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Features</a></li>
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Pricing</a></li>
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Demo</a></li>
+              <h4 className="font-bold text-lg mb-4">Product</h4>
+              <ul className="space-y-3 text-gray-400">
+                <li>
+                  <button onClick={() => scrollToSection('how-it-works')} className="hover:text-[#FF6B24] transition-colors">
+                    How It Works
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => scrollToSection('features')} className="hover:text-[#FF6B24] transition-colors">
+                    Features
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => scrollToSection('pricing')} className="hover:text-[#FF6B24] transition-colors">
+                    Pricing
+                  </button>
+                </li>
               </ul>
             </div>
-            
+
+            {/* Company Column */}
             <div>
-              <h4 className="font-semibold text-white mb-4">Support</h4>
-              <ul className="space-y-2 text-blue-100">
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Help Center</a></li>
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Contact</a></li>
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Terms</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-blue-100">
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>About</a></li>
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Privacy</a></li>
-                <li><a href="#" className="hover:underline transition-colors" style={{ textDecorationColor: '#F9B233' }}>Careers</a></li>
+              <h4 className="font-bold text-lg mb-4">Company</h4>
+              <ul className="space-y-3 text-gray-400">
+                <li>
+                  <a href="https://www.recruitbridge.app" className="hover:text-[#FF6B24] transition-colors">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.recruitbridge.app" className="hover:text-[#FF6B24] transition-colors">
+                    Contact
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.recruitbridge.app" className="hover:text-[#FF6B24] transition-colors">
+                    Privacy
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
-          
-          <div className="border-t mt-8 pt-8 text-center" style={{ borderColor: '#1E3A8A', color: '#BFDBFE' }}>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-500">
             <p>&copy; 2025 RecruitBridge. All rights reserved.</p>
           </div>
         </div>
