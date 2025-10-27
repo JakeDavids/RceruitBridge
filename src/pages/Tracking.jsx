@@ -244,7 +244,7 @@ function ConnectionModal({ isOpen, onClose, coachContact, school, athlete, onCon
                       </p>
                     )}
                     <Badge variant="outline" className="text-xs mt-1 capitalize">
-                      {connection.relationship_strength} {connection.connection_type.replace('_', ' ')}
+                      {connection.relationship_strength} {(connection.connection_type || "").replace('_', ' ')}
                     </Badge>
                   </div>
                 ))}
@@ -587,8 +587,8 @@ function Tracking() {
   const filteredCoachContacts = coachContacts.filter(contact => {
     const searchLower = searchTerm.toLowerCase();
     return (
-      contact.coach_name.toLowerCase().includes(searchLower) ||
-      contact.coach_title.toLowerCase().includes(searchLower) ||
+      (contact.coach_name || "").toLowerCase().includes(searchLower) ||
+      (contact.coach_title || "").toLowerCase().includes(searchLower) ||
       getSchoolName(contact.school_id).toLowerCase().includes(searchLower)
     );
   });
@@ -609,17 +609,17 @@ function Tracking() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Main Header with Title and Add Connection Button */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 rounded-xl flex items-center justify-center">
               <Users className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Coach Tracking</h1>
-              <p className="text-slate-600">Monitor your communication with coaches and manage connections</p>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Coach Tracking</h1>
+              <p className="text-slate-600 dark:text-slate-400">Monitor your communication with coaches and manage connections</p>
             </div>
           </div>
           <Button 
@@ -669,7 +669,7 @@ function Tracking() {
                             <div className="flex items-center gap-3 mb-2">
                               <h3 className="font-bold text-lg text-slate-900">{coachContact.coach_name}</h3>
                               <Badge className={getStatusColor(coachContact.response_status)}>
-                                {coachContact.response_status.replace('_', ' ')}
+                                {(coachContact.response_status || "").replace('_', ' ')}
                               </Badge>
                             </div>
                             
@@ -787,7 +787,7 @@ function Tracking() {
                           )}
                         </div>
                         <Badge variant="outline" className="capitalize">
-                          {connection.relationship_strength} {connection.connection_type.replace('_', ' ')}
+                          {connection.relationship_strength} {(connection.connection_type || "").replace('_', ' ')}
                         </Badge>
                       </div>
                     </CardContent>

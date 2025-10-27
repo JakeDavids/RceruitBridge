@@ -589,39 +589,99 @@ export default function Schools() {
   };
 
   const conferenceColors = {
-    "American Athletic Conference": "bg-blue-100 text-blue-800 border-blue-200",
-    "SEC": "bg-red-100 text-red-800 border-red-200",
-    "ACC": "bg-purple-100 text-purple-800 border-purple-200", 
-    "Big Ten": "bg-yellow-100 text-yellow-800 border-yellow-200",
-    "Pac-12": "bg-green-100 text-green-800 border-green-200",
-    "Sun Belt": "bg-orange-100 text-orange-800 border-orange-200",
-    "Missouri Valley": "bg-indigo-100 text-indigo-800 border-indigo-200",
-    "GLIAC": "bg-cyan-100 text-cyan-800 border-cyan-200",
-    "NESCAC": "bg-rose-100 text-rose-800 border-rose-200",
-    "Big Sky": "bg-teal-100 text-teal-800 border-teal-200",
-    "CAA": "bg-violet-100 text-violet-800 border-violet-200",
-    "Gulf South": "bg-emerald-100 text-emerald-800 border-emerald-200",
-    "OAC": "bg-amber-100 text-amber-800 border-amber-200",
-    "WIAC": "bg-lime-100 text-lime-800 border-lime-200",
-    "MACCC": "bg-pink-100 text-pink-800 border-pink-200",
-    "ICCAC": "bg-sky-100 text-sky-800 border-sky-200",
-    "Independent": "bg-gray-100 text-gray-800 border-gray-200",
-    "default": "bg-slate-100 text-slate-800 border-slate-200"
+    // FBS Conferences
+    "American Athletic Conference": "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
+    "SEC": "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700",
+    "ACC": "bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700",
+    "Big Ten": "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700",
+    "Big 12": "bg-blue-200 text-blue-900 border-blue-300 dark:bg-blue-800/30 dark:text-blue-200 dark:border-blue-600",
+    "Pac-12": "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700",
+    "Mountain West": "bg-cyan-200 text-cyan-900 border-cyan-300 dark:bg-cyan-800/30 dark:text-cyan-200 dark:border-cyan-600",
+    "Conference USA": "bg-orange-200 text-orange-900 border-orange-300 dark:bg-orange-800/30 dark:text-orange-200 dark:border-orange-600",
+    "Sun Belt": "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700",
+    "Mid-American Conference": "bg-red-200 text-red-900 border-red-300 dark:bg-red-800/30 dark:text-red-200 dark:border-red-600",
+
+    // FCS Conferences
+    "Ivy League": "bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700",
+    "Patriot League": "bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700",
+    "Missouri Valley": "bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700",
+    "Big Sky": "bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700",
+    "CAA": "bg-violet-100 text-violet-800 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-700",
+    "Southern Conference": "bg-yellow-200 text-yellow-900 border-yellow-300 dark:bg-yellow-800/30 dark:text-yellow-200 dark:border-yellow-600",
+    "Southland Conference": "bg-blue-300 text-blue-900 border-blue-400 dark:bg-blue-700/30 dark:text-blue-200 dark:border-blue-500",
+
+    // D2 Conferences
+    "GLIAC": "bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-900/30 dark:text-cyan-300 dark:border-cyan-700",
+    "Gulf South": "bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700",
+    "PSAC": "bg-purple-200 text-purple-900 border-purple-300 dark:bg-purple-800/30 dark:text-purple-200 dark:border-purple-600",
+    "RMAC": "bg-amber-200 text-amber-900 border-amber-300 dark:bg-amber-800/30 dark:text-amber-200 dark:border-amber-600",
+    "GAC": "bg-rose-200 text-rose-900 border-rose-300 dark:bg-rose-800/30 dark:text-rose-200 dark:border-rose-600",
+
+    // D3 Conferences
+    "NESCAC": "bg-rose-100 text-rose-800 border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:border-rose-700",
+    "OAC": "bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700",
+    "WIAC": "bg-lime-100 text-lime-800 border-lime-200 dark:bg-lime-900/30 dark:text-lime-300 dark:border-lime-700",
+    "UAA": "bg-violet-200 text-violet-900 border-violet-300 dark:bg-violet-800/30 dark:text-violet-200 dark:border-violet-600",
+    "ODAC": "bg-pink-200 text-pink-900 border-pink-300 dark:bg-pink-800/30 dark:text-pink-200 dark:border-pink-600",
+    "CCIW": "bg-sky-200 text-sky-900 border-sky-300 dark:bg-sky-800/30 dark:text-sky-200 dark:border-sky-600",
+    "MASCAC": "bg-teal-200 text-teal-900 border-teal-300 dark:bg-teal-800/30 dark:text-teal-200 dark:border-teal-600",
+
+    // JUCO Conferences
+    "MACCC": "bg-pink-100 text-pink-800 border-pink-200 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-700",
+    "ICCAC": "bg-sky-100 text-sky-800 border-sky-200 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-700",
+    "NJCAA": "bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200 dark:bg-fuchsia-900/30 dark:text-fuchsia-300 dark:border-fuchsia-700",
+
+    // Special
+    "Independent": "bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-700/30 dark:text-gray-300 dark:border-gray-600",
+    "default": "bg-slate-100 text-slate-800 border-slate-200 dark:bg-slate-700/30 dark:text-slate-300 dark:border-slate-600"
   };
 
   const getConferenceLogo = (conference) => {
     const logoMap = {
+      // FBS Conferences
       "SEC": "⚔️",
       "ACC": "🏟️",
       "American Athletic Conference": "🇺🇸",
       "Big Ten": "🌽",
+      "Big 12": "🌟",
       "Pac-12": "🌊",
+      "Mountain West": "⛰️",
+      "Conference USA": "🏜️",
       "Sun Belt": "☀️",
-      "Independent": "⭐",
-      "NESCAC": "🌲", // Example D3 conference logo
-      "WIAC": "🧀",   // Example D3 conference logo
-      "ODAC": "🐴",   // Example D3 conference logo
-      "UAA": "📚"     // Example D3 conference logo
+      "Mid-American Conference": "🦅",
+
+      // FCS Conferences
+      "Ivy League": "🎓",
+      "Patriot League": "🦅",
+      "Missouri Valley": "🌾",
+      "Big Sky": "🦌",
+      "CAA": "🌊",
+      "Southern Conference": "🌲",
+      "Southland Conference": "🤠",
+
+      // D2 Conferences
+      "GLIAC": "⛵",
+      "Gulf South": "🏖️",
+      "PSAC": "🗽",
+      "RMAC": "🏔️",
+      "GAC": "🌾",
+
+      // D3 Conferences
+      "NESCAC": "🌲",
+      "OAC": "🌾",
+      "WIAC": "🧀",
+      "UAA": "📚",
+      "ODAC": "🐴",
+      "CCIW": "🏭",
+      "MASCAC": "🦞",
+
+      // JUCO Conferences
+      "MACCC": "🎸",
+      "ICCAC": "🌽",
+      "NJCAA": "🎯",
+
+      // Special
+      "Independent": "⭐"
     };
     return logoMap[conference] || "🏈";
   };

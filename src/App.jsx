@@ -2,6 +2,7 @@ import './App.css'
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
 import React from 'react'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 function App() {
   // Check if this is landing mode or app mode
@@ -16,10 +17,12 @@ function App() {
     const NewLanding = React.lazy(() => import("@/pages/NewLanding.jsx"));
 
     return (
-      <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div></div>}>
-        <NewLanding />
-        <Analytics />
-      </React.Suspense>
+      <ThemeProvider>
+        <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div></div>}>
+          <NewLanding />
+          <Analytics />
+        </React.Suspense>
+      </ThemeProvider>
     );
   }
 
@@ -27,11 +30,13 @@ function App() {
   const Pages = React.lazy(() => import("@/Pages.jsx"));
 
   return (
-    <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div></div>}>
-      <Pages />
-      <Toaster />
-      <Analytics />
-    </React.Suspense>
+    <ThemeProvider>
+      <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin h-12 w-12 border-b-2 border-blue-600 rounded-full"></div></div>}>
+        <Pages />
+        <Toaster />
+        <Analytics />
+      </React.Suspense>
+    </ThemeProvider>
   )
 }
 
