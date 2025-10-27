@@ -93,7 +93,7 @@ export default function Questionnaires() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-start justify-between mb-8">
             <div className="flex items-center gap-4">

@@ -147,7 +147,7 @@ export default function BillingPortal() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex items-center gap-4">
@@ -232,7 +232,7 @@ export default function BillingPortal() {
             <CardDescription>Manage your payment methods and billing history</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
+            <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
               <Calendar className="w-8 h-8 text-slate-400" />
               <div>
                 <p className="font-medium text-slate-900">Next Billing Date</p>
@@ -240,7 +240,7 @@ export default function BillingPortal() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
+            <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
               <CreditCard className="w-8 h-8 text-slate-400" />
               <div>
                 <p className="font-medium text-slate-900">Payment Method</p>
@@ -248,7 +248,7 @@ export default function BillingPortal() {
               </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 rounded-lg p-4">
               <div className="flex items-start gap-3">
                 <Info className="w-5 h-5 text-blue-600 mt-0.5" />
                 <div>
@@ -374,7 +374,7 @@ export default function BillingPortal() {
               />
             </div>
 
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 rounded-lg p-3">
               <p className="text-sm text-yellow-900">
                 <strong>Note:</strong> Your account will be immediately reverted to the free plan, and you'll receive a refund within 24-48 hours.
               </p>

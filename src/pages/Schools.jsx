@@ -376,9 +376,9 @@ function AISuggestions({ athlete, user, onTargetSchool }) {
                 {isPro && suggestions.length > 0 && (
                     <div className="space-y-4">
                         {suggestions.map((school, i) => (
-                            <div key={i} className="p-4 bg-white rounded-lg border shadow-sm">
-                                <p className="font-semibold">{getFormattedSchoolName(school.name)} <Badge variant="secondary">{school.division}</Badge></p>
-                                <p className="text-sm text-slate-600 mt-2 italic">"{school.reason}"</p>
+                            <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-lg border dark:border-slate-700 shadow-sm">
+                                <p className="font-semibold text-slate-900 dark:text-slate-100">{getFormattedSchoolName(school.name)} <Badge variant="secondary">{school.division}</Badge></p>
+                                <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 italic">"{school.reason}"</p>
                             </div>
                         ))}
                     </div>
@@ -591,31 +591,64 @@ export default function Schools() {
   const conferenceColors = {
     // FBS Conferences
     "American Athletic Conference": "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
+    "American Athletic": "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
+    "American": "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
     "SEC": "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700",
     "ACC": "bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700",
     "Big Ten": "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700",
     "Big 12": "bg-blue-200 text-blue-900 border-blue-300 dark:bg-blue-800/30 dark:text-blue-200 dark:border-blue-600",
     "Pac-12": "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700",
+    "Pac 12": "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700",
     "Mountain West": "bg-cyan-200 text-cyan-900 border-cyan-300 dark:bg-cyan-800/30 dark:text-cyan-200 dark:border-cyan-600",
+    "MWC": "bg-cyan-200 text-cyan-900 border-cyan-300 dark:bg-cyan-800/30 dark:text-cyan-200 dark:border-cyan-600",
     "Conference USA": "bg-orange-200 text-orange-900 border-orange-300 dark:bg-orange-800/30 dark:text-orange-200 dark:border-orange-600",
     "Sun Belt": "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700",
     "Mid-American Conference": "bg-red-200 text-red-900 border-red-300 dark:bg-red-800/30 dark:text-red-200 dark:border-red-600",
+    "Mid-American": "bg-red-200 text-red-900 border-red-300 dark:bg-red-800/30 dark:text-red-200 dark:border-red-600",
+    "Mid-American (MAC)": "bg-red-200 text-red-900 border-red-300 dark:bg-red-800/30 dark:text-red-200 dark:border-red-600",
+    "MAC": "bg-red-200 text-red-900 border-red-300 dark:bg-red-800/30 dark:text-red-200 dark:border-red-600",
 
     // FCS Conferences
     "Ivy League": "bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700",
+    "Patriot": "bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700",
     "Patriot League": "bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700",
-    "Missouri Valley": "bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700",
+    "Missouri Valley": "bg-indigo-200 text-indigo-900 border-indigo-300 dark:bg-indigo-800/30 dark:text-indigo-200 dark:border-indigo-600",
+    "MVFC": "bg-indigo-200 text-indigo-900 border-indigo-300 dark:bg-indigo-800/30 dark:text-indigo-200 dark:border-indigo-600",
     "Big Sky": "bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700",
     "CAA": "bg-violet-100 text-violet-800 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-700",
     "Southern Conference": "bg-yellow-200 text-yellow-900 border-yellow-300 dark:bg-yellow-800/30 dark:text-yellow-200 dark:border-yellow-600",
+    "SoCon": "bg-yellow-200 text-yellow-900 border-yellow-300 dark:bg-yellow-800/30 dark:text-yellow-200 dark:border-yellow-600",
+    "Southland": "bg-blue-300 text-blue-900 border-blue-400 dark:bg-blue-700/30 dark:text-blue-200 dark:border-blue-500",
     "Southland Conference": "bg-blue-300 text-blue-900 border-blue-400 dark:bg-blue-700/30 dark:text-blue-200 dark:border-blue-500",
+    "Pioneer": "bg-lime-200 text-lime-900 border-lime-300 dark:bg-lime-800/30 dark:text-lime-200 dark:border-lime-600",
+    "NEC": "bg-sky-300 text-sky-900 border-sky-400 dark:bg-sky-700/30 dark:text-sky-200 dark:border-sky-500",
+    "Big South-OVC": "bg-rose-300 text-rose-900 border-rose-400 dark:bg-rose-700/30 dark:text-rose-200 dark:border-rose-500",
+    "MEAC": "bg-amber-300 text-amber-900 border-amber-400 dark:bg-amber-700/30 dark:text-amber-200 dark:border-amber-500",
+    "SWAC": "bg-green-200 text-green-900 border-green-300 dark:bg-green-800/30 dark:text-green-200 dark:border-green-600",
 
     // D2 Conferences
     "GLIAC": "bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-900/30 dark:text-cyan-300 dark:border-cyan-700",
     "Gulf South": "bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700",
+    "GSC": "bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700",
     "PSAC": "bg-purple-200 text-purple-900 border-purple-300 dark:bg-purple-800/30 dark:text-purple-200 dark:border-purple-600",
     "RMAC": "bg-amber-200 text-amber-900 border-amber-300 dark:bg-amber-800/30 dark:text-amber-200 dark:border-amber-600",
+    "Rocky Mountain Athletic Conference": "bg-amber-200 text-amber-900 border-amber-300 dark:bg-amber-800/30 dark:text-amber-200 dark:border-amber-600",
     "GAC": "bg-rose-200 text-rose-900 border-rose-300 dark:bg-rose-800/30 dark:text-rose-200 dark:border-rose-600",
+    "Great American": "bg-rose-200 text-rose-900 border-rose-300 dark:bg-rose-800/30 dark:text-rose-200 dark:border-rose-600",
+    "GLVC": "bg-teal-300 text-teal-900 border-teal-400 dark:bg-teal-700/30 dark:text-teal-200 dark:border-teal-500",
+    "CIAA": "bg-orange-300 text-orange-900 border-orange-400 dark:bg-orange-700/30 dark:text-orange-200 dark:border-orange-500",
+    "SIAC": "bg-purple-300 text-purple-900 border-purple-400 dark:bg-purple-700/30 dark:text-purple-200 dark:border-purple-500",
+    "MEC": "bg-blue-400 text-blue-950 border-blue-500 dark:bg-blue-700/40 dark:text-blue-100 dark:border-blue-400",
+    "SAC": "bg-red-300 text-red-900 border-red-400 dark:bg-red-700/30 dark:text-red-200 dark:border-red-500",
+    "GMAC": "bg-fuchsia-200 text-fuchsia-900 border-fuchsia-300 dark:bg-fuchsia-800/30 dark:text-fuchsia-200 dark:border-fuchsia-600",
+    "MIAA": "bg-violet-300 text-violet-900 border-violet-400 dark:bg-violet-700/30 dark:text-violet-200 dark:border-violet-500",
+    "NSIC": "bg-indigo-300 text-indigo-900 border-indigo-400 dark:bg-indigo-700/30 dark:text-indigo-200 dark:border-indigo-500",
+    "Lone Star": "bg-yellow-300 text-yellow-900 border-yellow-400 dark:bg-yellow-700/30 dark:text-yellow-200 dark:border-yellow-500",
+    "GNAC": "bg-emerald-200 text-emerald-900 border-emerald-300 dark:bg-emerald-800/30 dark:text-emerald-200 dark:border-emerald-600",
+    "Great Midwest": "bg-sky-400 text-sky-950 border-sky-500 dark:bg-sky-700/40 dark:text-sky-100 dark:border-sky-400",
+    "Northeast-10": "bg-slate-300 text-slate-900 border-slate-400 dark:bg-slate-700/30 dark:text-slate-200 dark:border-slate-500",
+    "Conference Carolinas": "bg-cyan-300 text-cyan-900 border-cyan-400 dark:bg-cyan-700/30 dark:text-cyan-200 dark:border-cyan-500",
+    "SSAC*": "bg-pink-300 text-pink-900 border-pink-400 dark:bg-pink-700/30 dark:text-pink-200 dark:border-pink-500",
 
     // D3 Conferences
     "NESCAC": "bg-rose-100 text-rose-800 border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:border-rose-700",
@@ -625,11 +658,65 @@ export default function Schools() {
     "ODAC": "bg-pink-200 text-pink-900 border-pink-300 dark:bg-pink-800/30 dark:text-pink-200 dark:border-pink-600",
     "CCIW": "bg-sky-200 text-sky-900 border-sky-300 dark:bg-sky-800/30 dark:text-sky-200 dark:border-sky-600",
     "MASCAC": "bg-teal-200 text-teal-900 border-teal-300 dark:bg-teal-800/30 dark:text-teal-200 dark:border-teal-600",
+    "NCAC": "bg-green-300 text-green-900 border-green-400 dark:bg-green-700/30 dark:text-green-200 dark:border-green-500",
+    "NEWMAC": "bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700",
+    "SCAC": "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700",
+    "SAA": "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
+    "Centennial": "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700",
+    "Empire 8": "bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700",
+    "MIAC": "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700",
+    "NWC": "bg-emerald-200 text-emerald-900 border-emerald-300 dark:bg-emerald-800/30 dark:text-emerald-200 dark:border-emerald-600",
+    "HCAC": "bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-900/30 dark:text-cyan-300 dark:border-cyan-700",
+    "PAC": "bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700",
+    "UMAC": "bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200 dark:bg-fuchsia-900/30 dark:text-fuchsia-300 dark:border-fuchsia-700",
+    "NACC": "bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700",
+    "NCFC": "bg-rose-100 text-rose-800 border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:border-rose-700",
+    "Landmark": "bg-slate-200 text-slate-900 border-slate-300 dark:bg-slate-800/30 dark:text-slate-200 dark:border-slate-600",
+    "Liberty": "bg-sky-100 text-sky-800 border-sky-200 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-700",
+    "USA South": "bg-violet-100 text-violet-800 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-700",
+    "SCIAC": "bg-pink-100 text-pink-800 border-pink-200 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-700",
+    "United Athletic": "bg-lime-200 text-lime-900 border-lime-300 dark:bg-lime-800/30 dark:text-lime-200 dark:border-lime-600",
+    "NJAC": "bg-orange-200 text-orange-900 border-orange-300 dark:bg-orange-800/30 dark:text-orange-200 dark:border-orange-600",
+    "WSC": "bg-green-200 text-green-900 border-green-300 dark:bg-green-800/30 dark:text-green-200 dark:border-green-600",
+    "GSFC": "bg-blue-200 text-blue-900 border-blue-300 dark:bg-blue-800/30 dark:text-blue-200 dark:border-blue-600",
+    "NIFC": "bg-red-200 text-red-900 border-red-300 dark:bg-red-800/30 dark:text-red-200 dark:border-red-600",
 
     // JUCO Conferences
     "MACCC": "bg-pink-100 text-pink-800 border-pink-200 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-700",
     "ICCAC": "bg-sky-100 text-sky-800 border-sky-200 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-700",
     "NJCAA": "bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200 dark:bg-fuchsia-900/30 dark:text-fuchsia-300 dark:border-fuchsia-700",
+    "KJCCC": "bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700",
+    "SWJCFC": "bg-yellow-200 text-yellow-900 border-yellow-300 dark:bg-yellow-800/30 dark:text-yellow-200 dark:border-yellow-600",
+    "MCAC": "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700",
+    "WSFL": "bg-indigo-200 text-indigo-900 border-indigo-300 dark:bg-indigo-800/30 dark:text-indigo-200 dark:border-indigo-600",
+    "NORCAL": "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700",
+
+    // CCCAA Conferences (California Community Colleges)
+    "CCCAA-B6": "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
+    "CCCAA-CC": "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700",
+    "CCCAA-GV": "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700",
+    "CCCAA-IE": "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700",
+    "CCCAA-NC": "bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700",
+    "CCCAA-SC": "bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700",
+    "CCCAA–B6": "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
+    "CCCAA–GV": "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700",
+    "CCCAA–NC": "bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700",
+    "CCCAA–PC": "bg-pink-100 text-pink-800 border-pink-200 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-700",
+    "CCCAA–SC": "bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700",
+
+    // SCFA Conferences (Southern California Football Association)
+    "SCFA-NDA": "bg-orange-200 text-orange-900 border-orange-300 dark:bg-orange-800/30 dark:text-orange-200 dark:border-orange-600",
+    "SCFA-NDC": "bg-amber-200 text-amber-900 border-amber-300 dark:bg-amber-800/30 dark:text-amber-200 dark:border-amber-600",
+    "SCFA–NC": "bg-rose-200 text-rose-900 border-rose-300 dark:bg-rose-800/30 dark:text-rose-200 dark:border-rose-600",
+    "SCFA–SC": "bg-sky-200 text-sky-900 border-sky-300 dark:bg-sky-800/30 dark:text-sky-200 dark:border-sky-600",
+
+    // Other Conferences
+    "ARC": "bg-cyan-200 text-cyan-900 border-cyan-300 dark:bg-cyan-800/30 dark:text-cyan-200 dark:border-cyan-600",
+    "ASC": "bg-lime-100 text-lime-800 border-lime-200 dark:bg-lime-900/30 dark:text-lime-300 dark:border-lime-700",
+    "B8": "bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700",
+    "CCC": "bg-violet-100 text-violet-800 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-700",
+    "CNE": "bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700",
+    "LEC": "bg-fuchsia-200 text-fuchsia-900 border-fuchsia-300 dark:bg-fuchsia-800/30 dark:text-fuchsia-200 dark:border-fuchsia-600",
 
     // Special
     "Independent": "bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-700/30 dark:text-gray-300 dark:border-gray-600",
@@ -642,29 +729,62 @@ export default function Schools() {
       "SEC": "⚔️",
       "ACC": "🏟️",
       "American Athletic Conference": "🇺🇸",
+      "American Athletic": "🇺🇸",
+      "American": "🇺🇸",
       "Big Ten": "🌽",
       "Big 12": "🌟",
       "Pac-12": "🌊",
+      "Pac 12": "🌊",
       "Mountain West": "⛰️",
+      "MWC": "⛰️",
       "Conference USA": "🏜️",
       "Sun Belt": "☀️",
       "Mid-American Conference": "🦅",
+      "Mid-American": "🦅",
+      "Mid-American (MAC)": "🦅",
+      "MAC": "🦅",
 
       // FCS Conferences
       "Ivy League": "🎓",
+      "Patriot": "🦅",
       "Patriot League": "🦅",
       "Missouri Valley": "🌾",
+      "MVFC": "🌾",
       "Big Sky": "🦌",
       "CAA": "🌊",
       "Southern Conference": "🌲",
+      "SoCon": "🌲",
+      "Southland": "🤠",
       "Southland Conference": "🤠",
+      "Pioneer": "🎯",
+      "NEC": "🗻",
+      "Big South-OVC": "🌳",
+      "MEAC": "🦁",
+      "SWAC": "🏛️",
 
       // D2 Conferences
       "GLIAC": "⛵",
       "Gulf South": "🏖️",
+      "GSC": "🏖️",
       "PSAC": "🗽",
       "RMAC": "🏔️",
+      "Rocky Mountain Athletic Conference": "🏔️",
       "GAC": "🌾",
+      "Great American": "🌾",
+      "GLVC": "🏞️",
+      "CIAA": "📚",
+      "SIAC": "🦉",
+      "MEC": "⛏️",
+      "SAC": "🌄",
+      "GMAC": "🌉",
+      "MIAA": "🌻",
+      "NSIC": "❄️",
+      "Lone Star": "⭐",
+      "GNAC": "🌲",
+      "Great Midwest": "🌉",
+      "Northeast-10": "🦞",
+      "Conference Carolinas": "🌺",
+      "SSAC*": "🦩",
 
       // D3 Conferences
       "NESCAC": "🌲",
@@ -674,16 +794,70 @@ export default function Schools() {
       "ODAC": "🐴",
       "CCIW": "🏭",
       "MASCAC": "🦞",
+      "NCAC": "🌿",
+      "NEWMAC": "🎓",
+      "SCAC": "🌵",
+      "SAA": "🦅",
+      "Centennial": "⚡",
+      "Empire 8": "🏔️",
+      "MIAC": "🦆",
+      "NWC": "🌲",
+      "HCAC": "🏛️",
+      "PAC": "🌴",
+      "UMAC": "🌊",
+      "NACC": "🦌",
+      "NCFC": "🌿",
+      "Landmark": "🗿",
+      "Liberty": "🗽",
+      "USA South": "🌳",
+      "SCIAC": "🌅",
+      "United Athletic": "🎯",
+      "NJAC": "🏙️",
+      "WSC": "🌄",
+      "GSFC": "⚓",
+      "NIFC": "🌾",
 
       // JUCO Conferences
       "MACCC": "🎸",
       "ICCAC": "🌽",
       "NJCAA": "🎯",
+      "KJCCC": "🌻",
+      "SWJCFC": "🤠",
+      "MCAC": "🦬",
+      "WSFL": "🌊",
+      "NORCAL": "🌉",
+
+      // CCCAA Conferences (California Community Colleges)
+      "CCCAA-B6": "🏖️",
+      "CCCAA-CC": "🎬",
+      "CCCAA-GV": "🍇",
+      "CCCAA-IE": "🏜️",
+      "CCCAA-NC": "🌲",
+      "CCCAA-SC": "🌴",
+      "CCCAA–B6": "🏖️",
+      "CCCAA–GV": "🍇",
+      "CCCAA–NC": "🌲",
+      "CCCAA–PC": "🌊",
+      "CCCAA–SC": "🌴",
+
+      // SCFA Conferences (Southern California Football Association)
+      "SCFA-NDA": "🏈",
+      "SCFA-NDC": "🏈",
+      "SCFA–NC": "🏈",
+      "SCFA–SC": "🏈",
+
+      // Other Conferences
+      "ARC": "🏔️",
+      "ASC": "🌟",
+      "B8": "8️⃣",
+      "CCC": "🎓",
+      "CNE": "🌊",
+      "LEC": "📖",
 
       // Special
       "Independent": "⭐"
     };
-    return logoMap[conference] || "🏈";
+    return logoMap[conference] || "🏆";
   };
 
   const tierDefinitions = {
@@ -711,10 +885,10 @@ export default function Schools() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+            <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-purple-600 dark:to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30 dark:shadow-purple-500/20">
               <Target className="w-7 h-7 text-white" />
             </div>
             <div>
@@ -875,9 +1049,9 @@ export default function Schools() {
         currentStep={2}
         nextButtonText="Scroll to Search"
       >
-        <div className="space-y-3 bg-blue-50 p-4 rounded-lg">
-          <p className="text-sm text-blue-900 font-medium">How to find your target school:</p>
-          <ul className="text-sm text-blue-800 space-y-2">
+        <div className="space-y-3 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+          <p className="text-sm text-blue-900 dark:text-blue-200 font-medium">How to find your target school:</p>
+          <ul className="text-sm text-blue-800 dark:text-blue-300 space-y-2">
             <li>🔍 <strong>Use the search bar</strong> - Type the school name to find it quickly</li>
             <li>📊 <strong>Filter by division</strong> - Choose FBS, FCS, D2, D3, or JUCO</li>
             <li>🗺️ <strong>Filter by state</strong> - Narrow down schools by location</li>

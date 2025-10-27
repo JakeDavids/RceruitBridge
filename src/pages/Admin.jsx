@@ -104,7 +104,7 @@ function AdminContent() {
 
   if (!user || user.role !== 'admin') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
         <div className="max-w-4xl mx-auto">
           <Alert>
             <AlertTriangle className="h-4 w-4" />
@@ -121,7 +121,7 @@ function AdminContent() {
   const currentValue = getEnvironmentValue();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
@@ -199,17 +199,17 @@ function AdminContent() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+              <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
                 <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
                 <p className="font-semibold text-green-800">Identity Functions</p>
                 <p className="text-sm text-green-600">Operational</p>
               </div>
-              <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200">
                 <Settings className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                 <p className="font-semibold text-blue-800">Feature Flags</p>
                 <p className="text-sm text-blue-600">{featureFlags.length} configured</p>
               </div>
-              <div className="text-center p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200">
                 <AlertTriangle className="w-8 h-8 text-purple-600 mx-auto mb-2" />
                 <p className="font-semibold text-purple-800">Monitoring</p>
                 <p className="text-sm text-purple-600">Active</p>

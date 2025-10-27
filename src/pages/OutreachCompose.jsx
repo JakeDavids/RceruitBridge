@@ -568,7 +568,7 @@ Make ${coach.coach_name} feel like this athlete specifically wants to play for H
           <CardContent className="space-y-4">
             <div>
               <Label htmlFor="to" className="font-semibold">To:</Label>
-              <div className="mt-1 border rounded-lg p-2 bg-slate-50 h-20 overflow-y-auto">
+              <div className="mt-1 border rounded-lg p-2 bg-slate-50 dark:bg-slate-800 h-20 overflow-y-auto">
                 {selectedCoachDetails.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
                     {selectedCoachDetails.map(coach => (
@@ -695,7 +695,7 @@ Make ${coach.coach_name} feel like this athlete specifically wants to play for H
             <Separator />
 
             <h3 className="text-lg font-semibold mt-4 mb-2">Email Preview</h3>
-            <div className="border rounded-lg p-4 bg-slate-50 min-h-[150px]">
+            <div className="border rounded-lg p-4 bg-slate-50 dark:bg-slate-800 min-h-[150px]">
               {emailSubject && <p className="font-bold mb-2">Subject: {emailSubject}</p>}
               {(emailSubject || emailBody) && <Separator className="my-2" />}
               {emailBody && (

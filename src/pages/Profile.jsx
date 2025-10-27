@@ -456,7 +456,7 @@ export default function Profile() {
 
         <div className="grid lg:grid-cols-2 gap-4 md:gap-6">
           {/* Profile Photo */}
-          <Card id="profile-photo-card" className="bg-white/80 backdrop-blur shadow-xl">
+          <Card id="profile-photo-card" className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg md:text-2xl font-bold text-slate-900">
                 <Camera className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
@@ -491,7 +491,7 @@ export default function Profile() {
           </Card>
 
           {/* Basic Information */}
-          <Card id="basic-info-card" className="bg-white/80 backdrop-blur shadow-xl">
+          <Card id="basic-info-card" className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
             <CardHeader>
               <CardTitle className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
                 <UserIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
@@ -567,7 +567,7 @@ export default function Profile() {
           </Card>
 
           {/* Academic Information */}
-          <Card id="academic-info-card" className="bg-white/80 backdrop-blur shadow-xl">
+          <Card id="academic-info-card" className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
             <CardHeader>
               <CardTitle className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
                 <GraduationCap className="w-5 h-5 md:w-6 md:h-6 text-pink-600" />
@@ -637,7 +637,7 @@ export default function Profile() {
           </Card>
 
           {/* Athletic Information */}
-          <Card id="athletic-info-card" className="bg-white/80 backdrop-blur shadow-xl">
+          <Card id="athletic-info-card" className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
             <CardHeader>
               <CardTitle className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
                 <Trophy className="w-5 h-5 md:w-6 md:h-6 text-purple-600" />
@@ -769,7 +769,7 @@ export default function Profile() {
           </Card>
 
           {/* Community Service */}
-          <Card id="community-service-card" className="bg-white/80 backdrop-blur shadow-xl">
+          <Card id="community-service-card" className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
             <CardHeader>
               <CardTitle className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
                 <UserIcon className="w-5 h-5 md:w-6 md:h-6 text-green-600" />
@@ -793,7 +793,7 @@ export default function Profile() {
           </Card>
 
           {/* Coach References */}
-          <Card id="coach-references-card" className="bg-white/80 backdrop-blur shadow-xl">
+          <Card id="coach-references-card" className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
             <CardHeader>
               <CardTitle className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
                 <UserIcon className="w-5 h-5 md:w-6 md:h-6 text-yellow-600" />
@@ -818,7 +818,7 @@ export default function Profile() {
         </div>
 
         {/* Recruiting Preferences */}
-        <Card className="bg-white/80 backdrop-blur shadow-xl">
+        <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
           <CardHeader>
             <CardTitle className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
               <Target className="w-5 h-5 md:w-6 md:h-6 text-red-600" />
@@ -905,7 +905,7 @@ export default function Profile() {
         </Card>
 
         {/* Upload Center - Integrated into Profile */}
-        <Card className="bg-white/80 backdrop-blur shadow-xl">
+        <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur shadow-xl">
           <CardHeader>
             <CardTitle className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
               <Upload className="w-5 h-5 md:w-6 md:h-6 text-indigo-600" />
@@ -925,7 +925,7 @@ export default function Profile() {
                   className="flex-1 text-base md:text-lg"
                 />
               </div>
-              <p className="text-sm text-slate-600 mt-1">Your best plays - will be automatically included in outreach emails</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Your best plays - will be automatically included in outreach emails</p>
             </div>
 
             <div className="space-y-2">
@@ -968,7 +968,7 @@ export default function Profile() {
                   className="flex-1 text-base md:text-lg"
                 />
               </div>
-              <p className="text-sm text-slate-600 mt-1">Upload your official academic records</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Upload your official academic records</p>
             </div>
 
             <div className="bg-blue-50 p-4 rounded-lg">

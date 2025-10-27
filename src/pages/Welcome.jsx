@@ -7,7 +7,7 @@ import { Trophy, ArrowRight } from "lucide-react";
 
 export default function WelcomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center p-6">
       <Card className="max-w-2xl mx-auto text-center shadow-2xl">
         <CardContent className="p-8 md:p-12">
           <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">

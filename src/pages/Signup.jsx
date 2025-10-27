@@ -164,7 +164,7 @@ export default function Signup() {
         <motion.button
           onClick={handleGoogleSignup}
           disabled={loading}
-          className="w-full mb-6 py-3 px-4 bg-white hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-md flex items-center justify-center gap-3 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full mb-6 py-3 px-4 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-800 font-semibold rounded-lg shadow-md flex items-center justify-center gap-3 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           whileHover={{ scale: loading ? 1 : 1.02 }}
           whileTap={{ scale: loading ? 1 : 0.98 }}
         >
